@@ -1,3 +1,4 @@
 Hof_RC
-0.0.1
+0.0.2
 Hof RC,Hall Of Fame RC,hofrc,hofrc,index.php,1,0
+3.2.0
