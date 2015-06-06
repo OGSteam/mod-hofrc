@@ -29,7 +29,7 @@ $id_rc = $_GET["id"];
 if ($_GET["create"] == 'ok')
 	{
 		$nb_enregistrement = $db->sql_query("SELECT count(*) from `".TABLE_HOFRC_TITLE."`");
-		$numero = (mysql_result($nb_enregistrement,0) + 1);
+		$numero = (mysqli_data_seek ($nb_enregistrement,0) + 1);
 		$db->sql_query("UPDATE `".TABLE_HOFRC_INFO_RC."` SET `publicated` = '1' WHERE ".TABLE_HOFRC_INFO_RC.".`id_rc`  = '".$id_rc."'");
 		$db->sql_query("INSERT INTO `".TABLE_HOFRC_TITLE."` (`id`, `id_rc`, `board_url`, `title`) VALUES ('".$numero."', '".$id_rc."', '', '".$_POST['title']."')");
 		$id = $db->sql_query("SELECT `id` FROM `".TABLE_HOFRC_TITLE."` ORDER BY id DESC LIMIT 0,1");
@@ -133,7 +133,7 @@ function copyclipboard(intext)
 	
 <?php
  $count = 0;
-while ($data = mysql_fetch_assoc($queryRC))
+while ($data = $db->sql_fetch_assoc($queryRC))
 
 	{
 		$id_rcround = $data['id_rcround'];
@@ -148,7 +148,7 @@ while ($data = mysql_fetch_assoc($queryRC))
 		<th>
 			<?php 
 				$queryAtt = $db->sql_query("SELECT player FROM ".TABLE_ROUND_ATTACK." WHERE `id_rcround`=".$id_rcround.' GROUP BY player'); 
-					while($player_att = mysql_fetch_array( $queryAtt ))
+					while($player_att = $db->sql_fetch_row( $queryAtt ))
 						{ 
 							echo $player_att['player']."<br>";
 						}
@@ -158,7 +158,7 @@ while ($data = mysql_fetch_assoc($queryRC))
 		<th>
 			<?php 
 				$queryDef = $db->sql_query("SELECT player FROM ".TABLE_ROUND_DEFENSE." WHERE `id_rcround`=".$id_rcround.' GROUP BY player');
-					while($player_def = mysql_fetch_array( $queryDef ))
+					while($player_def = $db->sql_fetch_row( $queryDef ))
 						{ 
 							if ($player_def['player'] == $player )
 								{ 

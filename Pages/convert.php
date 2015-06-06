@@ -157,8 +157,8 @@ while ($data = $db->sql_fetch_assoc($queryRC))
 
 	{
 		$id_rcround = $data['id_rcround'];
-		$query_Nb_Att = $db->sql_query("SELECT player FROM ".TABLE_ROUND_ATTACK." WHERE `id_rcround`=".$id_rcround.' GROUP BY player'); $Nb_Att = mysql_num_rows( $query_Nb_Att );
-		$query_Nb_Def = $db->sql_query("SELECT player FROM ".TABLE_ROUND_DEFENSE." WHERE `id_rcround`=".$id_rcround.' GROUP BY player'); $Nb_Def = mysql_num_rows( $query_Nb_Def );
+		$query_Nb_Att = $db->sql_query("SELECT player FROM ".TABLE_ROUND_ATTACK." WHERE `id_rcround`=".$id_rcround.' GROUP BY player'); $Nb_Att = $db->sql_numrows( $query_Nb_Att );
+		$query_Nb_Def = $db->sql_query("SELECT player FROM ".TABLE_ROUND_DEFENSE." WHERE `id_rcround`=".$id_rcround.' GROUP BY player'); $Nb_Def = $db->sql_numrows( $query_Nb_Def );
 		$type_hof = find_hof($Nb_Att, $Nb_Def, $data['victoire'], $data['dateRC'], $data['debris_M'], $data['debris_C'], $data['id_rc']);
 		
 ?>
@@ -167,8 +167,8 @@ while ($data = $db->sql_fetch_assoc($queryRC))
 		<th><?php echo $type_hof;?></th>
 		<th><?php echo date("H:i:s - j-m-Y",$data['dateRC']);?></th>
 		<th><?php echo $data['coordinates'];?></th>
-		<th><?php $queryAtt = $db->sql_query("SELECT player FROM ".TABLE_ROUND_ATTACK." WHERE `id_rcround`=".$id_rcround.' GROUP BY player'); while($player_att = mysql_fetch_array( $queryAtt )){ echo $player_att['player']."<br>";}?><?php echo number_format($data['pertes_A'],0,'','.');?></th>
-		<th><?php $queryDef = $db->sql_query("SELECT player FROM ".TABLE_ROUND_DEFENSE." WHERE `id_rcround`=".$id_rcround.' GROUP BY player');while($player_def = mysql_fetch_array( $queryDef )){ echo $player_def['player']."<br>";}?><?php  echo number_format($data['pertes_D'],0,'','.');?></th>
+		<th><?php $queryAtt = $db->sql_query("SELECT player FROM ".TABLE_ROUND_ATTACK." WHERE `id_rcround`=".$id_rcround.' GROUP BY player'); while($player_att = $db->sql_fetch_row( $queryAtt )){ echo $player_att['player']."<br>";}?><?php echo number_format($data['pertes_A'],0,'','.');?></th>
+		<th><?php $queryDef = $db->sql_query("SELECT player FROM ".TABLE_ROUND_DEFENSE." WHERE `id_rcround`=".$id_rcround.' GROUP BY player');while($player_def = $db->sql_fetch_row( $queryAtt )){ echo $player_def['player']."<br>";}?><?php  echo number_format($data['pertes_D'],0,'','.');?></th>
 		<th><?php echo number_format($data['gain_M'],0,'','.');?></th> 
 		<th><?php echo number_format($data['gain_C'],0,'','.');?></th> 
 		<th><?php echo number_format($data['gain_D'],0,'','.');?></th> 
