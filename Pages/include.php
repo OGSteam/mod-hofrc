@@ -236,7 +236,7 @@ function jsspecialchars($s) {
 	// ajout de ce petit replace car le masque ne prend pas correctement le double quote...
 	$s = str_replace('"','&quot;',$s);
 
-	return preg_replace('/([^ !#$%@()*+,-.\x30-\x5b\x5d-\x7e])/e',
+	return preg_replace('/([^ !#$%@()*+,-.\x30-\x5b\x5d-\x7e])/',
 		"'\\x'.(ord('\\1')<16? '0': '').dechex(ord('\\1'))",$s);
 }
 
@@ -958,8 +958,8 @@ function jsspecialchars($s) {
 			define('TABLE_HOFRC_CONFIG',$table_prefix.'hofrc_config');
 			define('TABLE_HOFRC_INFO_RC',$table_prefix.'hofrc_info_rc');
 			$query_set_config = "select * from " . TABLE_HOFRC_CONFIG;
-			$set_config = mysql_query($query_set_config);
-			while (list($set_config_name, $set_config_value) = mysql_fetch_row($set_config)) 
+			$set_config = $db->sql_query($query_set_config);
+			while (list($set_config_name, $set_config_value) = $db->sql_fetch_row($set_config))
 				{
 					$set_hofrc_config[$set_config_name] = stripslashes($set_config_value);
 				}
@@ -1358,7 +1358,7 @@ function jsspecialchars($s) {
 			
 			// $list_hof = $db->sql_query("SELECT `id`, `id_rc`, `BOARD_URL`, `TITLE` FROM ".TABLE_HOFRC_TITLE);
 			$query_title = $db->sql_query("SELECT `id`, `id_rc`, `BOARD_URL`, `title` FROM ".TABLE_HOFRC_TITLE." ORDER BY id");
-			while ($title = mysql_fetch_assoc($query_title))
+			while ($title = $db->sql_fetch_assoc($query_title))
 				{
 					$color_txt_1 = explode(",",$color_txt_1_RGB);
 					$color_txt_2 = explode(",",$color_txt_2_RGB);

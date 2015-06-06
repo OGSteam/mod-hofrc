@@ -90,8 +90,8 @@ WHILE (list($id_rc, $daterc, $type, $coordinates, $victoire, $metal_cdr, $crista
 		<th width="110px"><?php echo date("H:i:s - j-m-Y",$daterc);?></th>
 		<th><?php echo $type;?></th>
 		<th><?php echo $coordinates;?></th>
-		<th><?php $query_Att = $db->sql_query("SELECT player FROM ".TABLE_HOFRC_ATTACK." WHERE `id_rc`=".$id_rc." AND round = 1 GROUP BY player");while($queryAtt = mysql_fetch_array( $query_Att )){ echo "<span style='color:".$att.";'>".$queryAtt['player']."</span><br>";}?></th>
-		<th><?php $query_Def1 = $db->sql_query("SELECT player FROM ".TABLE_HOFRC_DEFENCE." WHERE `id_rc`=".$id_rc." AND round = 1 GROUP BY player");WHILE($queryDef1 = mysql_fetch_array( $query_Def1 )){ echo "<span style='color:".$def.";'>".$queryDef1['player']."</span><br>";}?></th>
+		<th><?php $query_Att = $db->sql_query("SELECT player FROM ".TABLE_HOFRC_ATTACK." WHERE `id_rc`=".$id_rc." AND round = 1 GROUP BY player");while($queryAtt = $db->sql_fetch_row( $query_Att )){ echo "<span style='color:".$att.";'>".$queryAtt['player']."</span><br>";}?></th>
+		<th><?php $query_Def1 = $db->sql_query("SELECT player FROM ".TABLE_HOFRC_DEFENCE." WHERE `id_rc`=".$id_rc." AND round = 1 GROUP BY player");WHILE($queryDef1 = $db->sql_fetch_row( $query_Def1 )){ echo "<span style='color:".$def.";'>".$queryDef1['player']."</span><br>";}?></th>
 		<th><?php echo number_format($metal_cdr + $cristal_cdr,0,'','.');?></th> 
 		<th>
 			<form style="text-align:center;" method="POST" action="index.php?action=hofrc&subaction=publier&id=<?php echo $id_rc?>&create=ok" name="titlehof">
@@ -155,8 +155,8 @@ WHILE (list($id_rc_pub, $daterc_pub, $type_pub, $coordinates_pub, $victoire_pub,
 		<th width="110px"><?php echo date("H:i:s - j-m-Y",$daterc_pub);?></th>
 		<th><?php echo $type_pub;?></th>
 		<th><?php echo $coordinates_pub;?></th>
-		<th><?php $query_Att_pub = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_ATTACK." WHERE `id_rc`=".$id_rc_pub." AND round = 1 GROUP BY player");while($queryAtt_pub = mysql_fetch_array( $query_Att_pub )){ echo "<span style='color:".$att_pub.";'>".$queryAtt_pub['player']."</span><br>";}?></th>
-		<th><?php $query_Def_pub = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_DEFENCE." WHERE `id_rc`=".$id_rc_pub." AND round = 1 GROUP BY player");while($queryDef_pub = mysql_fetch_array( $query_Def_pub )){ echo "<span style='color:".$def_pub.";'>".$queryDef_pub['player']."</span><br>";}?></th>
+		<th><?php $query_Att_pub = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_ATTACK." WHERE `id_rc`=".$id_rc_pub." AND round = 1 GROUP BY player");while($queryAtt_pub = $db->sql_fetch_row( $query_Att_pub )){ echo "<span style='color:".$att_pub.";'>".$queryAtt_pub['player']."</span><br>";}?></th>
+		<th><?php $query_Def_pub = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_DEFENCE." WHERE `id_rc`=".$id_rc_pub." AND round = 1 GROUP BY player");while($queryDef_pub = $db->sql_fetch_row( $query_Def_pub )){ echo "<span style='color:".$def_pub.";'>".$queryDef_pub['player']."</span><br>";}?></th>
 		<th><?php echo number_format($metal_cdr_pub + $cristal_cdr_pub,0,'','.');?></th> 
 		<th><form style="text-align:center;" method="POST" action="index.php?action=hofrc&subaction=gestion&del=<?php echo $id_rc_pub?>" name="del_hof">
 				<input align="center" type="submit" name="del" value="Supprimer">
@@ -214,8 +214,8 @@ WHILE (list($id_rc_ign, $daterc_ign, $type_ign, $coordinates_ign, $victoire_ign,
 		<th width="110px"><?php echo date("H:i:s - j-m-Y",$daterc_pub);?></th>
 		<th><?php echo $type_ign;?></th>
 		<th><?php echo $coordinates_ign;?></th>
-		<th><?php $query_Att_ign = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_ATTACK."  WHERE `id_rc`=".$id_rc_ign." AND round = 1 GROUP BY player");while($queryAtt_ign = mysql_fetch_array( $query_Att_ign )){ echo "<span style='color:".$att_ign.";'>".$queryAtt_ign['player']."</span><br>";}?></th>
-		<th><?php $query_Def_ign = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_DEFENCE." WHERE `id_rc`=".$id_rc_ign." AND round = 1 GROUP BY player");while($queryDef_ign = mysql_fetch_array( $query_Def_ign )){ echo "<span style='color:".$def_ign.";'>".$queryDef_ign['player']."</span><br>";}?></th>
+		<th><?php $query_Att_ign = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_ATTACK."  WHERE `id_rc`=".$id_rc_ign." AND round = 1 GROUP BY player");while($queryAtt_ign = $db->sql_fetch_row( $query_Att_ign )){ echo "<span style='color:".$att_ign.";'>".$queryAtt_ign['player']."</span><br>";}?></th>
+		<th><?php $query_Def_ign = $db->sql_query("SELECT `player` FROM ".TABLE_HOFRC_DEFENCE." WHERE `id_rc`=".$id_rc_ign." AND round = 1 GROUP BY player");while($queryDef_ign = $db->sql_fetch_row( $query_Def_ign )){ echo "<span style='color:".$def_ign.";'>".$queryDef_ign['player']."</span><br>";}?></th>
 		<th><?php echo number_format($metal_cdr_ign + $cristal_cdr_ign,0,'','.');?></th> 
 		<th><form style="text-align:center;" method="POST" action="index.php?action=hofrc&subaction=gestion&traiter=<?php echo $id_rc_ign?>" name="traiter_hof">
 				<input align="center" type="submit" name="del" value="Traiter">
