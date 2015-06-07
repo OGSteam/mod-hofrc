@@ -473,7 +473,7 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 				<?php
 				$source = imagecreatefromjpeg("mod/hofrc/Skin/".$skin."/historique.jpg");
 				$preview = "mod/hofrc/Output/temporaire.png";
-				$font = "mod/hofrc/Font/".$font_historique;
+				$font = "mod/hofrc/Font/".$font_historique.".ttf";
 				
 				$color_txt_1 = intval(explode(",",$color_txt_1_RGB));
 				$color_txt_2 = intval(explode(",",$color_txt_2_RGB));
