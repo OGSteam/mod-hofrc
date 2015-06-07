@@ -97,9 +97,9 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 
 // On récupère les configurations de l'univers
 			$query_config = "select * from " . TABLE_HOFRC_CONFIG;
-			$result_config = mysql_query($query_config);
+			$result_config = $db->sql_query($query_config);
 	
-			while (list($config_name, $config_value) = mysql_fetch_row($result_config)) 
+			while (list($config_name, $config_value) = $db->sql_fetch_row($result_config))
 				{
 					$hofrc_config[$config_name] = stripslashes($config_value);
 				}
@@ -665,7 +665,7 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 			<fieldset>
 				<legend>
 					<b>
-						<font color='#0080FF'><u>Défences</u></font>
+						<font color='#0080FF'><u>Défenses</u></font>
 					</b>
 				</legend>
 				<p align='left'>	
