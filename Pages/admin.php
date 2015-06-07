@@ -104,15 +104,15 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 					$hofrc_config[$config_name] = stripslashes($config_value);
 				}
 			$font_historique = $hofrc_config["font_historique"];
-			$font_size = $hofrc_config["font_size_historique"];
+			$font_size = intval($hofrc_config["font_size_historique"]);
 			$largeur_historique = $hofrc_config["largeur_historique"];
 			$hauteur_historique = $hofrc_config["hauteur_historique"];
 			$angle_historique = $hofrc_config["angle_historique"];
-			$pos_horiz_historique_1 = $hofrc_config["pos_horiz_historique_1"];
-			$pos_horiz_historique_2 = $hofrc_config["pos_horiz_historique_2"];
-			$pos_horiz_historique_3 = $hofrc_config["pos_horiz_historique_3"];
-			$pos_horiz_historique_4 = $hofrc_config["pos_horiz_historique_4"];
-			$pos_horiz_historique_5 = $hofrc_config["pos_horiz_historique_5"];
+			$pos_horiz_historique_1 = intval($hofrc_config["pos_horiz_historique_1"]);
+			$pos_horiz_historique_2 = intval($hofrc_config["pos_horiz_historique_2"]);
+			$pos_horiz_historique_3 = intval($hofrc_config["pos_horiz_historique_3"]);
+			$pos_horiz_historique_4 = intval($hofrc_config["pos_horiz_historique_4"]);
+			$pos_horiz_historique_5 = intval($hofrc_config["pos_horiz_historique_5"]);
 			$color_txt_1_RGB = $hofrc_config["color_txt_historique_1"];
 			$color_txt_2_RGB = $hofrc_config["color_txt_historique_2"];
 			$color_txt_3_RGB = $hofrc_config["color_txt_historique_3"];
@@ -475,11 +475,11 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 				$preview = "mod/hofrc/Output/temporaire.png";
 				$font = "mod/hofrc/Font/".$font_historique;
 				
-				$color_txt_1 = explode(",",$color_txt_1_RGB);
-				$color_txt_2 = explode(",",$color_txt_2_RGB);
-				$color_txt_3 = explode(",",$color_txt_3_RGB);
-				$color_txt_4 = explode(",",$color_txt_4_RGB);
-				$color_txt_5 = explode(",",$color_txt_5_RGB);
+				$color_txt_1 = intval(explode(",",$color_txt_1_RGB));
+				$color_txt_2 = intval(explode(",",$color_txt_2_RGB));
+				$color_txt_3 = intval(explode(",",$color_txt_3_RGB));
+				$color_txt_4 = intval(explode(",",$color_txt_4_RGB));
+				$color_txt_5 = intval(explode(",",$color_txt_5_RGB));
 				
 				$destination  = imagecreatetruecolor($largeur_historique, $hauteur_historique) or die ("Impossible de crée un flux d'image GD");
 			
