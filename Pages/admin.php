@@ -105,9 +105,9 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 				}
 			$font_historique = $hofrc_config["font_historique"];
 			$font_size = intval($hofrc_config["font_size_historique"]);
-			$largeur_historique = $hofrc_config["largeur_historique"];
-			$hauteur_historique = $hofrc_config["hauteur_historique"];
-			$angle_historique = $hofrc_config["angle_historique"];
+			$largeur_historique = intval($hofrc_config["largeur_historique"]);
+			$hauteur_historique = intval($hofrc_config["hauteur_historique"]);
+			$angle_historique = intval($hofrc_config["angle_historique"]);
 			$pos_horiz_historique_1 = intval($hofrc_config["pos_horiz_historique_1"]);
 			$pos_horiz_historique_2 = intval($hofrc_config["pos_horiz_historique_2"]);
 			$pos_horiz_historique_3 = intval($hofrc_config["pos_horiz_historique_3"]);
@@ -118,7 +118,7 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 			$color_txt_3_RGB = $hofrc_config["color_txt_historique_3"];
 			$color_txt_4_RGB = $hofrc_config["color_txt_historique_4"];
 			$color_txt_5_RGB = $hofrc_config["color_txt_historique_5"];
-			$pos_verti_historique = $hofrc_config["pos_verti_historique"];
+			$pos_verti_historique = intval($hofrc_config["pos_verti_historique"]);
 			$day_start_universe = strftime("%d",$hofrc_config["start_universe"]);
 			$month_start_universe = strftime("%m",$hofrc_config["start_universe"]);
 			$year_start_universe = strftime("%Y",$hofrc_config["start_universe"]);
@@ -188,35 +188,35 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 				</legend>
 				<p align='left'>
 					<form style="text-align:right;" method="POST" action="index.php?action=hofrc&subaction=admin" name="config">
-						<span style="text-align:center";><a align="center">Début de l'univers : </a><input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_start_universe;?>" name="day_start_universe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_start_universe;?>" name="month_start_universe" /> / <input style="width: 40px; text-align: center;" type="text" value="<?php echo $year_start_universe;?>" name="year_start_universe" /></span><br><br>
+						<span style="text-align:center"><a align="center">Début de l'univers : </a><input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_start_universe;?>" name="day_start_universe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_start_universe;?>" name="month_start_universe" /> / <input style="width: 40px; text-align: center;" type="text" value="<?php echo $year_start_universe;?>" name="year_start_universe" /></span><br><br>
 							<a style="margin-right:82px;">CDR en solo</a><a style="text-align:right; margin-right:20px">CDR en groupé</a><br>
 							<!-- Configuration INITIAL SOLO -->
-							<a>CDR Initial <?php echo infobulle("Permet de désactivé les hofs initial sur certains univers.");?>: </a> <input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_initial;?>" name="config_size_initial" /> de débris.
+							<a>CDR Initial <?php echo help(null,'Permet de désactiver les hofs initial sur certains univers.'); ?>: </a> <input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_initial;?>" name="config_size_initial" /> de débris.
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_solo;?>" name="day_config_end_initial_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_solo;?>" name="month_config_end_initial_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px" type="text" value="<?php echo $year_config_end_initial_solo;?>" name="year_config_end_initial_solo" />
 							<!-- Configuration INITIAL GROUPE -->
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_groupe;?>" name="day_config_end_initial_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_groupe;?>" name="month_config_end_initial_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px" type="text" value="<?php echo $year_config_end_initial_groupe;?>" name="year_config_end_initial_groupe" /><br>
 							<!-- Configuration COURANT SOLO -->
-							<a>CDR Courant <?php echo infobulle("Permet de désactivé les hofs courant sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_courant;?>" name="config_size_courant" /> de débris.
+							<a>CDR Courant <?php echo help(null,"Permet de désactiver les hofs courant sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_courant;?>" name="config_size_courant" /> de débris.
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_solo;?>" name="day_config_end_courant_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_solo;?>" name="month_config_end_courant_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_courant_solo;?>" name="year_config_end_courant_solo" />
 							<!-- Configuration COURANT GROUPE -->
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_groupe;?>" name="day_config_end_courant_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_groupe;?>" name="month_config_end_courant_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_courant_groupe;?>" name="year_config_end_courant_groupe" /><br>
 							<!-- Configuration BASIC SOLO -->
-							<a>CDR Basic <?php echo infobulle("Permet de désactivé les hofs basic sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_basic;?>" name="config_size_basic" /> de débris.
+							<a>CDR Basic <?php echo help(null,"Permet de désactiver les hofs basic sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_basic;?>" name="config_size_basic" /> de débris.
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_solo;?>" name="day_config_end_basic_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_solo;?>" name="month_config_end_basic_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_basic_solo;?>" name="year_config_end_basic_solo" />
 							<!--Configuration BASIC GROUPE -->
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_groupe;?>" name="day_config_end_basic_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_groupe;?>" name="month_config_end_basic_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_basic_groupe;?>" name="year_config_end_basic_groupe" /><br>
 							<!-- Configuration NORMAL SOLO -->
-							<a>CDR Normal <?php echo infobulle("Permet de désactivé les hofs normal sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_normal;?>" name="config_size_normal" /> de débris.
+							<a>CDR Normal <?php echo help(null,"Permet de désactiver les hofs normal sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_normal;?>" name="config_size_normal" /> de débris.
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_solo;?>" name="day_config_end_normal_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_solo;?>" name="month_config_end_normal_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_normal_solo;?>" name="year_config_end_normal_solo" />
 							<!--Configuration NORMAL GROUPE -->
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_groupe;?>" name="day_config_end_normal_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_groupe;?>" name="month_config_end_normal_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_normal_groupe;?>" name="year_config_end_normal_groupe" /><br>
 							<!-- Configuration AVANCE SOLO -->
-							<a>CDR Avancé <?php echo infobulle("Permet de désactivé les hofs avancés sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_avance;?>" name="config_size_avance" /> de débris.
+							<a>CDR Avancé <?php echo help(null,"Permet de désactiver les hofs avancés sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_avance;?>" name="config_size_avance" /> de débris.
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_solo;?>" name="day_config_end_avance_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_solo;?>" name="month_config_end_avance_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_avance_solo;?>" name="year_config_end_avance_solo" />
 							<!-- Configuration AVANCE GROUPE -->
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_groupe;?>" name="day_config_end_avance_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_groupe;?>" name="month_config_end_avance_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_avance_groupe;?>" name="year_config_end_avance_groupe" /></br>
 							<!-- Configuration STRATEGE SOLO -->
-							<a>CDR Stratège <?php echo infobulle("Permet de désactivé les hofs stratège sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_stratege;?>" name="config_size_stratege" /> de débris.
+							<a>CDR Stratège <?php echo help(null,"Permet de désactiver les hofs stratège sur certains univers.");?>: </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_stratege;?>" name="config_size_stratege" /> de débris.
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_solo;?>" name="day_config_end_stratege_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_solo;?>" name="month_config_end_stratege_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_stratege_solo;?>" name="year_config_end_stratege_solo" />
 							<!-- Configuration STRATEGE GROUPE -->
 							<input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_groupe;?>" name="day_config_end_stratege_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_groupe;?>" name="month_config_end_stratege_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_stratege_groupe;?>" name="year_config_end_stratege_groupe" /></br></br>
@@ -290,7 +290,7 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 							<tr>
 								<th width="220px">
 									<!-- On limite le fichier à 300Ko -->
-									Image :<?php echo infobulle("Les différents fichier doivent avoir comme nom:<br>- header <br>- round <br>- separator <br>- result <br>- background<br>Les seuls fichier accepter sont des gif, jpg et png.");?> <input type="file" name="picture"></br></br>
+									Image :<?php echo help(null,"Les différents fichier doivent avoir comme nom:<br>- header <br>- round <br>- separator <br>- result <br>- background<br>Les seuls fichier accepter sont des gif, jpg et png.");?> <input type="file" name="picture"></br></br>
 								</th>	
 								<th style="text-align:left;">
 									<input type="radio" name="PIC" value="PIC_HEADER">Entête<br>
@@ -556,13 +556,13 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 					</b>
 				</legend>
 				<p align='left'>
-					Ressources Piller Minimum: <input type="radio" name="position_color_picker" id="position_color_picker_ressources_piller_min" checked="checked">
+					Ressources Pillées Minimum: <input type="radio" name="position_color_picker" id="position_color_picker_ressources_piller_min" checked="checked">
 					<input type="text" name="couleur_ressources_piller_min" id="couleur_ressources_piller_min" value="<?php if (!empty($color_RESSOURCES_PILLER_MIN)==TRUE) echo $color_RESSOURCES_PILLER_MIN; else echo '000000'; ?>" onKeyUp="document.getElementById('preview_ressources_piller_min').style.color=this.value;" maxlength="7"><br />
 		
-					Ressources Piller Maximum: <input type="radio" name="position_color_picker" id="position_color_picker_ressources_piller_max" checked="checked">
+					Ressources Pillées Maximum: <input type="radio" name="position_color_picker" id="position_color_picker_ressources_piller_max" checked="checked">
 					<input type="text" name="couleur_ressources_piller_max" id="couleur_ressources_piller_max" value="<?php if (!empty($color_RESSOURCES_PILLER_MAX)==TRUE) echo $color_RESSOURCES_PILLER_MAX; else echo '000000'; ?>" onKeyUp="document.getElementById('preview_ressources_piller_max').style.color=this.value;" maxlength="7"><br />
 		
-					Pertes des Flottes et Défences: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_fleet_def" checked="checked">
+					Pertes des Flottes et Défenses: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_fleet_def" checked="checked">
 					<input type="text" name="couleur_pertes_fleet_def" id="couleur_pertes_fleet_def" value="<?php if (!empty($color_PERTES_FLEET_DEF)==TRUE) echo $color_PERTES_FLEET_DEF; else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pertes_fleet_def').style.color=this.value;" maxlength="7"><br />
 		
 					Pertes Minimum Attaque: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_min_att" checked="checked">
@@ -1041,7 +1041,7 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 						</script>
 					</td>
 					<td>
-						<?php echo infobulle('Cliquez sur la couleur pour la sélectionner.<br />Pour alterner le texte à colorer (fixe/variable), cochez celui désiré.'); ?>
+						<?php echo help( null,'Cliquez sur la couleur pour la sélectionner.<br />Pour alterner le texte à colorer (fixe ou variable), cochez celui désiré.'); ?>
 					</td>
 				</tr>
 				<tr colspan="2">
@@ -1056,13 +1056,3 @@ list($id,$title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color
 		</th>
 	</tr>
 </table>
-
-<script language="JavaScript" type="text/javascript">
-// cela permet de rester compatible avec le javascript désactivé.
-document.getElementById('list_fonds_ogsign').style.display = 'none';
-document.getElementById('submit_bar2').style.display = 'none';
-document.getElementById('choice_color_txt').style.display = 'none';
-document.getElementById('bloc_preview_txt_color').style.display = 'none';
-document.getElementById('colorpicker').style.display = 'block'; // pour IE
-document.getElementById('colorpicker').style.display = 'table';
-</script>
