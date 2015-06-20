@@ -847,7 +847,7 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
             }
             return "<span style='color:red;'>Courant</span>";
         } elseif (($set_hofrc_config["size_basic"] < $cdr && $cdr < $set_hofrc_config["size_normal"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_basic_solo"])) {
-            $check_basic_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_initial_basic = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_initial_basic)) {
                 signal_hof($id_RC, "BASIC");
                 echo "<script>alert('Un HOF Basic a été fait.');</script>";
