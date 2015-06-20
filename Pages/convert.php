@@ -21,6 +21,8 @@ require_once('mod/hofrc/Pages/include.php');
 
 // Gestion des dates
 
+    $day = date("j", time());
+
 
 //Si les dates d'affichage ne sont pas définies, on affiche par défaut les attaques du jour,
 if (!empty($_POST["from_day"]) && !empty($_POST["from_day"]) && !empty($_POST["from_day"])) {

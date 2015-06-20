@@ -82,6 +82,7 @@ function post_config($new_start_universe, $config_size_initial, $config_size_cou
 function select_picture($type, $skin, $picture, $historique, $round)
 {
     global $db, $table_prefix;
+    $historique_picture = '';
     define('TABLE_HOFRC_TITLE', $table_prefix . 'hofrc_title');
 
     $filename = "mod/hofrc/Skin/" . $skin . '/' . $picture;
@@ -221,6 +222,8 @@ function convert($id_RC, $type, $hof, $pillage)
     // On définie le skin
     $skin = select_skin(0);
 
+    $template = '';
+
     // On récupère la configuration par défaut
     $query_RCcolor = $db->sql_query("SELECT pt, gt, cle, clo, cr, vb, vc, rec, se, bmd, dst, edlm, tra, sat, lm, lleger, llourd, cg, ai, lp, pb, gb, player_att, player_def, ally, techno, detruit, ressources_piller_min, ressources_piller_max, pertes_fleet_def, seuil_pertes, seuil_pillage, seuil_cdr, pertes_min_att, pertes_max_att, pertes_min_def, pertes_max_def, debris_min, debris_max, renta_min, renta_max, pic_header , pic_round, pic_separator, pic_result, pic_background FROM " . TABLE_HOFRC_SKIN . " WHERE title LIKE CONVERT( _utf8 '" . $skin . "' USING latin1 ) COLLATE latin1_general_ci");
     list($color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color_VB, $color_VC, $color_REC, $color_SE, $color_BMD, $color_DST, $color_EDLM, $color_TRA, $color_SAT, $color_LM, $color_LLEGER, $color_LLOURD, $color_CG, $color_AI, $color_LP, $color_PB, $color_GB, $color_PLAYER_ATT, $color_PLAYER_DEF, $color_ALLY, $color_TECHNO, $color_DETRUIT, $color_RESSOURCES_PILLER_MIN, $color_RESSOURCES_PILLER_MAX, $color_PERTES_FLEET_DEF, $color_SEUIL_PERTES, $color_SEUIL_PILLAGE, $color_SEUIL_CDR, $color_PERTES_MIN_ATT, $color_PERTES_MAX_ATT, $color_PERTES_MIN_DEF, $color_PERTES_MAX_DEF, $color_DEBRIS_MIN, $color_DEBRIS_MAX, $color_RENTA_MIN, $color_RENTA_MAX, $color_PIC_HEADER, $color_PIC_ROUND, $color_PIC_SEPARATOR, $color_PIC_RESULT, $color_PIC_BACKGROUND) = $db->sql_fetch_row($query_RCcolor);
@@ -313,6 +316,7 @@ function convert($id_RC, $type, $hof, $pillage)
         // On récupérère tout les informations coté attaque du premier round
         $key_att_first = '';
         $ship_att_first = 0;
+        $template_type_att = '';
 
         // Variable de concaténation pour les attaquants et techno
         $template_type_att .= "^/" . $player_att . "^$";
@@ -341,6 +345,8 @@ function convert($id_RC, $type, $hof, $pillage)
         } else {
             $ally_def = $result_ally_att;
         }
+
+        $template_type_def = '';
 
         // Variable ce concaténation pour les défenseurs et techno
         $template_type_def .= "^/" . $player_def . "^$";
@@ -516,7 +522,7 @@ function convert($id_RC, $type, $hof, $pillage)
     // On récupère les pillage
     if (!empty($pillage)) {
         $pillage_unit_perdu_att = 0;
-        $pillage_unit_perdu_att = 0;
+        $pillage_unit_perdu_def = 0;
         $pillage_metal = 0;
         $pillage_cristal = 0;
         $pillage_deuterium = 0;
@@ -832,35 +838,35 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
     // On détermine qui est le vainqeur pour savoir par la suite s'il s'agit d'un groupée
     if (($Nb_Att == 1) || ($Nb_Def == 1)) {
         // Maintenant que l'on sait qu'il s'agit d'une victoire solo on détermine de quel catégorie il s'agit.
-        if (($set_hofrc_config["size_initial"] < $cdr && $cdr < $set_hofrc_config["size_courant"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_initial_solo"])) {
+        if (($set_hofrc_config["size_initial"] < $cdr && $cdr < $set_hofrc_config["size_courant"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_initial_solo"])) {
             $check_initial_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_initial_solo)) {
                 signal_hof($id_RC, "INITIAL");
                 echo "<script>alert('Un HOF Initial a été fait.');</script>";
             }
             return "<span style='color:red;'>Initial</span>";
-        } elseif (($set_hofrc_config["size_courant"] < $cdr && $cdr < $set_hofrc_config["size_basic"]) && ($set_hofrc_config["start_universe"] < $dateRc && $set_hofrc_config["end_courant_solo"] > $dateRC)) {
+        } elseif (($set_hofrc_config["size_courant"] < $cdr && $cdr < $set_hofrc_config["size_basic"]) && ($set_hofrc_config["start_universe"] < $dateRC && $set_hofrc_config["end_courant_solo"] > $dateRC)) {
             $check_courant_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_courant_solo)) {
                 signal_hof($id_RC, "COURANT");
                 echo "<script>alert('Un HOF Courant a été fait.');</script>";
             }
             return "<span style='color:red;'>Courant</span>";
-        } elseif (($set_hofrc_config["size_basic"] < $cdr && $cdr < $set_hofrc_config["size_normal"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_basic_solo"])) {
+        } elseif (($set_hofrc_config["size_basic"] < $cdr && $cdr < $set_hofrc_config["size_normal"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_basic_solo"])) {
             $check_initial_basic = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_initial_basic)) {
                 signal_hof($id_RC, "BASIC");
                 echo "<script>alert('Un HOF Basic a été fait.');</script>";
             }
             return "<span style='color:red;'>Basic</span>";
-        } elseif (($set_hofrc_config["size_normal"] < $cdr && $cdr < $set_hofrc_config["size_avance"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_normal_solo"])) {
+        } elseif (($set_hofrc_config["size_normal"] < $cdr && $cdr < $set_hofrc_config["size_avance"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_normal_solo"])) {
             $check_normal_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_normal_solo)) {
                 signal_hof($id_RC, "NORMAL");
                 echo "<script>alert('Un HOF Normal a été fait.');</script>";
             }
             return "<span style='color:red;'>Normal</span>";
-        } elseif (($set_hofrc_config["size_avance"] < $cdr && $cdr < $set_hofrc_config["size_stratege"]) && ($set_hofrc_config["start_universe"] < $dateRc) && ($dateRC < $set_hofrc_config["end_stratege_solo"])) {
+        } elseif (($set_hofrc_config["size_avance"] < $cdr && $cdr < $set_hofrc_config["size_stratege"]) && ($set_hofrc_config["start_universe"] < $dateRC) && ($dateRC < $set_hofrc_config["end_stratege_solo"])) {
             $check_avance_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_avance_solo)) {
                 signal_hof($id_RC, "AVANCE");
@@ -910,35 +916,35 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
             }
             return "<span style='color:red;'>Legendaire</span>";
         }
-    } elseif (($set_hofrc_config["size_initial"] < $cdr && $cdr < $set_hofrc_config["size_courant"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_initial_groupe"])) {
+    } elseif (($set_hofrc_config["size_initial"] < $cdr && $cdr < $set_hofrc_config["size_courant"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_initial_groupe"])) {
         $check_initial_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_initial_groupe)) {
             signal_hof($id_RC, "INITIAL");
             echo "<script>alert('Un HOF initial a été fait.');</script>";
         }
         return "<span style='color:red;'>Initial</span>";
-    } elseif (($set_hofrc_config["size_courant"] < $cdr && $cdr < $set_hofrc_config["size_basic"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_courant_groupe"])) {
+    } elseif (($set_hofrc_config["size_courant"] < $cdr && $cdr < $set_hofrc_config["size_basic"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_courant_groupe"])) {
         $check_courant_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_courant_groupe)) {
             signal_hof($id_RC, "COURANT");
             echo "<script>alert('Un HOF Courant a été fait.');</script>";
         }
         return "<span style='color:red;'>Courant</span>";
-    } elseif (($set_hofrc_config["size_basic"] < $cdr && $cdr < $set_hofrc_config["size_normal"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_basic_groupe"])) {
+    } elseif (($set_hofrc_config["size_basic"] < $cdr && $cdr < $set_hofrc_config["size_normal"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_basic_groupe"])) {
         $check_basic_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_basic_groupe)) {
             signal_hof($id_RC, "BASIC");
             echo "<script>alert('Un HOF Basic a été fait.');</script>";
         }
         return "<span style='color:red;'>Basic</span>";
-    } elseif (($set_hofrc_config["size_normal"] < $cdr && $cdr < $set_hofrc_config["size_avance"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_normal_groupe"])) {
+    } elseif (($set_hofrc_config["size_normal"] < $cdr && $cdr < $set_hofrc_config["size_avance"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_normal_groupe"])) {
         $check_normal_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_normal_groupe)) {
             signal_hof($id_RC, "NORMAL");
             echo "<script>alert('Un HOF Normal a été fait.');</script>";
         }
         return "<span style='color:red;'>Normal</span>";
-    } elseif (($set_hofrc_config["size_avance"] < $cdr && $cdr < $set_hofrc_config["size_stratege"]) && ($set_hofrc_config["start_universe"] < $dateRc && $dateRC < $set_hofrc_config["end_stratege_groupe"])) {
+    } elseif (($set_hofrc_config["size_avance"] < $cdr && $cdr < $set_hofrc_config["size_stratege"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_stratege_groupe"])) {
         $check_avance_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_avance_groupe)) {
             signal_hof($id_RC, "AVANCE");
@@ -1088,7 +1094,7 @@ function historique($name)
     $skin = select_skin(0);
     // On récupère la police
     $query_font = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'font_historique'");
-    list($select_font) = $db->sql_fetch_row($query_skin);
+    list($select_font) = $db->sql_fetch_row($query_font);
     // On récupère les dimensions de l'image
     $query_largeur = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'largeur_historique'");
     list($largeur_picture) = $db->sql_fetch_row($query_largeur);
@@ -1118,7 +1124,7 @@ function historique($name)
     list($color_txt_2_RGB) = $db->sql_fetch_row($query_color_txt_2);
     $query_color_txt_3 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_3'");
     list($color_txt_3_RGB) = $db->sql_fetch_row($query_color_txt_3);
-    $query_pos_horiz_5 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_4'");
+    $query_color_txt_4 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_4'");
     list($color_txt_4_RGB) = $db->sql_fetch_row($query_color_txt_4);
     $query_color_txt_5 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_5'");
     list($color_txt_5_RGB) = $db->sql_fetch_row($query_color_txt_5);
