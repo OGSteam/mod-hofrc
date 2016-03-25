@@ -1092,9 +1092,9 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                                 aB[i / 2 + 1530] = 127;
                             }
 
-                            var hexbase = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
+                            var hexbase = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
                             var i = 0;
-                            var jl = new Array();
+                            var jl = [];
                             for (x = 0; x < 16; x++)
                                 for (y = 0; y < 16; y++)
                                     jl[i++] = hexbase[x] + hexbase[y];
@@ -1126,7 +1126,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                             // appelée au survol, affiche la couleur survolée dans la case témoin
                             function t(e) {
                                 source = ie ? event.srcElement : e.target;
-                                if (source.tagName == 'TABLE') return
+                                if (source.tagName == 'TABLE') return;
                                 while (source.tagName != 'TD' && source.tagName != 'HTML')source = ns6 ? source.parentNode : source.parentElement;
                                 // couleur dans la zone témoin
                                 document.getElementById('temoin').style.backgroundColor = couleur_clic;
@@ -1320,7 +1320,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                         </script>
                     </td>
                     <td>
-                        <?php echo help(null, 'Cliquez sur la couleur pour la sélectionner.<br />Pour alterner le texte à colorer (fixe ou variable), cochez celui désiré.'); ?>
+                        <?php echo help(null, 'Cliquez sur la couleur pour la sélectionner.<br>Pour alterner le texte à colorer (fixe ou variable), cochez celui désiré.'); ?>
                     </td>
                 </tr>
                 <tr colspan="2">
