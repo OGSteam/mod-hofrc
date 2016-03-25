@@ -24,6 +24,6 @@ $rc = UNparseRC($id_rc);
 echo "<table align='center'>" . "\n";
 echo "<tr><td class='c'>" . nl2br($rc) . "</td></tr>" . "\n";
 echo "</table>";
-echo "<br />";
+echo "<br>";
 //require_once("views/page_tail_2.php");
 ?>
