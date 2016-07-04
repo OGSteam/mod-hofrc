@@ -214,7 +214,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                         name="year_config_end_initial_groupe"/><br>
                     <!-- Configuration COURANT SOLO -->
                     <a>CDR
-                        Courant <?php echo help(null, "Permet de désactiver les hofs courant sur certains univers.");?>
+                        Courant <?php echo help(null, "Permet de désactiver les hofs courant sur certains univers."); ?>
                         : </a><input style="width: 20%; text-align: center;" type="text"
                                      value="<?php echo $config_size_courant; ?>" name="config_size_courant"/> de débris.
                     <input style="width: 20px; text-align: center;" type="text"
@@ -233,7 +233,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                         value="<?php echo $year_config_end_courant_groupe; ?>"
                         name="year_config_end_courant_groupe"/><br>
                     <!-- Configuration BASIC SOLO -->
-                    <a>CDR Basic <?php echo help(null, "Permet de désactiver les hofs basic sur certains univers.");?>
+                    <a>CDR Basic <?php echo help(null, "Permet de désactiver les hofs basic sur certains univers."); ?>
                         : </a><input style="width: 20%; text-align: center;" type="text"
                                      value="<?php echo $config_size_basic; ?>" name="config_size_basic"/> de débris.
                     <input style="width: 20px; text-align: center;" type="text"
@@ -251,7 +251,8 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                              value="<?php echo $year_config_end_basic_groupe; ?>"
                              name="year_config_end_basic_groupe"/><br>
                     <!-- Configuration NORMAL SOLO -->
-                    <a>CDR Normal <?php echo help(null, "Permet de désactiver les hofs normal sur certains univers.");?>
+                    <a>CDR
+                        Normal <?php echo help(null, "Permet de désactiver les hofs normal sur certains univers."); ?>
                         : </a><input style="width: 20%; text-align: center;" type="text"
                                      value="<?php echo $config_size_normal; ?>" name="config_size_normal"/> de débris.
                     <input style="width: 20px; text-align: center;" type="text"
@@ -270,7 +271,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                         value="<?php echo $year_config_end_normal_groupe; ?>" name="year_config_end_normal_groupe"/><br>
                     <!-- Configuration AVANCE SOLO -->
                     <a>CDR
-                        Avancé <?php echo help(null, "Permet de désactiver les hofs avancés sur certains univers.");?>
+                        Avancé <?php echo help(null, "Permet de désactiver les hofs avancés sur certains univers."); ?>
                         : </a><input style="width: 20%; text-align: center;" type="text"
                                      value="<?php echo $config_size_avance; ?>" name="config_size_avance"/> de débris.
                     <input style="width: 20px; text-align: center;" type="text"
@@ -290,7 +291,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                         name="year_config_end_avance_groupe"/></br>
                     <!-- Configuration STRATEGE SOLO -->
                     <a>CDR
-                        Stratège <?php echo help(null, "Permet de désactiver les hofs stratège sur certains univers.");?>
+                        Stratège <?php echo help(null, "Permet de désactiver les hofs stratège sur certains univers."); ?>
                         : </a><input style="width: 20%; text-align: center;" type="text"
                                      value="<?php echo $config_size_stratege; ?>" name="config_size_stratege"/> de
                     débris.
@@ -395,7 +396,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                             <th width="220px">
                                 <!-- On limite le fichier à 300Ko -->
                                 Image
-                                :<?php echo help(null, "Les différents fichier doivent avoir comme nom:<br>- header <br>- round <br>- separator <br>- result <br>- background<br>Les seuls fichier accepter sont des gif, jpg et png.");?>
+                                :<?php echo help(null, "Les différents fichier doivent avoir comme nom:<br>- header <br>- round <br>- separator <br>- result <br>- background<br>Les seuls fichier accepter sont des gif, jpg et png."); ?>
                                 <input type="file" name="picture"></br></br>
                             </th>
                             <th style="text-align:left;">
@@ -430,7 +431,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
             </legend>
             <p align='left'>
 
-                <?php list_font();?>
+                <?php list_font(); ?>
 
             </p>
         </fieldset>
@@ -444,7 +445,8 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
 
             <form method="POST" action="index.php?action=hofrc&subaction=admin" name="rate">
                 Ratio: <input type="text" name="rate_resize"
-                              value="<?php $rate_resize = rate_resizing(0); echo($rate_resize); ?>" id="new_skin"
+                              value="<?php $rate_resize = rate_resizing(0);
+                              echo($rate_resize); ?>" id="new_skin"
                               maxlength="20">%<br/>
                 <!-- VALIDATION DES PARAMETRES -->
                 <br>
@@ -503,11 +505,11 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 // Combien il restait de case pour finir la ligne? On ne rempli avec du vide
                 if ($count != 0) {
                     ?>
-									<td style="border:0;" class="d" colspan="<?php echo $back_per_page - $count; ?>">
-									&nbsp
-									</td>
-								</tr>
-									<?php
+                    <td style="border:0;" class="d" colspan="<?php echo $back_per_page - $count; ?>">
+                        &nbsp
+                    </td>
+                    </tr>
+                    <?php
                 }
 
                 ?></table>
@@ -654,7 +656,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 imagedestroy($destination);
 
                 ?>
-                <?php echo '<br><img src="' . $preview . '" alt="' . $preview . '" /><br><br>';?>
+                <?php echo '<br><img src="' . $preview . '" alt="' . $preview . '" /><br><br>'; ?>
             </fieldset>
         </th>
     </tr>

@@ -21,7 +21,7 @@ require_once('mod/hofrc/Pages/include.php');
 
 // Gestion des dates
 
-    $day = date("j", time());
+$day = date("j", time());
 
 
 //Si les dates d'affichage ne sont pas définies, on affiche par défaut les attaques du jour,
@@ -40,7 +40,6 @@ if (!empty($_POST["from_day"]) && !empty($_POST["from_day"]) && !empty($_POST["f
     $from_septjours = $day - 7;
     $from_yesterday = $day - 1;
 }
-
 
 
 if (!empty($_POST["to_day"]) && !empty($_POST["to_day"]) && !empty($_POST["to_day"])) {
@@ -89,7 +88,7 @@ if (!empty($_GET["result"])) {
     <tr>
         <th><?php
             $rc_convert = convert($id, 'preview', 'raid', '');
-            echo nl2br($rc_convert);?>
+            echo nl2br($rc_convert); ?>
         </th>
     </tr>
     <tr>
@@ -101,7 +100,7 @@ if (!empty($_GET["result"])) {
         <th>
             <div id="bbcode" style="display: none; float: center; padding: 0;"><?php
                 $rc_convert_bbcode = convert($id, 'bbcode', 'raid', '');
-                echo nl2br($rc_convert_bbcode);?>
+                echo nl2br($rc_convert_bbcode); ?>
             </div>
         </th>
     </tr>
@@ -169,19 +168,21 @@ if (!empty($_GET["result"])) {
         ?>
 
         <tr>
-            <th><?php echo $type_hof;?></th>
-            <th><?php echo date("H:i:s - j-m-Y", $data['dateRC']);?></th>
-            <th><?php echo $data['coordinates'];?></th>
-            <th><?php $queryAtt = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player'); while ($player_att = $db->sql_fetch_row($queryAtt)) {
+            <th><?php echo $type_hof; ?></th>
+            <th><?php echo date("H:i:s - j-m-Y", $data['dateRC']); ?></th>
+            <th><?php echo $data['coordinates']; ?></th>
+            <th><?php $queryAtt = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+                while ($player_att = $db->sql_fetch_row($queryAtt)) {
                     echo $player_att['player'] . "<br>";
-                }?><?php echo number_format($data['pertes_A'], 0, '', '.');?></th>
-            <th><?php $queryDef = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');while ($player_def = $db->sql_fetch_row($queryAtt)) {
+                } ?><?php echo number_format($data['pertes_A'], 0, '', '.'); ?></th>
+            <th><?php $queryDef = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+                while ($player_def = $db->sql_fetch_row($queryAtt)) {
                     echo $player_def['player'] . "<br>";
-                }?><?php  echo number_format($data['pertes_D'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['gain_M'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['gain_C'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['gain_D'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.');?></th>
+                } ?><?php echo number_format($data['pertes_D'], 0, '', '.'); ?></th>
+            <th><?php echo number_format($data['gain_M'], 0, '', '.'); ?></th>
+            <th><?php echo number_format($data['gain_C'], 0, '', '.'); ?></th>
+            <th><?php echo number_format($data['gain_D'], 0, '', '.'); ?></th>
+            <th><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.'); ?></th>
             <th><a style="cursor:pointer"
                    onclick="window.open('index.php?action=hofrc&subaction=preview&id=<?php echo $data['id_rc'] ?>', 'RC Original', 'width=920, height=550, menubar=no, resizable=yes, scrollbars=yes, status=no, toolbar=no'); return false;">Vérifier</a>
             </th>
