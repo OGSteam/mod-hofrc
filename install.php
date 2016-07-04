@@ -299,6 +299,6 @@ if ($is_ok == true) {
     $query = "ALTER TABLE " . TABLE_ROUND_DEFENSE . " ALTER COLUMN `PT` SET DEFAULT '0', ALTER COLUMN `GT` SET DEFAULT '0', ALTER COLUMN `CLE` SET DEFAULT '0', ALTER COLUMN `CLO` SET DEFAULT '0', ALTER COLUMN `CR` SET DEFAULT '0', ALTER COLUMN `VB` SET DEFAULT '0', ALTER COLUMN `VC` SET DEFAULT '0', ALTER COLUMN `REC` SET DEFAULT '0', ALTER COLUMN `SE` SET DEFAULT '0', ALTER COLUMN `BMD` SET DEFAULT '0', ALTER COLUMN `DST` SET DEFAULT '0', ALTER COLUMN `EDLM` SET DEFAULT '0', ALTER COLUMN `SAT` SET DEFAULT '0', ALTER COLUMN `TRA` SET DEFAULT '0', ALTER COLUMN `LM` SET DEFAULT '0', ALTER COLUMN `LLE` SET DEFAULT '0', ALTER COLUMN `LLO` SET DEFAULT '0', ALTER COLUMN `CG` SET DEFAULT '0', ALTER COLUMN `AI` SET DEFAULT '0', ALTER COLUMN `LP` SET DEFAULT '0', ALTER COLUMN `PB` SET DEFAULT '0', ALTER COLUMN `GB` SET DEFAULT '0'";
     $db->sql_query($query);
 } else {
-    echo "<script>alert('Désolé, un problème a eu lieu pendant l'installation, corrigez les problèmes survenue et réessayez.');</script>";
+    echo "<script>alert('Désolé, un problème a eu lieu pendant l\'installation, corrigez les problèmes survenue et réessayez.');</script>";
 }
 ?>
