@@ -28,7 +28,6 @@ if ($pub_subaction !== "preview" && $pub_subaction !== "temp") {
                     <?php
 
 
-
                     if ($pub_subaction != "convert") {
                         echo "\t\t\t" . "<td class='c' width='150' onclick=\"window.location = 'index.php?action=hofrc&subaction=convert';\">";
                         echo "<a style='cursor:pointer'><font color='lime'>Conversion d'un HOF</font></a>";
