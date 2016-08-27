@@ -19,6 +19,24 @@ if (!$db->sql_numrows($db->sql_query($query))) die("Hacking attempt");
 
 /**************************************************************************/
 // Fonction pour traiter le post de configuration de l'historique
+/**
+ * @param $font_historique
+ * @param $font_size
+ * @param $largeur_historique
+ * @param $hauteur_historique
+ * @param $pos_horiz_historique_1
+ * @param $pos_horiz_historique_2
+ * @param $pos_horiz_historique_3
+ * @param $pos_horiz_historique_4
+ * @param $pos_horiz_historique_5
+ * @param $color_txt_historique_1
+ * @param $color_txt_historique_2
+ * @param $color_txt_historique_3
+ * @param $color_txt_historique_4
+ * @param $color_txt_historique_5
+ * @param $pos_verti_historique
+ * @param $angle_historique
+ */
 function set_historique($font_historique, $font_size, $largeur_historique, $hauteur_historique, $pos_horiz_historique_1, $pos_horiz_historique_2, $pos_horiz_historique_3, $pos_horiz_historique_4, $pos_horiz_historique_5, $color_txt_historique_1, $color_txt_historique_2, $color_txt_historique_3, $color_txt_historique_4, $color_txt_historique_5, $pos_verti_historique, $angle_historique)
 {
     global $db, $table_prefix;
@@ -44,6 +62,32 @@ function set_historique($font_historique, $font_size, $largeur_historique, $haut
 
 /**************************************************************************/
 // Fonction pour traiter le post de la configuration de l'univers
+/**
+ * @param $new_start_universe
+ * @param $config_size_initial
+ * @param $config_size_courant
+ * @param $config_size_basic
+ * @param $config_size_normal
+ * @param $config_size_avance
+ * @param $config_size_stratege
+ * @param $config_size_expert
+ * @param $config_size_guerrier
+ * @param $config_size_devastateur
+ * @param $config_size_champion
+ * @param $config_size_legendaire
+ * @param $new_end_initial_solo
+ * @param $new_end_initial_groupe
+ * @param $new_end_courant_solo
+ * @param $new_end_courant_groupe
+ * @param $new_end_basic_solo
+ * @param $new_end_basic_groupe
+ * @param $new_end_normal_solo
+ * @param $new_end_normal_groupe
+ * @param $new_end_avance_solo
+ * @param $new_end_avance_groupe
+ * @param $new_end_stratege_solo
+ * @param $new_end_stratege_groupe
+ */
 function post_config($new_start_universe, $config_size_initial, $config_size_courant, $config_size_basic, $config_size_normal, $config_size_avance, $config_size_stratege, $config_size_expert, $config_size_guerrier, $config_size_devastateur, $config_size_champion, $config_size_legendaire, $new_end_initial_solo, $new_end_initial_groupe, $new_end_courant_solo, $new_end_courant_groupe, $new_end_basic_solo, $new_end_basic_groupe, $new_end_normal_solo, $new_end_normal_groupe, $new_end_avance_solo, $new_end_avance_groupe, $new_end_stratege_solo, $new_end_stratege_groupe)
 {
     global $db, $table_prefix;
@@ -79,6 +123,14 @@ function post_config($new_start_universe, $config_size_initial, $config_size_cou
 /**************************************************************************/
 
 // Fonction pour afficher texte ou images
+/**
+ * @param $type
+ * @param $skin
+ * @param $picture
+ * @param $historique
+ * @param $round
+ * @return string
+ */
 function select_picture($type, $skin, $picture, $historique, $round)
 {
     global $db, $table_prefix;
@@ -124,6 +176,10 @@ function select_picture($type, $skin, $picture, $historique, $round)
 /**************************************************************************/
 
 // Fonction servant a sélectionner le skin ou le changer dans la configuration
+/**
+ * @param $value
+ * @return mixed
+ */
 function select_skin($value)
 {
     global $db, $table_prefix;
@@ -140,6 +196,9 @@ function select_skin($value)
 /**************************************************************************/
 
 // Function pour creer un nouveau skin
+/**
+ * @param $new_skin
+ */
 function new_skin($new_skin)
 {
     global $db, $table_prefix;
@@ -158,6 +217,14 @@ function new_skin($new_skin)
 /**************************************************************************/
 
 // Function pour formater le RC
+/**
+ * @param $color_min
+ * @param $color_max
+ * @param $ressource
+ * @param $quota
+ * @param $type
+ * @return string
+ */
 function format_number($color_min, $color_max, $ressource, $quota, $type)
 {
     if ($type == "preview") {
@@ -178,16 +245,22 @@ function format_number($color_min, $color_max, $ressource, $quota, $type)
 /**************************************************************************/
 
 // Fonction pour avoir des infobulle
+/**
+ * @param        $txt_contenu
+ * @param string $titre
+ * @param int    $largeur
+ * @return string
+ */
 function infobulle($txt_contenu, $titre = 'Aide', $largeur = 200)
 {
     // vérification de $largeur
     if (!is_numeric($largeur))
         $largeur = 200;
 
-    /*$infobulle = '<img style="cursor: pointer;" title="" alt="tooltip" src="images/help_2.png" onMouseOver="this.T_WIDTH=210;this.T_TEMP=0;return escape(\'<table width=\''
+    /*$infobulle = '<img style="cursor: pointer;" title="" alt="tooltip" src="assets/images/help_2.png" onMouseOver="this.T_WIDTH=210;this.T_TEMP=0;return escape(\'<table width=\''
 		.$largeur.'\'><tr><td align=\'center\' class=\'c\'>'
 		.jsspecialchars($titre).'</td></tr><tr><th align=\'center\'>'.jsspecialchars($txt_contenu).'</th></tr></table>\')">';*/
-    $infobulle = '<img style="cursor: pointer;" title="" alt="tooltip" src="images/help_2.png" onMouseOver="this.T_WIDTH=210;this.T_TEMP=0;return escape(\'<table width=\''
+    $infobulle = '<img style="cursor: pointer;" title="" alt="tooltip" src="assets/images/help_2.png" onMouseOver="this.T_WIDTH=210;this.T_TEMP=0;return escape(\'<table width=\''
         . $largeur . '\'><tr><td align=\'center\' class=\'c\'>'
         . ($titre) . '</td></tr><tr><th align=\'center\'>' . ($txt_contenu) . '</th></tr></table>\')">';
     // retourne l'infobulle
@@ -215,6 +288,13 @@ function jsspecialchars($s)
 /**************************************************************************/
 
 // La function pour convertir le rc
+/**
+ * @param $id_RC
+ * @param $type
+ * @param $hof
+ * @param $pillage
+ * @return string
+ */
 function convert($id_RC, $type, $hof, $pillage)
 {
     global $db, $table_prefix;
@@ -570,6 +650,14 @@ function convert($id_RC, $type, $hof, $pillage)
 
 /**************************************************************************/
 
+/**
+ * @param $player_name
+ * @param $alive_unit
+ * @param $key
+ * @param $id_rcround
+ * @param $cat
+ * @return string
+ */
 function lost_unit($player_name, $alive_unit, $key, $id_rcround, $cat)
 {
     global $db, $table_prefix;
@@ -589,6 +677,22 @@ function lost_unit($player_name, $alive_unit, $key, $id_rcround, $cat)
 
 /**************************************************************************/
 
+/**
+ * @param $PT
+ * @param $GT
+ * @param $CLE
+ * @param $CLO
+ * @param $CR
+ * @param $VB
+ * @param $VC
+ * @param $REC
+ * @param $SE
+ * @param $BMD
+ * @param $SAT
+ * @param $DEST
+ * @param $EDLM
+ * @param $TRA
+ */
 function set_color_fleet($PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $SAT, $DEST, $EDLM, $TRA)
 {
     global $db, $table_prefix;
@@ -599,6 +703,16 @@ function set_color_fleet($PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $
 
 /**************************************************************************/
 
+/**
+ * @param $LM
+ * @param $LLEGER
+ * @param $LLOURD
+ * @param $CG
+ * @param $AI
+ * @param $LP
+ * @param $PB
+ * @param $GB
+ */
 function set_color_def($LM, $LLEGER, $LLOURD, $CG, $AI, $LP, $PB, $GB)
 {
     global $db, $table_prefix;
@@ -609,6 +723,14 @@ function set_color_def($LM, $LLEGER, $LLOURD, $CG, $AI, $LP, $PB, $GB)
 
 /**************************************************************************/
 
+/**
+ * @param $title
+ * @param $ALLY
+ * @param $PLAYER_ATT
+ * @param $PLAYER_DEF
+ * @param $TECHNO
+ * @param $DETRUIT
+ */
 function set_color_general($title, $ALLY, $PLAYER_ATT, $PLAYER_DEF, $TECHNO, $DETRUIT)
 {
     global $db, $table_prefix;
@@ -619,6 +741,22 @@ function set_color_general($title, $ALLY, $PLAYER_ATT, $PLAYER_DEF, $TECHNO, $DE
 
 /**************************************************************************/
 
+/**
+ * @param $PILLER_MIN
+ * @param $PILLER_MAX
+ * @param $PERTES_FLEET_DEF
+ * @param $SEUIL_PERTES
+ * @param $SEUIL_PILLAGE
+ * @param $SEUIL_CDR
+ * @param $PERTES_MIN_ATT
+ * @param $PERTES_MAX_ATT
+ * @param $PERTES_MIN_DEF
+ * @param $PERTES_MAX_DEF
+ * @param $DEBRIS_MIN
+ * @param $DEBRIS_MAX
+ * @param $RENTA_MIN
+ * @param $RENTA_MAX
+ */
 function set_end_rc($PILLER_MIN, $PILLER_MAX, $PERTES_FLEET_DEF, $SEUIL_PERTES, $SEUIL_PILLAGE, $SEUIL_CDR, $PERTES_MIN_ATT, $PERTES_MAX_ATT, $PERTES_MIN_DEF, $PERTES_MAX_DEF, $DEBRIS_MIN, $DEBRIS_MAX, $RENTA_MIN, $RENTA_MAX)
 {
     global $db, $table_prefix;
@@ -629,6 +767,10 @@ function set_end_rc($PILLER_MIN, $PILLER_MAX, $PERTES_FLEET_DEF, $SEUIL_PERTES, 
 
 /**************************************************************************/
 
+/**
+ * @param $percent
+ * @return mixed
+ */
 function rate_resizing($percent)
 {
     global $db, $table_prefix;
@@ -644,6 +786,10 @@ function rate_resizing($percent)
 
 /**************************************************************************/
 
+/**
+ * @param $size
+ * @return float
+ */
 function image_resizing($size)
 {
     global $db;
@@ -658,6 +804,10 @@ function image_resizing($size)
 
 /**************************************************************************/
 
+/**
+ * @param $folder
+ * @return array
+ */
 function get_background_tab($folder)
 {
     // Liste tous les fichiers .jpg du dossier des fonds disponibles	
@@ -672,6 +822,10 @@ function get_background_tab($folder)
 
 /**************************************************************************/
 
+/**
+ * @param $folder
+ * @return array
+ */
 function get_image_tab($folder)
 {
     // Liste tous les fichier .jpg et .png du dossier des images disponible (fusion avec les polices et les fonds...?)
@@ -686,6 +840,9 @@ function get_image_tab($folder)
 
 /**************************************************************************/
 
+/**
+ * @param $pic
+ */
 function upload_picture($pic)
 {
     preg_match('#^\w+#', $_FILES['picture']['name'], $pic_name);
@@ -732,6 +889,9 @@ function upload_picture($pic)
 
 /**************************************************************************/
 
+/**
+ * @param $type
+ */
 function upload($type)
 {
     $skin = select_skin(0);
@@ -821,6 +981,16 @@ function list_font()
 /**************************************************************************/
 
 // La fonction principale du mod qui permet de détecter les hofs dans les rc par rapport au date limite de chaque type de rc
+/**
+ * @param $Nb_Att
+ * @param $Nb_Def
+ * @param $victory
+ * @param $dateRC
+ * @param $debris_M
+ * @param $debris_C
+ * @param $id_RC
+ * @return string
+ */
 function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id_RC)
 {
     global $db, $table_prefix;
@@ -1000,6 +1170,10 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
 
 /**************************************************************************/
 
+/**
+ * @param $id_RC
+ * @param $type
+ */
 function signal_hof($id_RC, $type)
 {
     global $db, $table_prefix;
@@ -1083,6 +1257,9 @@ function signal_hof($id_RC, $type)
 
 /**************************************************************************/
 
+/**
+ * @param $name
+ */
 function historique($name)
 {
     global $db, $table_prefix;
@@ -1204,5 +1381,3 @@ function page_footer()
 						</center>';
 
 }
-
-?>
