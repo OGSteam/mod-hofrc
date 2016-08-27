@@ -74,7 +74,7 @@ if ($_POST["raid"]) {
         <tr>
             <th><?php
                 $rc_convert = convert($id_rc, 'preview', "1", $pillage);
-                echo nl2br($rc_convert);?>
+                echo nl2br($rc_convert); ?>
             </th>
         </tr>
         <tr>
@@ -86,7 +86,7 @@ if ($_POST["raid"]) {
             <th>
                 <div id="bbcode" style="display: none; float: center; padding: 0;"><?php
                     $rc_convert_bbcode = convert($id_rc, 'bbcode', "1", $pillage);
-                    echo nl2br($rc_convert_bbcode);?>
+                    echo nl2br($rc_convert_bbcode); ?>
                 </div>
             </th>
         </tr>
@@ -112,7 +112,7 @@ if ($_POST["raid"]) {
           action="index.php?action=hofrc&subaction=publier&id=<?php echo $id_rc; ?>">
         <tr>
             <td class="c" align="center" colspan="11">Listes des RC enregistrés dans
-                OGSpy:<?php echo infobulle("Validez en bas de la page lorsque vous avez finie.");?> <font color="red">Ne
+                OGSpy:<?php echo infobulle("Validez en bas de la page lorsque vous avez finie."); ?> <font color="red">Ne
                     sélectionner que les pillages du HOF</font></td>
         </tr>
         <tr>
@@ -140,8 +140,8 @@ if ($_POST["raid"]) {
                 ?>
 
                 <tr>
-                    <th><?php echo date("H:i:s - j-m-Y", $data['dateRC']);?></th>
-                    <th><?php echo $data['coordinates'];?></th>
+                    <th><?php echo date("H:i:s - j-m-Y", $data['dateRC']); ?></th>
+                    <th><?php echo $data['coordinates']; ?></th>
                     <th>
                         <?php
                         $queryAtt = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
@@ -166,10 +166,10 @@ if ($_POST["raid"]) {
                         echo number_format($data['pertes_D'], 0, '', '.');
                         ?>
                     </th>
-                    <th><?php echo number_format($data['gain_M'], 0, '', '.');?></th>
-                    <th><?php echo number_format($data['gain_C'], 0, '', '.');?></th>
-                    <th><?php echo number_format($data['gain_D'], 0, '', '.');?></th>
-                    <th><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.');?></th>
+                    <th><?php echo number_format($data['gain_M'], 0, '', '.'); ?></th>
+                    <th><?php echo number_format($data['gain_C'], 0, '', '.'); ?></th>
+                    <th><?php echo number_format($data['gain_D'], 0, '', '.'); ?></th>
+                    <th><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.'); ?></th>
                     <th><a style="cursor:pointer"
                            onclick="window.open('index.php?action=hofrc&subaction=preview&id=<?php echo $data['id_rc'] ?>', 'RC Original', 'width=920, height=550, menubar=no, resizable=yes, scrollbars=yes, status=no, toolbar=no'); return false;">Vérifier</a>
                     </th>
