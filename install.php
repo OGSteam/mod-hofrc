@@ -195,9 +195,10 @@ if ($is_ok == true) {
         . "  ) COMMENT='Information pour la création de l\'image'";
     $db->sql_query($query);
 
-    $query = "INSERT INTO `" . TABLE_HOFRC_SKIN . "` VALUES ('','ogsteam', '#ff9900', '#ff9900', '#33ff99', '#ff00ff', '#00ffff', '#ffcc00', '#eec273', '#0040ff', '#ff0099', '#00ff99', '#b000b0', '#a099ff', '#ff9900', '#00b0b0', '#a0ff99', '#ff99a0', '#99ffa0', '#9900ff', '#99a0ff', '#ccffcc', '#ffcc99', '#FFFF38', '#4040FF', '#28DAFF', '#28DAFF', '#FF4000', '#CF0000', '#00AF00', '#FF1010', '#FF0000', '600000', '250000', '1000000', '#6FFF30', '#B70000', '#6FFF30', '#B70000', '#00AF00', '#FF1010', '#B70000', '#00C700', 'header.png', 'round.png', 'separator.png', 'result.png', 'background.png')";
+    $query = "INSERT INTO `" . TABLE_HOFRC_SKIN . "` 
+     (`title`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lleger`, `llourd`, `cg`, `ai`, `lp`, `pb`, `gb`, `ally`, `player_att`, `player_def`, `techno`, `detruit`, `ressources_piller_min`, `ressources_piller_max`, `pertes_fleet_def`, `seuil_pertes`, `seuil_pillage`, `seuil_cdr`, `pertes_min_att`, `pertes_max_att`, `pertes_min_def`, `pertes_max_def`, `debris_min`, `debris_max`, `renta_min`, `renta_max`, `pic_header`, `pic_round`, `pic_separator`, `pic_result`, `pic_background`)
+     VALUES ('ogsteam', '#ff9900', '#ff9900', '#33ff99', '#ff00ff', '#00ffff', '#ffcc00', '#eec273', '#0040ff', '#ff0099', '#00ff99', '#b000b0', '#a099ff', '#ff9900', '#00b0b0', '#a0ff99', '#ff99a0', '#99ffa0', '#9900ff', '#99a0ff', '#ccffcc', '#ffcc99', '#FFFF38', '#4040FF', '#28DAFF', '#28DAFF', '#FF4000', '#CF0000', '#00AF00', '#FF1010', '#FF0000', '600000', '250000', '1000000', '#6FFF30', '#B70000', '#6FFF30', '#B70000', '#00AF00', '#FF1010', '#B70000', '#00C700', 'header.png', 'round.png', 'separator.png', 'result.png', 'background.png')";
     $db->sql_query($query);
-
 
     $query = "INSERT INTO `" . TABLE_HOFRC_CONFIG . "` VALUES ('hofrc_skin', 'ogsteam')";
     $db->sql_query($query);
