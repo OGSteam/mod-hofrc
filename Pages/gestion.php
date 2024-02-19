@@ -21,24 +21,27 @@ define('TABLE_HOFRC_ATTACK', $table_prefix . 'hofrc_attack');
 define('TABLE_HOFRC_DEFENCE', $table_prefix . 'hofrc_defence');
 
 // Si on supprime un HOF
-if ($del_id = $_GET['del']) {
+if (isset($_GET['del'])) {
+    $del_id = (int) $_GET['del'];
     $db->sql_query("DELETE FROM `" . TABLE_HOFRC_TITLE . "` WHERE `" . TABLE_HOFRC_TITLE . "`.`id_rc` = " . $del_id);
     $db->sql_query("UPDATE `" . TABLE_HOFRC_INFO_RC . "` SET `publicated` = '0' WHERE " . TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $del_id . "'");
 }
 
-// Si on veut ignorer un hof car ils ont peur de montrer leur flotte sur le board
-if ($ignore_id = $_GET['ignore']) {
+
+if (isset($pub_ignore)) {
+    $ignore_id = (int)$pub_ignore;
     $db->sql_query("UPDATE `" . TABLE_HOFRC_INFO_RC . "` SET `ignored` = '1' WHERE " . TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $ignore_id . "'");
 }
 
 // Si on veut traiter un hof ignorer
-if ($traiter_id = $_GET['traiter']) {
+if (isset( $pub_traiter)) {
+    $traiter_id == (int) $pub_traiter;
     $db->sql_query("UPDATE `" . TABLE_HOFRC_INFO_RC . "` SET `ignored` = '0' WHERE " . TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $traiter_id . "'");
 }
 
 //On va récupérer tout les hofs non publiés
 $query_info = $db->sql_query("SELECT `id_rc`, `daterc`, `type_hof`, `coordinates`, `victoire`, `metal_cdr`, `cristal_cdr` FROM `" . TABLE_HOFRC_INFO_RC . "` WHERE `publicated` = '0' AND `ignored` = '0'");;
-if ($_POST['url']) {
+if (isset( $pub_url)) {
     $db->sql_query("UPDATE `" . TABLE_HOFRC_TITLE . "` SET `board_url` = '" . $_POST['url_board_ogame'] . "' WHERE " . TABLE_HOFRC_TITLE . ".`id_rc`  = '" . $_POST['url_id'] . "'");
     echo "<a><font align='center;'  color='red'>HOF ajouté.</font></a>";
 }

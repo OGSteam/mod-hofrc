@@ -1,4 +1,5 @@
 <?php
+
 /**
  * include.php
  * @package HofRC
@@ -91,7 +92,10 @@ function set_historique($font_historique, $font_size, $largeur_historique, $haut
 function post_config($new_start_universe, $config_size_initial, $config_size_courant, $config_size_basic, $config_size_normal, $config_size_avance, $config_size_stratege, $config_size_expert, $config_size_guerrier, $config_size_devastateur, $config_size_champion, $config_size_legendaire, $new_end_initial_solo, $new_end_initial_groupe, $new_end_courant_solo, $new_end_courant_groupe, $new_end_basic_solo, $new_end_basic_groupe, $new_end_normal_solo, $new_end_normal_groupe, $new_end_avance_solo, $new_end_avance_groupe, $new_end_stratege_solo, $new_end_stratege_groupe)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+    if (!defined('TABLE_HOFRC_CONFIG')) {
+        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+    }
+
 
     $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_start_universe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'start_universe'");
     $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_initial . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_initial'");
@@ -135,7 +139,10 @@ function select_picture($type, $skin, $picture, $historique, $round)
 {
     global $db, $table_prefix;
     $historique_picture = '';
-    define('TABLE_HOFRC_TITLE', $table_prefix . 'hofrc_title');
+    if (!defined('TABLE_HOFRC_TITLE')) {
+        define('TABLE_HOFRC_TITLE', $table_prefix . 'hofrc_title');
+    }
+
 
     $filename = "mod/hofrc/Skin/" . $skin . '/' . $picture;
     $file_historique = "mod/hofrc/Output/historique.php";
@@ -183,7 +190,10 @@ function select_picture($type, $skin, $picture, $historique, $round)
 function select_skin($value)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+    if (!defined('TABLE_HOFRC_CONFIG')) {
+        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+    }
+
     if ($value === 0) {
         $query_skin = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_skin'");
         list($skin) = $db->sql_fetch_row($query_skin);
@@ -281,8 +291,11 @@ function jsspecialchars($s)
     // ajout de ce petit replace car le masque ne prend pas correctement le double quote...
     $s = str_replace('"', '\'', $s);
 
-    return preg_replace('/([^ !#$%@()*+,-.\x30-\x5b\x5d-\x7e])/',
-        "'\\x'.(ord('\\1')<16? '0': '').dechex(ord('\\1'))", $s);
+    return preg_replace(
+        '/([^ !#$%@()*+,-.\x30-\x5b\x5d-\x7e])/',
+        "'\\x'.(ord('\\1')<16? '0': '').dechex(ord('\\1'))",
+        $s
+    );
 }
 
 /**************************************************************************/
@@ -298,7 +311,11 @@ function jsspecialchars($s)
 function convert($id_RC, $type, $hof, $pillage)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    if (!defined('TABLE_HOFRC_SKIN')) {
+        define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    }
+
+
     // On définie le skin
     $skin = select_skin(0);
 
@@ -384,7 +401,7 @@ function convert($id_RC, $type, $hof, $pillage)
 
     // On récupère la flotte attaquante du premier round
     $query_round_attack_first = $db->sql_query("SELECT player, coordinates, Armes, Bouclier, Protection, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SUM(DST), SUM(EDLM), SUM(TRA) FROM " . TABLE_ROUND_ATTACK . " WHERE id_rcround=" . $id_rcround . " GROUP BY player");
-    WHILE (list($player_att, $coordinates_att, $Armes_att, $Bouclier_att, $Protection_att, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $DST, $EDLM, $TRA) = $db->sql_fetch_row($query_round_attack_first)) {
+    while (list($player_att, $coordinates_att, $Armes_att, $Bouclier_att, $Protection_att, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $DST, $EDLM, $TRA) = $db->sql_fetch_row($query_round_attack_first)) {
         // On récupère les alliances des attaquants
         $query_ally_att = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_att . "'");
         list($result_ally_att) = $db->sql_fetch_row($query_ally_att);
@@ -411,12 +428,11 @@ function convert($id_RC, $type, $hof, $pillage)
             }
         }
         $template_type_att .= "---";
-
     }
 
     // On récupère la flotte défensive du premier round
     $query_round_defense_first = $db->sql_query("SELECT player, coordinates, Armes, Bouclier, Protection, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SAT, SUM(DST), SUM(EDLM), SUM(TRA), LM, LLE, LLO, CG, AI, LP, PB, GB FROM " . TABLE_ROUND_DEFENSE . " WHERE id_rcround=" . $id_rcround . " GROUP BY player");
-    WHILE (list($player_def, $coordinates_def, $Armes_def, $Bouclier_def, $Protection_def, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $SAT, $DST, $EDLM, $TRA, $LM, $LLE, $LLO, $CG, $AI, $LP, $PB, $GB) = $db->sql_fetch_row($query_round_defense_first)) {
+    while (list($player_def, $coordinates_def, $Armes_def, $Bouclier_def, $Protection_def, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $SAT, $DST, $EDLM, $TRA, $LM, $LLE, $LLO, $CG, $AI, $LP, $PB, $GB) = $db->sql_fetch_row($query_round_defense_first)) {
         // On récupère les alliances de la défence
         $query_ally_att = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_att . "'");
         list($result_ally_att) = $db->sql_fetch_row($query_ally_att);
@@ -479,7 +495,7 @@ function convert($id_RC, $type, $hof, $pillage)
 
     // On récupère les flottes après le combat
     $query_player_attack_last = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE id_rcround=" . $id_last_rcround . " GROUP BY player");
-    WHILE (list($player_attack_list) = $db->sql_fetch_row($query_player_attack_last)) {
+    while (list($player_attack_list) = $db->sql_fetch_row($query_player_attack_last)) {
         // On nettoie les noms des joueurs des metacaractère et nous voila partie dans un beau bordel -_-'
         $player_attack_list_format = preg_replace('#(\(|\)|\#|\!|\^|\$|\(|\)|\[|\]|\{|\}|\?|\+|\*|\.|\\|\|)#', 'Xespace_symboleX$1', $player_attack_list);
         // Ogspy n'accepte pas le $1 à cause du \ donc j'ai mis un espace que l'on supprime
@@ -489,7 +505,7 @@ function convert($id_RC, $type, $hof, $pillage)
 
 
         $query_round_attack_last = $db->sql_query("SELECT player, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SUM(DST), SUM(EDLM), SUM(TRA) FROM " . TABLE_ROUND_ATTACK . " WHERE id_rcround=" . $id_last_rcround . " AND player='" . $player_attack_list . "'  GROUP BY player");
-        WHILE (list($player_att, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $DST, $EDLM, $TRA) = $db->sql_fetch_row($query_round_attack_last)) {
+        while (list($player_att, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $DST, $EDLM, $TRA) = $db->sql_fetch_row($query_round_attack_last)) {
             // Variable de concaténation pour les attaquants
             $template .= "\n" . 'Attaquant ' . $color_player_att . $player_att . $color_bal . "\n";
             $key_att_last = '';
@@ -517,7 +533,7 @@ function convert($id_RC, $type, $hof, $pillage)
     }
     // On recupère les flottes de défenses après le combat
     $query_player_def_last = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE id_rcround=" . $id_last_rcround . " GROUP BY player");
-    WHILE (list($player_def_list) = $db->sql_fetch_row($query_player_def_last)) {
+    while (list($player_def_list) = $db->sql_fetch_row($query_player_def_last)) {
         // On nettoie les noms des joueurs des metacaractère et nous voila partie dans un beau bordel -_-'
         $player_def_list_format = preg_replace('#(\(|\)|\#|\!|\^|\$|\(|\)|\[|\]|\{|\}|\?|\+|\*|\.|\\|\|)#', 'Xespace_symboleX$1', $player_def_list);
         // Ogspy n'accepte pas le $1 à cause du \ donc j'ai mis un espace que l'on supprime
@@ -526,7 +542,7 @@ function convert($id_RC, $type, $hof, $pillage)
         preg_match_all('#\^/(' . $player_def_list_format2 . ')\^\$,(.+)---#isU', $template_type_def, $select_fleet_def);
 
         $query_round_defense_last = $db->sql_query("SELECT player, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SAT, SUM(DST), SUM(EDLM), SUM(TRA), LM, LLE, LLO, CG, AI, LP, PB, GB FROM " . TABLE_ROUND_DEFENSE . " WHERE id_rcround=" . $id_last_rcround . " AND player='" . $player_def_list . "'  GROUP BY player");
-        WHILE (list($player_def, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $SAT, $DST, $EDLM, $TRA, $LM, $LLE, $LLO, $CG, $AI, $LP, $PB, $GB) = $db->sql_fetch_row($query_round_defense_last)) {
+        while (list($player_def, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $SAT, $DST, $EDLM, $TRA, $LM, $LLE, $LLO, $CG, $AI, $LP, $PB, $GB) = $db->sql_fetch_row($query_round_defense_last)) {
             // Variable de concaténation pour les défenseurs
             $template .= "\n" . 'Défenseur ' . $color_player_def . $player_def . $color_bal . "\n";
             $key_def_last = '';
@@ -561,7 +577,6 @@ function convert($id_RC, $type, $hof, $pillage)
             // Variable de concaténation si le défenseur détruit
             $template .= $color_detruit . 'Détruit' . $color_bal . " \n";
         }
-
     }
     // Variable de concaténation pour afficher une séparation
     if ($type == "bbcode") {
@@ -578,7 +593,6 @@ function convert($id_RC, $type, $hof, $pillage)
     } elseif ($victoire == "D") {
         // Variable de concaténation si le défenseur gagne la bataille
         $template .= "\n" . 'Le défenseur a remporté la bataille !' . "\n";
-
     } elseif ($victoire == "N") {
         // Variable de concaténation si match nul
         $template .= "\n" . 'La bataille se termine par un match nul, les deux flottes rentrent vers leurs planètes respectives.' . "\n";
@@ -599,6 +613,13 @@ function convert($id_RC, $type, $hof, $pillage)
         $template .= "\n\n" . ' Une lune se forme dans l\'orbite de la planète!' . "\n";
     }
 
+    $pillage_unit_perdu_att = 0;
+    $pillage_unit_perdu_def = 0;
+    $pillage_metal = 0;
+    $pillage_cristal = 0;
+    $pillage_deuterium = 0;
+    $pillage_cdr_M = 0;
+    $pillage_cdr_C = 0;
     // On récupère les pillage
     if (!empty($pillage)) {
         $pillage_unit_perdu_att = 0;
@@ -645,7 +666,6 @@ function convert($id_RC, $type, $hof, $pillage)
     }
 
     return $template;
-
 }
 
 /**************************************************************************/
@@ -667,7 +687,7 @@ function lost_unit($player_name, $alive_unit, $key, $id_rcround, $cat)
         $table_cat = TABLE_ROUND_DEFENSE;
     }
     $query_round_key = $db->sql_query("SELECT SUM(" . $key . ") FROM " . $table_cat . " WHERE id_rcround=" . $id_rcround . " AND player='" . $player_name . "' GROUP BY player");
-    WHILE (list($result_key) = $db->sql_fetch_row($query_round_key))
+    while (list($result_key) = $db->sql_fetch_row($query_round_key))
         $lost_unit = $result_key - $alive_unit;
 
     $result_lost_unit = "( -" . number_format($lost_unit, 0, ',', '.') . " )";
@@ -696,7 +716,9 @@ function lost_unit($player_name, $alive_unit, $key, $id_rcround, $cat)
 function set_color_fleet($PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $SAT, $DEST, $EDLM, $TRA)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    if (!defined('TABLE_HOFRC_SKIN')) {
+        define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    }
     $set_id = $_GET['id'];
     $db->sql_query("UPDATE `" . TABLE_HOFRC_SKIN . "` SET `pt` = '" . $PT . "', `gt` = '" . $GT . "', `cle` = '" . $CLE . "', `clo` = '" . $CLO . "', `cr` = '" . $CR . "', `vb` = '" . $VB . "', `vc` = '" . $VC . "', `rec` = '" . $REC . "', `se` = '" . $SE . "', `bmd` = '" . $BMD . "', `sat` = '" . $SAT . "', `dst` = '" . $DEST . "', `edlm` = '" . $EDLM . "', `tra` = '" . $TRA . "'	WHERE `" . TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
 }
@@ -716,7 +738,9 @@ function set_color_fleet($PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $
 function set_color_def($LM, $LLEGER, $LLOURD, $CG, $AI, $LP, $PB, $GB)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    if (!defined('TABLE_HOFRC_SKIN')) {
+        define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    }
     $set_id = $_GET['id'];
     $db->sql_query("UPDATE `" . TABLE_HOFRC_SKIN . "` SET `lm` = '" . $LM . "', `lleger` = '" . $LLEGER . "', `llourd` = '" . $LLOURD . "', `cg` = '" . $CG . "', `ai` = '" . $AI . "', `lp` = '" . $LP . "', `pb` = '" . $PB . "', `gb` = '" . $GB . "'	WHERE `" . TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
 }
@@ -774,7 +798,10 @@ function set_end_rc($PILLER_MIN, $PILLER_MAX, $PERTES_FLEET_DEF, $SEUIL_PERTES, 
 function rate_resizing($percent)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+    if (!defined('TABLE_HOFRC_CONFIG')) {
+        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+    }
+
     if ($percent === 0) {
         $query_rate = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_percent_resizing'");
         list($rate_resize) = $db->sql_fetch_row($query_rate);
@@ -859,7 +886,6 @@ function upload_picture($pic)
         } else {
             echo $erreur . "round.xxx";
         }
-
     } elseif ($pic == "PIC_SEPARATOR") {
         if ($pic_name[0] == "separator") {
             upload("pictures");
@@ -1164,8 +1190,6 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
         }
         return "<span style='color:red;'>Legendaire</span>";
     }
-
-
 }
 
 /**************************************************************************/
@@ -1177,10 +1201,22 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
 function signal_hof($id_RC, $type)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    define('TABLE_HOFRC_ATTACK', $table_prefix . 'hofrc_attack');
-    define('TABLE_HOFRC_DEFENSE', $table_prefix . 'hofrc_defence');
-    define('TABLE_HOFRC_INFO_RC', $table_prefix . 'hofrc_info_rc');
+    if (!defined('TABLE_HOFRC_CONFIG')) {
+        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+    }
+    if (!defined('TABLE_HOFRC_ATTACK')) {
+        define('TABLE_HOFRC_ATTACK', $table_prefix . 'hofrc_attack');
+    }
+    if (!defined('TABLE_HOFRC_DEFENSE')) {
+        define('TABLE_HOFRC_DEFENSE', $table_prefix . 'hofrc_defence');
+    }
+    if (!defined('TABLE_HOFRC_INFO_RC')) {
+        define('TABLE_HOFRC_INFO_RC', $table_prefix . 'hofrc_info_rc');
+    }
+
+
+
+
 
     // On sélectionne les id des round pour le rc dans la table parsedRCROUND
     $query_parsedrcround_first = $db->sql_query("SELECT id_rcround FROM " . TABLE_PARSEDRCROUND . " WHERE id_rc = " . $id_RC . " AND numround = 1 ");
@@ -1189,11 +1225,11 @@ function signal_hof($id_RC, $type)
     // On sélectionne les info du rc dans la table parsedRC
     $query_parsedrc = $db->sql_query("SELECT dateRC, coordinates, nb_rounds, victoire, pertes_A, pertes_D, gain_M, gain_C, gain_D, debris_M, debris_C, lune FROM " . TABLE_PARSEDRC . " WHERE id_rc=" . $id_RC);
     list($dateRC, $coordinates, $nb_rounds, $victoire, $pertes_A, $pertes_D, $gain_M, $gain_C, $gain_D, $debris_M, $debris_C, $lune) = $db->sql_fetch_row($query_parsedrc);
-    $db->sql_query("INSERT INTO `" . TABLE_HOFRC_INFO_RC . "` (`id`, `id_rc`, `id_rcround`, `Daterc`, `type_hof`, `coordinates`, `victoire`, `nb_rounds`, `metal_taken`, `cristal_taken`, `deut_taken`, `metal_cdr`, `cristal_cdr`, `lost_attack`, `lost_defence`, `lune`) VALUES ('', '" . $id_RC . "', '" . $id_rcround_first . "', '" . $dateRC . "', '" . $type . "', '" . $coordinates . "', '" . $victoire . "', '" . $nb_rounds . "', '" . $gain_M . "', '" . $gain_C . "', '" . $gain_D . "', '" . $debris_M . "', '" . $debris_C . "', '" . $pertes_A . "', '" . $pertes_D . "', '" . $lune . "')");
+    $db->sql_query("INSERT INTO `" . TABLE_HOFRC_INFO_RC . "` ( `id_rc`, `id_rcround`, `Daterc`, `type_hof`, `coordinates`, `victoire`, `nb_rounds`, `metal_taken`, `cristal_taken`, `deut_taken`, `metal_cdr`, `cristal_cdr`, `lost_attack`, `lost_defence`, `lune`) VALUES ('" . $id_RC . "', '" . $id_rcround_first . "', '" . $dateRC . "', '" . $type . "', '" . $coordinates . "', '" . $victoire . "', '" . $nb_rounds . "', '" . $gain_M . "', '" . $gain_C . "', '" . $gain_D . "', '" . $debris_M . "', '" . $debris_C . "', '" . $pertes_A . "', '" . $pertes_D . "', '" . $lune . "')");
 
     //On va récupérer caractéristiques des attaquant du premier round
     $query_attack = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), SUM(`TRA`) FROM `" . TABLE_ROUND_ATTACK . "` WHERE `id_rcround` = " . $id_rcround_first . " group by `player`");;
-    WHILE (list($player_att, $coordinates_att, $Armes_att, $Bouclier_att, $Protection_att, $PT_att, $GT_att, $CLE_att, $CLO_att, $CR_att, $VB_att, $VC_att, $REC_att, $SE_att, $BMD_att, $DST_att, $EDLM_att, $TRA_att) = $db->sql_fetch_row($query_attack)) {
+    while (list($player_att, $coordinates_att, $Armes_att, $Bouclier_att, $Protection_att, $PT_att, $GT_att, $CLE_att, $CLO_att, $CR_att, $VB_att, $VC_att, $REC_att, $SE_att, $BMD_att, $DST_att, $EDLM_att, $TRA_att) = $db->sql_fetch_row($query_attack)) {
         // On récupère les alliances des attaquants
         $query_ally_att = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_att . "'");
         list($result_ally_att) = $db->sql_fetch_row($query_ally_att);
@@ -1202,13 +1238,13 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_att = $result_ally_att;
         }
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_ATTACK . "` (`id`, `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('', '" . $id_RC . "', '1', '" . $player_att . "', '" . $ally_att . "', '" . $coordinates_att . "', '" . $Armes_att . "', '" . $Bouclier_att . "', '" . $Protection_att . "', '" . $PT_att . "', '" . $GT_att . "', '" . $CLE_att . "', '" . $CLO_att . "', '" . $CR_att . "', '" . $VB_att . "', '" . $VC_att . "', '" . $REC_att . "', '" . $SE_att . "', '" . $BMD_att . "', '" . $DST_att . "', '" . $EDLM_att . "', '" . $TRA_att . "')");
+           $db->sql_query("INSERT INTO `" . TABLE_HOFRC_ATTACK . "` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('" . $id_RC . "', '1', '" . $player_att . "', '" . $ally_att . "', '" . $coordinates_att . "', '" . $Armes_att . "', '" . $Bouclier_att . "', '" . $Protection_att . "', '" . $PT_att . "', '" . $GT_att . "', '" . $CLE_att . "', '" . $CLO_att . "', '" . $CR_att . "', '" . $VB_att . "', '" . $VC_att . "', '" . $REC_att . "', '" . $SE_att . "', '" . $BMD_att . "', '" . $DST_att . "', '" . $EDLM_att . "', '" . $TRA_att . "')");
     }
 
 
     //On va récupérer caractéristiques des défenseurs du premier round
     $query_defence = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), `SAT`, SUM(`TRA`), `LM`, `LLE`, `LLO`, `CG`, `AI`, `LP`, `PB`, `GB` FROM `" . TABLE_ROUND_DEFENSE . "` WHERE `id_rcround` = " . $id_rcround_first . " group by `player`");
-    WHILE (list($player_def, $coordinates_def, $Armes_def, $Bouclier_def, $Protection_def, $PT_def, $GT_def, $CLE_def, $CLO_def, $CR_def, $VB_def, $VC_def, $REC_def, $SE_def, $BMD_def, $DST_def, $EDLM_def, $SAT_def, $TRA_def, $LM, $LLE, $LLO, $CG, $AI, $LP, $PB, $GB) = $db->sql_fetch_row($query_defence)) {
+    while (list($player_def, $coordinates_def, $Armes_def, $Bouclier_def, $Protection_def, $PT_def, $GT_def, $CLE_def, $CLO_def, $CR_def, $VB_def, $VC_def, $REC_def, $SE_def, $BMD_def, $DST_def, $EDLM_def, $SAT_def, $TRA_def, $LM, $LLE, $LLO, $CG, $AI, $LP, $PB, $GB) = $db->sql_fetch_row($query_defence)) {
         // On récupère les alliances des défenseurs
         $query_ally_def = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_def . "'");
         list($result_ally_def) = $db->sql_fetch_row($query_ally_def);
@@ -1217,8 +1253,7 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_def = $result_ally_def;
         }
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_DEFENSE . "` (`id`, `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ('', '" . $id_RC . "', '1', '" . $player_def . "', '" . $ally_def . "', '" . $coordinates_def . "', '" . $Armes_def . "', '" . $Bouclier_def . "', '" . $Protection_def . "', '" . $PT_def . "', '" . $GT_def . "', '" . $CLE_def . "', '" . $CLO_def . "', '" . $CR_def . "', '" . $VB_def . "', '" . $VC_def . "', '" . $REC_def . "', '" . $SE_def . "', '" . $BMD_def . "', '" . $DST_def . "', '" . $EDLM_def . "', '" . $TRA_def . "', '" . $SAT_def . "', '" . $LM . "', '" . $LLE . "', '" . $LLO . "', '" . $CG . "', '" . $AI . "', '" . $LP . "', '" . $PB . "', '" . $GB . "')");
-
+        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_DEFENSE . "` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ( '" . $id_RC . "', '1', '" . $player_def . "', '" . $ally_def . "', '" . $coordinates_def . "', '" . $Armes_def . "', '" . $Bouclier_def . "', '" . $Protection_def . "', '" . $PT_def . "', '" . $GT_def . "', '" . $CLE_def . "', '" . $CLO_def . "', '" . $CR_def . "', '" . $VB_def . "', '" . $VC_def . "', '" . $REC_def . "', '" . $SE_def . "', '" . $BMD_def . "', '" . $DST_def . "', '" . $EDLM_def . "', '" . $TRA_def . "', '" . $SAT_def . "', '" . $LM . "', '" . $LLE . "', '" . $LLO . "', '" . $CG . "', '" . $AI . "', '" . $LP . "', '" . $PB . "', '" . $GB . "')");
     }
 
     $query_parsedrcround_last = $db->sql_query("SELECT id_rcround FROM " . TABLE_PARSEDRCROUND . " WHERE id_rc = " . $id_RC . " AND numround = " . $nb_rounds);
@@ -1226,7 +1261,7 @@ function signal_hof($id_RC, $type)
 
     //On va récupérer caractéristiques des attaquant du dernier round
     $query_attack_last = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), SUM(`TRA`) FROM `" . TABLE_ROUND_ATTACK . "` WHERE `id_rcround` = " . $id_rcround_last . " group by `player`");;
-    WHILE (list($player_att_last, $coordinates_att_last, $Armes_att_last, $Bouclier_att_last, $Protection_att_last, $PT_att_last, $GT_att_last, $CLE_att_last, $CLO_att_last, $CR_att_last, $VB_att_last, $VC_att_last, $REC_att_last, $SE_att_last, $BMD_att_last, $DST_att_last, $EDLM_att_last, $TRA_att_last) = $db->sql_fetch_row($query_attack_last)) {
+    while (list($player_att_last, $coordinates_att_last, $Armes_att_last, $Bouclier_att_last, $Protection_att_last, $PT_att_last, $GT_att_last, $CLE_att_last, $CLO_att_last, $CR_att_last, $VB_att_last, $VC_att_last, $REC_att_last, $SE_att_last, $BMD_att_last, $DST_att_last, $EDLM_att_last, $TRA_att_last) = $db->sql_fetch_row($query_attack_last)) {
         // On récupère les alliances des attaquants
         $query_ally_att_last = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_att . "'");
         list($result_ally_att_last) = $db->sql_fetch_row($query_ally_att_last);
@@ -1235,13 +1270,13 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_att_last = $result_ally_att_last;
         }
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_ATTACK . "` (`id`, `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('', '" . $id_RC . "', '" . $nb_rounds . "', '" . $player_att_last . "', '" . $ally_att_last . "','" . $coordinates_att_last . "', '" . $Armes_att_last . "', '" . $Bouclier_att_last . "', '" . $Protection_att_last . "', '" . $PT_att_last . "', '" . $GT_att_last . "', '" . $CLE_att_last . "', '" . $CLO_att_last . "', '" . $CR_att_last . "', '" . $VB_att_last . "', '" . $VC_att_last . "', '" . $REC_att_last . "', '" . $SE_att_last . "', '" . $BMD_att_last . "', '" . $DST_att_last . "', '" . $EDLM_att_last . "', '" . $TRA_att_last . "')");
+        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_ATTACK . "` (`id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('" . $id_RC . "', '" . $nb_rounds . "', '" . $player_att_last . "', '" . $ally_att_last . "','" . $coordinates_att_last . "', '" . $Armes_att_last . "', '" . $Bouclier_att_last . "', '" . $Protection_att_last . "', '" . $PT_att_last . "', '" . $GT_att_last . "', '" . $CLE_att_last . "', '" . $CLO_att_last . "', '" . $CR_att_last . "', '" . $VB_att_last . "', '" . $VC_att_last . "', '" . $REC_att_last . "', '" . $SE_att_last . "', '" . $BMD_att_last . "', '" . $DST_att_last . "', '" . $EDLM_att_last . "', '" . $TRA_att_last . "')");
     }
 
 
     //On va récupérer caractéristiques des défenseurs du dernier round
     $query_defence_last = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), `SAT`, SUM(`TRA`), `LM`, `LLE`, `LLO`, `CG`, `AI`, `LP`, `PB`, `GB` FROM `" . TABLE_ROUND_DEFENSE . "` WHERE `id_rcround` = " . $id_rcround_last . " group by `player`");
-    WHILE (list($player_def_last, $coordinates_def_last, $Armes_def_last, $Bouclier_def_last, $Protection_def_last, $PT_def_last, $GT_def_last, $CLE_def_last, $CLO_def_last, $CR_def_last, $VB_def_last, $VC_def_last, $REC_def_last, $SE_def_last, $BMD_def_last, $DST_def_last, $EDLM_def_last, $SAT_def_last, $TRA_def_last, $LM_last, $LLE_last, $LLO_last, $CG_last, $AI_last, $LP_last, $PB_last, $GB_last) = $db->sql_fetch_row($query_defence_last)) {
+    while (list($player_def_last, $coordinates_def_last, $Armes_def_last, $Bouclier_def_last, $Protection_def_last, $PT_def_last, $GT_def_last, $CLE_def_last, $CLO_def_last, $CR_def_last, $VB_def_last, $VC_def_last, $REC_def_last, $SE_def_last, $BMD_def_last, $DST_def_last, $EDLM_def_last, $SAT_def_last, $TRA_def_last, $LM_last, $LLE_last, $LLO_last, $CG_last, $AI_last, $LP_last, $PB_last, $GB_last) = $db->sql_fetch_row($query_defence_last)) {
         // On récupère les alliances des défenseurs
         $query_ally_def_last = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_def . "'");
         list($result_ally_def_last) = $db->sql_fetch_row($query_ally_def_last);
@@ -1250,8 +1285,7 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_def_last = $result_ally_def_last;
         }
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_DEFENSE . "` (`id`, `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ('', '" . $id_RC . "', '" . $nb_rounds . "', '" . $player_def_last . "', '" . $ally_def_last . "','" . $coordinates_def_last . "', '" . $Armes_def_last . "', '" . $Bouclier_def_last . "', '" . $Protection_def_last . "', '" . $PT_def_last . "', '" . $GT_def_last . "', '" . $CLE_def_last . "', '" . $CLO_def_last . "', '" . $CR_def_last . "', '" . $VB_def_last . "', '" . $VC_def_last . "', '" . $REC_def_last . "', '" . $SE_def_last . "', '" . $BMD_def_last . "', '" . $DST_def_last . "', '" . $EDLM_def_last . "', '" . $TRA_def_last . "', '" . $SAT_def_last . "', '" . $LM_last . "', '" . $LLE_last . "', '" . $LLO_last . "', '" . $CG_last . "', '" . $AI_last . "', '" . $LP_last . "', '" . $PB_last . "', '" . $GB_last . "')");
-
+        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_DEFENSE . "` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ('" . $id_RC . "', '" . $nb_rounds . "', '" . $player_def_last . "', '" . $ally_def_last . "','" . $coordinates_def_last . "', '" . $Armes_def_last . "', '" . $Bouclier_def_last . "', '" . $Protection_def_last . "', '" . $PT_def_last . "', '" . $GT_def_last . "', '" . $CLE_def_last . "', '" . $CLO_def_last . "', '" . $CR_def_last . "', '" . $VB_def_last . "', '" . $VC_def_last . "', '" . $REC_def_last . "', '" . $SE_def_last . "', '" . $BMD_def_last . "', '" . $DST_def_last . "', '" . $EDLM_def_last . "', '" . $TRA_def_last . "', '" . $SAT_def_last . "', '" . $LM_last . "', '" . $LLE_last . "', '" . $LLO_last . "', '" . $CG_last . "', '" . $AI_last . "', '" . $LP_last . "', '" . $PB_last . "', '" . $GB_last . "')");
     }
 }
 
@@ -1265,9 +1299,18 @@ function historique($name)
     global $db, $table_prefix;
     define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
     define('TABLE_HOFRC_ATTACK', $table_prefix . 'hofrc_attack');
-    define('TABLE_HOFRC_DEFENSE', $table_prefix . 'hofrc_defence');
+    if (!defined('TABLE_HOFRC_DEFENSE')) {
+        define('TABLE_HOFRC_DEFENSE', $table_prefix . 'hofrc_defence');
+    }
+    if (!defined('TABLE_HOFRC_INFO_RC')) {
     define('TABLE_HOFRC_INFO_RC', $table_prefix . 'hofrc_info_rc');
+    }
+    if (!defined('TABLE_HOFRC_TITLE')) {
     define('TABLE_HOFRC_TITLE', $table_prefix . 'hofrc_title');
+    }
+
+
+
     $skin = select_skin(0);
     // On récupère la police
     $query_font = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'font_historique'");
@@ -1313,10 +1356,10 @@ function historique($name)
 
     $source = imagecreatefromjpeg("mod/hofrc/Skin/" . $skin . "/historique.jpg");
     $historique = "mod/hofrc/Output/" . $name . ".png";
-    $font = "/mod/hofrc/Font/" . $select_font;
+    $font = "./mod/hofrc/Font/" . $select_font.".ttf";
     if (is_file($historique)) {
         unlink($historique);
-    }// Regarde si le fichier existe ou non  
+    } // Regarde si le fichier existe ou non  
 
     // $list_hof = $db->sql_query("SELECT `id`, `id_rc`, `BOARD_URL`, `TITLE` FROM ".TABLE_HOFRC_TITLE);
     $query_title = $db->sql_query("SELECT `id`, `id_rc`, `BOARD_URL`, `title` FROM " . TABLE_HOFRC_TITLE . " ORDER BY id");
@@ -1326,7 +1369,7 @@ function historique($name)
         $color_txt_3 = explode(",", $color_txt_3_RGB);
         $color_txt_4 = explode(",", $color_txt_4_RGB);
         $color_txt_5 = explode(",", $color_txt_5_RGB);
-        $destination = imagecreatetruecolor($largeur_picture, $hauteur_picture) or die ("Impossible de crée un flux d'image GD");
+        $destination = imagecreatetruecolor($largeur_picture, $hauteur_picture) or die("Impossible de crée un flux d'image GD");
         $color_txt_1 = imagecolorallocate($destination, $color_txt_1[0], $color_txt_1[1], $color_txt_1[2]);
         $color_txt_2 = imagecolorallocate($destination, $color_txt_2[0], $color_txt_2[1], $color_txt_2[2]);
         $color_txt_3 = imagecolorallocate($destination, $color_txt_3[0], $color_txt_3[1], $color_txt_3[2]);
@@ -1348,7 +1391,7 @@ function historique($name)
         $hauteur_destination = imagesy($destination);
         imagecopyresampled($destination, $source, 0, 0, 0, 0, $largeur_destination, $hauteur_destination, $largeur_source, $hauteur_source);
         putenv('GDFONTPATH=' . realpath('.'));
-        //image - taille font - angle - horizontal - verticale
+
         imagettftext($destination, $font_size, $angle, $pos_horiz_1, $pos_verti, $color_txt_1, $font, $text1);
         imagettftext($destination, $font_size, $angle, $pos_horiz_2, $pos_verti, $color_txt_2, $font, $text2);
         imagettftext($destination, $font_size, $angle, $pos_horiz_3, $pos_verti, $color_txt_3, $font, $text3);
@@ -1356,10 +1399,7 @@ function historique($name)
         imagettftext($destination, $font_size, $angle, $pos_horiz_5, $pos_verti, $color_txt_5, $font, $text5);
         imagepng($destination, $historique);
         imagedestroy($destination);
-
     }
-
-
 }
 
 function page_footer()
@@ -1379,5 +1419,4 @@ function page_footer()
 							<i>HofRC (v' . $version . ') créé par Shad</i>
 						</font>
 						</center>';
-
 }

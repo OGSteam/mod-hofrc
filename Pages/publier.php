@@ -41,7 +41,8 @@ list($player, $date) = $db->sql_fetch_row($query_player_date);
 
 $queryRC = $db->sql_query("SELECT `" . TABLE_PARSEDRC . "`.`id_rc`,`dateRC`,`coordinates`,`victoire`,`pertes_A`,`pertes_D`,`gain_M`,`gain_C`,`gain_D`,`debris_M`,`debris_C` , `" . TABLE_PARSEDRCROUND . "`.`id_rc`,`numround`,`id_rcround` FROM `" . TABLE_PARSEDRCROUND . "` LEFT JOIN `" . TABLE_PARSEDRC . "` on `" . TABLE_PARSEDRC . "`.`id_rc`=`" . TABLE_PARSEDRCROUND . "`.`id_rc`  WHERE `dateRC` > " . $date . " AND numround=1 ORDER BY dateRC");
 
-if ($_POST["raid"]) {
+
+if (isset($_POST["raid"])) {
 
     // On véréfie que pillage et raid ne sont pas tout les 2 cocher
     for ($i = 1; $i <= $_POST["count"]; $i++) {

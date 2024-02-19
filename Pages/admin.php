@@ -1,4 +1,5 @@
 <?php
+
 /**
  * admin.php
  * @package HofRC
@@ -21,13 +22,13 @@ global $db, $table_prefix, $prefixe;
 define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
 define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
 
-if ($_GET["id"]) {
+
+if (isset($pub_id)) {
 
     set_color_fleet($PT = $_POST["couleur_pt"], $GT = $_POST["couleur_gt"], $CLE = $_POST["couleur_cle"], $CLO = $_POST["couleur_clo"], $CR = $_POST["couleur_cr"], $VB = $_POST["couleur_vb"], $VC = $_POST["couleur_vc"], $REC = $_POST["couleur_rec"], $SE = $_POST["couleur_se"], $BMD = $_POST["couleur_bmd"], $SAT = $_POST["couleur_sat"], $DST = $_POST["couleur_dst"], $EDLM = $_POST["couleur_edlm"], $TRA = $_POST["couleur_tra"]);
     set_color_def($LM = $_POST["couleur_lm"], $LLEGER = $_POST["couleur_lleger"], $LLOURD = $_POST["couleur_llourd"], $CG = $_POST["couleur_cg"], $AI = $_POST["couleur_ai"], $LP = $_POST["couleur_lp"], $PB = $_POST["couleur_pb"], $GB = $_POST["couleur_gb"]);
     set_color_general($title = $_POST["set_title"], $ALLY = $_POST["couleur_ally"], $PLAYER_ATT = $_POST["couleur_player_att"], $PLAYER_DEF = $_POST["couleur_player_def"], $TECHNO = $_POST["couleur_techno"], $DETRUIT = $_POST["couleur_detruit"]);
     set_end_rc($PILLER_MIN = $_POST["couleur_ressources_piller_min"], $PILLER_MAX = $_POST["couleur_ressources_piller_max"], $PERTES_FLEET_DEF = $_POST["couleur_pertes_fleet_def"], $SEUIL_PERTES = $_POST["couleur_seuil_pertes"], $SEUIL_PILLAGE = $_POST["couleur_seuil_pillage"], $SEUIL_CDR = $_POST["couleur_seuil_cdr"], $PERTES_MIN_ATT = $_POST["couleur_pertes_min_att"], $PERTES_MAX_ATT = $_POST["couleur_pertes_max_att"], $PERTES_MIN_DEF = $_POST["couleur_pertes_min_def"], $PERTES_MAX_DEF = $_POST["couleur_pertes_max_def"], $DEBRIS_MIN = $_POST["couleur_debris_min"], $DEBRIS_MAX = $_POST["couleur_debris_max"], $RENTA_MIN = $_POST["couleur_renta_min"], $RENTA_MAX = $_POST["couleur_renta_max"]);
-
 }
 
 if (!empty($_POST["PIC"])) {
@@ -43,12 +44,11 @@ if (!empty($_POST["rate_resize"])) {
     rate_resizing($percent = $_POST["rate_resize"]);
 }
 
-if ($_POST["list_skin"]) {
-    select_skin($values = $_POST["list_skin"]);
-
+if (isset($pub_list_skin)) {
+    select_skin($values = $pub_list_skin);
 }
 
-if ($_POST["config_universe"]) {
+if (isset($pub_config_universe)) {
     $new_start_universe = mktime(0, 0, 0, $_POST["month_start_universe"], $_POST["day_start_universe"], $_POST["year_start_universe"]);
     $new_config_size_initial = str_replace(" ", "", $_POST["config_size_initial"]);
     $new_config_size_courant = str_replace(" ", "", $_POST["config_size_courant"]);
@@ -75,10 +75,9 @@ if ($_POST["config_universe"]) {
     $new_end_stratege_groupe = mktime(0, 0, 0, $_POST["month_config_end_stratege_groupe"], $_POST["day_config_end_stratege_groupe"], $_POST["year_config_end_stratege_groupe"]);
 
     post_config($new_start_universe, $new_config_size_initial, $new_config_size_courant, $new_config_size_basic, $new_config_size_normal, $new_config_size_avance, $new_config_size_stratege, $new_config_size_expert, $new_config_size_guerrier, $new_config_size_devastateur, $new_config_size_champion, $new_config_size_legendaire, $new_end_initial_solo, $new_end_initial_groupe, $new_end_courant_solo, $new_end_courant_groupe, $new_end_basic_solo, $new_end_basic_groupe, $new_end_normal_solo, $new_end_normal_groupe, $new_end_avance_solo, $new_end_avance_groupe, $new_end_stratege_solo, $new_end_stratege_groupe);
-
 }
 
-if ($_POST["set_historique"]) {
+if (isset($pub_set_historique)) {
     set_historique($font_historique = $_POST["set_font_historique"], $font_size = $_POST["set_font_size"], $largeur_historique = $_POST["set_largeur_historique"], $hauteur_historique = $_POST["set_hauteur_historique"], $pos_horiz_historique_1 = $_POST["set_pos_horiz_historique_1"], $pos_horiz_historique_2 = $_POST["set_pos_horiz_historique_2"], $pos_horiz_historique_3 = $_POST["set_pos_horiz_historique_3"], $pos_horiz_historique_4 = $_POST["set_pos_horiz_historique_4"], $pos_horiz_historique_5 = $_POST["set_pos_horiz_historique_5"], $color_txt_historique_1 = $_POST["set_color_txt_1_RGB"], $color_txt_historique_2 = $_POST["set_color_txt_2_RGB"], $color_txt_historique_3 = $_POST["set_color_txt_3_RGB"], $color_txt_historique_4 = $_POST["set_color_txt_4_RGB"], $color_txt_historique_5 = $_POST["set_color_txt_5_RGB"], $pos_verti_historique = $_POST["set_pos_verti_historique"], $angle_historique = $_POST["set_angle_historique"]);
 }
 // On définie le skin
@@ -183,158 +182,81 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 </legend>
                 <p align='left'>
 
-                <form style="text-align:right;" method="POST" action="index.php?action=hofrc&subaction=admin"
-                      name="config">
-                    <span style="text-align:center"><a align="center">Début de l'univers : </a><input
-                            style="width: 20px; text-align: center;" type="text"
-                            value="<?php echo $day_start_universe; ?>" name="day_start_universe"/> / <input
-                            style="width: 20px; text-align: center;" type="text"
-                            value="<?php echo $month_start_universe; ?>" name="month_start_universe"/> / <input
-                            style="width: 40px; text-align: center;" type="text"
-                            value="<?php echo $year_start_universe; ?>" name="year_start_universe"/></span><br><br>
+                <form style="text-align:right;" method="POST" action="index.php?action=hofrc&subaction=admin" name="config">
+                    <span style="text-align:center"><a align="center">Début de l'univers : </a><input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_start_universe; ?>" name="day_start_universe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_start_universe; ?>" name="month_start_universe" /> / <input style="width: 40px; text-align: center;" type="text" value="<?php echo $year_start_universe; ?>" name="year_start_universe" /></span><br><br>
                     <a style="margin-right:82px;">CDR en solo</a><a style="text-align:right; margin-right:20px">CDR en
                         groupé</a><br>
                     <!-- Configuration INITIAL SOLO -->
                     <a>CDR
                         Initial <?php echo help(null, 'Permet de désactiver les hofs initial sur certains univers.'); ?>
-                        : </a> <input style="width: 20%; text-align: center;" type="text"
-                                      value="<?php echo $config_size_initial; ?>" name="config_size_initial"/> de
+                        : </a> <input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_initial; ?>" name="config_size_initial" /> de
                     débris.
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_initial_solo; ?>" name="day_config_end_initial_solo"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_initial_solo; ?>" name="month_config_end_initial_solo"/>
-                    / <input style="width: 40px; text-align: center; margin-right:50px" type="text"
-                             value="<?php echo $year_config_end_initial_solo; ?>" name="year_config_end_initial_solo"/>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_solo; ?>" name="day_config_end_initial_solo" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_solo; ?>" name="month_config_end_initial_solo" />
+                    / <input style="width: 40px; text-align: center; margin-right:50px" type="text" value="<?php echo $year_config_end_initial_solo; ?>" name="year_config_end_initial_solo" />
                     <!-- Configuration INITIAL GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_initial_groupe; ?>" name="day_config_end_initial_groupe"/>
-                    / <input style="width: 20px; text-align: center;" type="text"
-                             value="<?php echo $month_config_end_initial_groupe; ?>"
-                             name="month_config_end_initial_groupe"/> / <input
-                        style="width: 40px; text-align: center; margin-right:10px" type="text"
-                        value="<?php echo $year_config_end_initial_groupe; ?>"
-                        name="year_config_end_initial_groupe"/><br>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_groupe; ?>" name="day_config_end_initial_groupe" />
+                    / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_groupe; ?>" name="month_config_end_initial_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px" type="text" value="<?php echo $year_config_end_initial_groupe; ?>" name="year_config_end_initial_groupe" /><br>
                     <!-- Configuration COURANT SOLO -->
                     <a>CDR
                         Courant <?php echo help(null, "Permet de désactiver les hofs courant sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text"
-                                     value="<?php echo $config_size_courant; ?>" name="config_size_courant"/> de débris.
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_courant_solo; ?>" name="day_config_end_courant_solo"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_courant_solo; ?>" name="month_config_end_courant_solo"/>
-                    / <input style="width: 40px; text-align: center; margin-right:50px;" type="text"
-                             value="<?php echo $year_config_end_courant_solo; ?>" name="year_config_end_courant_solo"/>
+                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_courant; ?>" name="config_size_courant" /> de débris.
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_solo; ?>" name="day_config_end_courant_solo" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_solo; ?>" name="month_config_end_courant_solo" />
+                    / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_courant_solo; ?>" name="year_config_end_courant_solo" />
                     <!-- Configuration COURANT GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_courant_groupe; ?>" name="day_config_end_courant_groupe"/>
-                    / <input style="width: 20px; text-align: center;" type="text"
-                             value="<?php echo $month_config_end_courant_groupe; ?>"
-                             name="month_config_end_courant_groupe"/> / <input
-                        style="width: 40px; text-align: center; margin-right:10px;" type="text"
-                        value="<?php echo $year_config_end_courant_groupe; ?>"
-                        name="year_config_end_courant_groupe"/><br>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_groupe; ?>" name="day_config_end_courant_groupe" />
+                    / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_groupe; ?>" name="month_config_end_courant_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_courant_groupe; ?>" name="year_config_end_courant_groupe" /><br>
                     <!-- Configuration BASIC SOLO -->
                     <a>CDR Basic <?php echo help(null, "Permet de désactiver les hofs basic sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text"
-                                     value="<?php echo $config_size_basic; ?>" name="config_size_basic"/> de débris.
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_basic_solo; ?>" name="day_config_end_basic_solo"/> / <input
-                        style="width: 20px; text-align: center;" type="text"
-                        value="<?php echo $month_config_end_basic_solo; ?>" name="month_config_end_basic_solo"/> /
-                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text"
-                           value="<?php echo $year_config_end_basic_solo; ?>" name="year_config_end_basic_solo"/>
+                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_basic; ?>" name="config_size_basic" /> de débris.
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_solo; ?>" name="day_config_end_basic_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_solo; ?>" name="month_config_end_basic_solo" /> /
+                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_basic_solo; ?>" name="year_config_end_basic_solo" />
                     <!--Configuration BASIC GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_basic_groupe; ?>" name="day_config_end_basic_groupe"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_basic_groupe; ?>" name="month_config_end_basic_groupe"/>
-                    / <input style="width: 40px; text-align: center; margin-right:10px;" type="text"
-                             value="<?php echo $year_config_end_basic_groupe; ?>"
-                             name="year_config_end_basic_groupe"/><br>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_groupe; ?>" name="day_config_end_basic_groupe" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_groupe; ?>" name="month_config_end_basic_groupe" />
+                    / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_basic_groupe; ?>" name="year_config_end_basic_groupe" /><br>
                     <!-- Configuration NORMAL SOLO -->
                     <a>CDR
                         Normal <?php echo help(null, "Permet de désactiver les hofs normal sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text"
-                                     value="<?php echo $config_size_normal; ?>" name="config_size_normal"/> de débris.
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_normal_solo; ?>" name="day_config_end_normal_solo"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_normal_solo; ?>" name="month_config_end_normal_solo"/> /
-                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text"
-                           value="<?php echo $year_config_end_normal_solo; ?>" name="year_config_end_normal_solo"/>
+                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_normal; ?>" name="config_size_normal" /> de débris.
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_solo; ?>" name="day_config_end_normal_solo" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_solo; ?>" name="month_config_end_normal_solo" /> /
+                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_normal_solo; ?>" name="year_config_end_normal_solo" />
                     <!--Configuration NORMAL GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_normal_groupe; ?>" name="day_config_end_normal_groupe"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_normal_groupe; ?>"
-                           name="month_config_end_normal_groupe"/> / <input
-                        style="width: 40px; text-align: center; margin-right:10px;" type="text"
-                        value="<?php echo $year_config_end_normal_groupe; ?>" name="year_config_end_normal_groupe"/><br>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_groupe; ?>" name="day_config_end_normal_groupe" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_groupe; ?>" name="month_config_end_normal_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_normal_groupe; ?>" name="year_config_end_normal_groupe" /><br>
                     <!-- Configuration AVANCE SOLO -->
                     <a>CDR
                         Avancé <?php echo help(null, "Permet de désactiver les hofs avancés sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text"
-                                     value="<?php echo $config_size_avance; ?>" name="config_size_avance"/> de débris.
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_avance_solo; ?>" name="day_config_end_avance_solo"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_avance_solo; ?>" name="month_config_end_avance_solo"/> /
-                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text"
-                           value="<?php echo $year_config_end_avance_solo; ?>" name="year_config_end_avance_solo"/>
+                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_avance; ?>" name="config_size_avance" /> de débris.
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_solo; ?>" name="day_config_end_avance_solo" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_solo; ?>" name="month_config_end_avance_solo" /> /
+                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_avance_solo; ?>" name="year_config_end_avance_solo" />
                     <!-- Configuration AVANCE GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_avance_groupe; ?>" name="day_config_end_avance_groupe"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_avance_groupe; ?>"
-                           name="month_config_end_avance_groupe"/> / <input
-                        style="width: 40px; text-align: center; margin-right:10px;" type="text"
-                        value="<?php echo $year_config_end_avance_groupe; ?>"
-                        name="year_config_end_avance_groupe"/></br>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_groupe; ?>" name="day_config_end_avance_groupe" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_groupe; ?>" name="month_config_end_avance_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_avance_groupe; ?>" name="year_config_end_avance_groupe" /></br>
                     <!-- Configuration STRATEGE SOLO -->
                     <a>CDR
                         Stratège <?php echo help(null, "Permet de désactiver les hofs stratège sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text"
-                                     value="<?php echo $config_size_stratege; ?>" name="config_size_stratege"/> de
+                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_stratege; ?>" name="config_size_stratege" /> de
                     débris.
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_stratege_solo; ?>" name="day_config_end_stratege_solo"/> /
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $month_config_end_stratege_solo; ?>"
-                           name="month_config_end_stratege_solo"/> / <input
-                        style="width: 40px; text-align: center; margin-right:50px;" type="text"
-                        value="<?php echo $year_config_end_stratege_solo; ?>" name="year_config_end_stratege_solo"/>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_solo; ?>" name="day_config_end_stratege_solo" /> /
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_solo; ?>" name="month_config_end_stratege_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_stratege_solo; ?>" name="year_config_end_stratege_solo" />
                     <!-- Configuration STRATEGE GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text"
-                           value="<?php echo $day_config_end_stratege_groupe; ?>"
-                           name="day_config_end_stratege_groupe"/> / <input style="width: 20px; text-align: center;"
-                                                                            type="text"
-                                                                            value="<?php echo $month_config_end_stratege_groupe; ?>"
-                                                                            name="month_config_end_stratege_groupe"/> /
-                    <input style="width: 40px; text-align: center; margin-right:10px;" type="text"
-                           value="<?php echo $year_config_end_stratege_groupe; ?>"
-                           name="year_config_end_stratege_groupe"/></br></br>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_groupe; ?>" name="day_config_end_stratege_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_groupe; ?>" name="month_config_end_stratege_groupe" /> /
+                    <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_stratege_groupe; ?>" name="year_config_end_stratege_groupe" /></br></br>
                     <!-- Configuration EXPERT -->
-                    <a>CDR Expert : </a><input style="width: 20%; text-align: center;" type="text"
-                                               value="<?php echo $config_size_expert; ?>" name="config_size_expert"/> de
+                    <a>CDR Expert : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_expert; ?>" name="config_size_expert" /> de
                     débris.
                     <!-- Configuration GUERRIER -->
-                    <a>CDR Guerrier : </a><input style="width: 20%; text-align: center;" type="text"
-                                                 value="<?php echo $config_size_guerrier; ?>"
-                                                 name="config_size_guerrier"/> de débris.</br></br>
+                    <a>CDR Guerrier : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_guerrier; ?>" name="config_size_guerrier" /> de débris.</br></br>
                     <!-- Configuration DEVASTATEUR -->
-                    <a>CDR Devastateur : </a><input style="width: 20%; text-align: center;" type="text"
-                                                    value="<?php echo $config_size_devastateur; ?>"
-                                                    name="config_size_devastateur"/> de débris.
+                    <a>CDR Devastateur : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_devastateur; ?>" name="config_size_devastateur" /> de débris.
                     <!-- Configuration CHAMPION -->
-                    <a>CDR Champion : </a><input style="width: 20%; text-align: center;" type="text"
-                                                 value="<?php echo $config_size_champion; ?>"
-                                                 name="config_size_champion"/> de débris.</br></br>
+                    <a>CDR Champion : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_champion; ?>" name="config_size_champion" /> de débris.</br></br>
                     <!-- Configuration LEGENDAIRE -->
-                    <a>CDR Légendaire : </a><input style="width: 20%; text-align: center;" type="text"
-                                                   value="<?php echo $config_size_legendaire; ?>"
-                                                   name="config_size_legendaire"/> de débris.</br></br>
+                    <a>CDR Légendaire : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_legendaire; ?>" name="config_size_legendaire" /> de débris.</br></br>
 
                     <input align="center" type="submit" name="config_universe" value="Envoyer">
                 </form>
@@ -351,8 +273,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 <p align='left'>
 
                 <form method="POST" action="index.php?action=hofrc&subaction=admin" name="create_skin">
-                    Créer un skin: <input style="width: 40%;" type="text" name="new_skin" id="new_skin"
-                                          maxlength="20"><br><br>
+                    Créer un skin: <input style="width: 40%;" type="text" name="new_skin" id="new_skin" maxlength="20"><br><br>
                     <!-- VALIDATION DES PARAMETRES -->
                     <input type="submit" name="create_skin" value="Envoyer">
                 </form>
@@ -447,10 +368,8 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
             <p align='left'>
 
             <form method="POST" action="index.php?action=hofrc&subaction=admin" name="rate">
-                Ratio: <input type="text" name="rate_resize"
-                              value="<?php $rate_resize = rate_resizing(0);
-                              echo($rate_resize); ?>" id="new_skin"
-                              maxlength="20">%<br/>
+                Ratio: <input type="text" name="rate_resize" value="<?php $rate_resize = rate_resizing(0);
+                                                                    echo ($rate_resize); ?>" id="new_skin" maxlength="20">%<br />
                 <!-- VALIDATION DES PARAMETRES -->
                 <br>
                 <center><input type="submit" name="rate" value="Envoyer"></center>
@@ -472,23 +391,22 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 $background = get_background_tab($skin);
 
                 // Limite à 5 images/lignes sinon au nombre d'images
-                $back_per_ligne = ($x = count($background) < $back_per_ligne) ? $x : 5;
+                $back_per_ligne =  (count($background) < 5) ? count($background) : 5;
                 $count = 0;
                 foreach ($background as $key => $fichier) {
                     // Si c'est la 1ere image de la ligne, on affiche le <tr>
                     $count++;
                     if ($count == 1) echo "<tr>";
 
-                    ?>
+                ?>
                     <th align="center">
                         <?php
-                        list ($width, $height, $type, $attr) = getimagesize("mod/hofrc/Skin/" . $skin . "/" . "/" . $fichier);
+                        list($width, $height, $type, $attr) = getimagesize("mod/hofrc/Skin/" . $skin . "/" . "/" . $fichier);
                         $new_width = image_resizing($width);
                         $new_height = image_resizing($height);
                         ?>
                         <a href="<?php echo "mod/hofrc/Skin/" . $skin . "/" . $fichier; ?>">
-                            <img src="<?php echo "mod/hofrc/Skin/" . $skin . "/" . $fichier; ?>"
-                                 width="<?php echo $new_width; ?>" height="<?php echo $new_height; ?>"><br/>
+                            <img src="<?php echo "mod/hofrc/Skin/" . $skin . "/" . $fichier; ?>" width="<?php echo $new_width; ?>" height="<?php echo $new_height; ?>"><br />
                         </a>
                         <?php echo $fichier; ?></br>
 
@@ -503,7 +421,6 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                         echo "</tr>";
                         $count = 0;
                     }
-
                 }
                 // Combien il restait de case pour finir la ligne? On ne rempli avec du vide
                 if ($count != 0) {
@@ -512,10 +429,11 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                         &nbsp
                     </td>
                     </tr>
-                    <?php
+                <?php
                 }
 
-                ?></table>
+                ?>
+            </table>
             </p>
         </fieldset>
     </th>
@@ -532,84 +450,64 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 </legend>
                 <p align='left'>
 
-                <form method="POST" action="index.php?action=hofrc&subaction=admin&id=<?php echo $id ?>"
-                      name="set_historique">
+                <form method="POST" action="index.php?action=hofrc&subaction=admin&id=<?php echo $id ?>" name="set_historique">
                     Police: Choix:
                     <SELECT style="width: 40%;" name="set_font_historique" value="">
                         <?php
-                        $folder = "mod/hofrc/Font";
-                        if ($list = opendir($folder)) {
-                            while (false !== ($file = readdir($list))) {
-                                if ($file != "." && $file != ".." && !is_dir($folder . $file)) {
-                                    echo "<option name = '" . $files . "' value='" . $file . "'";
-                                    if ($font_historique == $file) echo "selected='selected'";
-                                    echo ">" . $file . "</option>";
-                                }
-                            }
-                            closedir($list);
-                        }
-                        ?>
+                        $folder = "mod/hofrc/Font"; ?>
+                        <?php if ($list = opendir($folder)) : ?>
+                            <?php while (false !== ($file = readdir($list))) : ?>
+                                <?php if ($file != "." && $file != ".." && !is_dir($folder . $file)) : ?>
+                                    <option name='<?php echo $file; ?>' value='<?php echo $file; ?>'>
+                                        <?php echo $file; ?>
+                                    </option>
+
+                                <?php endif; ?>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
                     </select>
-                    Taille: <input type="text" name="set_font_size" id="set_font_size"
-                                   value="<?php if (!empty($font_size) == TRUE) echo $font_size; else echo 'Taille de la police'; ?>"
-                                   maxlength="20">
-                    <br/>
-                    Image: Largeur: <input type="text" name="set_largeur_historique" id="set_largeur_historique"
-                                           value="<?php if (!empty($largeur_historique) == TRUE) echo $largeur_historique; else echo 'Largeur de l\'image'; ?>"
-                                           maxlength="20">
-                    Hauteur: <input type="text" name="set_hauteur_historique" id="set_hauteur_historique"
-                                    value="<?php if (!empty($hauteur_historique) == TRUE) echo $hauteur_historique; else echo 'Hauteur de l\'image'; ?>"
-                                    maxlength="20">
-                    <br/>
-                    Texte: Position Verticale: <input type="text" name="set_pos_verti_historique"
-                                                      id="set_pos_verti_historique"
-                                                      value="<?php if (!empty($pos_verti_historique) == TRUE) echo $pos_verti_historique; else echo 'Pos. vert. txt'; ?>"
-                                                      maxlength="20">
-                    Angle: <input type="text" name="set_angle_historique" id="set_angle_historique"
-                                  value="<?php if (!empty($angle_historique) == TRUE) echo $angle_historique; else echo '0'; ?>"
-                                  maxlength="20">
-                    <br/>
-                    Texte 1: Position horizontale: <input type="text" name="set_pos_horiz_historique_2"
-                                                          id="set_pos_horiz_historique_2"
-                                                          value="<?php if (!empty($pos_horiz_historique_2) == TRUE) echo $pos_horiz_historique_2; else echo 'Pos. Horiz. txt 2'; ?>"
-                                                          maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_2_RGB" id="set_color_txt_2_RGB"
-                                    value="<?php if (!empty($color_txt_2_RGB) == TRUE) echo $color_txt_2_RGB; else echo 'X,XX,XXX'; ?>"
-                                    maxlength="20">
-                    <br/>
-                    Texte 2: Position horizontale: <input type="text" name="set_pos_horiz_historique_3"
-                                                          id="set_pos_horiz_historique_3"
-                                                          value="<?php if (!empty($pos_horiz_historique_3) == TRUE) echo $pos_horiz_historique_3; else echo 'Pos. Horiz. txt 3'; ?>"
-                                                          maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_3_RGB" id="set_color_txt_3_RGB"
-                                    value="<?php if (!empty($color_txt_3_RGB) == TRUE) echo $color_txt_3_RGB; else echo 'X,XX,XXX'; ?>"
-                                    maxlength="20">
-                    <br/>
-                    Texte 3: Position horizontale: <input type="text" name="set_pos_horiz_historique_4"
-                                                          id="set_pos_horiz_historique_4"
-                                                          value="<?php if (!empty($pos_horiz_historique_4) == TRUE) echo $pos_horiz_historique_4; else echo 'Pos. Horiz. txt 4'; ?>"
-                                                          maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_4_RGB" id="set_color_txt_4_RGB"
-                                    value="<?php if (!empty($color_txt_4_RGB) == TRUE) echo $color_txt_4_RGB; else echo 'X,XX,XXX'; ?>"
-                                    maxlength="20">
-                    <br/>
-                    Texte 4: Position horizontale: <input type="text" name="set_pos_horiz_historique_5"
-                                                          id="set_pos_horiz_historique_5"
-                                                          value="<?php if (!empty($pos_horiz_historique_5) == TRUE) echo $pos_horiz_historique_5; else echo 'Pos. Horiz. txt 5'; ?>"
-                                                          maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_5_RGB" id="set_color_txt_5_RGB"
-                                    value="<?php if (!empty($color_txt_5_RGB) == TRUE) echo $color_txt_5_RGB; else echo 'X,XX,XXX'; ?>"
-                                    maxlength="20">
+
+                    Taille: <input type="text" name="set_font_size" id="set_font_size" value="<?php if (!empty($font_size) == TRUE) echo $font_size;
+                                                                                                else echo 'Taille de la police'; ?>" maxlength="20">
+                    <br />
+                    Image: Largeur: <input type="text" name="set_largeur_historique" id="set_largeur_historique" value="<?php if (!empty($largeur_historique) == TRUE) echo $largeur_historique;
+                                                                                                                        else echo 'Largeur de l\'image'; ?>" maxlength="20">
+                    Hauteur: <input type="text" name="set_hauteur_historique" id="set_hauteur_historique" value="<?php if (!empty($hauteur_historique) == TRUE) echo $hauteur_historique;
+                                                                                                                    else echo 'Hauteur de l\'image'; ?>" maxlength="20">
+                    <br />
+                    Texte: Position Verticale: <input type="text" name="set_pos_verti_historique" id="set_pos_verti_historique" value="<?php if (!empty($pos_verti_historique) == TRUE) echo $pos_verti_historique;
+                                                                                                                                        else echo 'Pos. vert. txt'; ?>" maxlength="20">
+                    Angle: <input type="text" name="set_angle_historique" id="set_angle_historique" value="<?php if (!empty($angle_historique) == TRUE) echo $angle_historique;
+                                                                                                            else echo '0'; ?>" maxlength="20">
+                    <br />
+                    Texte 1: Position horizontale: <input type="text" name="set_pos_horiz_historique_2" id="set_pos_horiz_historique_2" value="<?php if (!empty($pos_horiz_historique_2) == TRUE) echo $pos_horiz_historique_2;
+                                                                                                                                                else echo 'Pos. Horiz. txt 2'; ?>" maxlength="20">
+                    Couleur: <input type="text" name="set_color_txt_2_RGB" id="set_color_txt_2_RGB" value="<?php if (!empty($color_txt_2_RGB) == TRUE) echo $color_txt_2_RGB;
+                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
+                    <br />
+                    Texte 2: Position horizontale: <input type="text" name="set_pos_horiz_historique_3" id="set_pos_horiz_historique_3" value="<?php if (!empty($pos_horiz_historique_3) == TRUE) echo $pos_horiz_historique_3;
+                                                                                                                                                else echo 'Pos. Horiz. txt 3'; ?>" maxlength="20">
+                    Couleur: <input type="text" name="set_color_txt_3_RGB" id="set_color_txt_3_RGB" value="<?php if (!empty($color_txt_3_RGB) == TRUE) echo $color_txt_3_RGB;
+                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
+                    <br />
+                    Texte 3: Position horizontale: <input type="text" name="set_pos_horiz_historique_4" id="set_pos_horiz_historique_4" value="<?php if (!empty($pos_horiz_historique_4) == TRUE) echo $pos_horiz_historique_4;
+                                                                                                                                                else echo 'Pos. Horiz. txt 4'; ?>" maxlength="20">
+                    Couleur: <input type="text" name="set_color_txt_4_RGB" id="set_color_txt_4_RGB" value="<?php if (!empty($color_txt_4_RGB) == TRUE) echo $color_txt_4_RGB;
+                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
+                    <br />
+                    Texte 4: Position horizontale: <input type="text" name="set_pos_horiz_historique_5" id="set_pos_horiz_historique_5" value="<?php if (!empty($pos_horiz_historique_5) == TRUE) echo $pos_horiz_historique_5;
+                                                                                                                                                else echo 'Pos. Horiz. txt 5'; ?>" maxlength="20">
+                    Couleur: <input type="text" name="set_color_txt_5_RGB" id="set_color_txt_5_RGB" value="<?php if (!empty($color_txt_5_RGB) == TRUE) echo $color_txt_5_RGB;
+                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
                     <!-- VALIDATION DES PARAMETRES -->
                     <br>
-                    <center><input type="reset" name="Submit" value="Réinitialiser le formulaire"> <input type="submit"
-                                                                                                          name="set_historique"
-                                                                                                          value="Envoyer">
+                    <center><input type="reset" name="Submit" value="Réinitialiser le formulaire"> <input type="submit" name="set_historique" value="Envoyer">
                     </center>
                 </form>
                 </p>
             </fieldset>
         </th>
+
         <th colspan="2">
             <fieldset>
                 <legend>
@@ -622,13 +520,13 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 $preview = "mod/hofrc/Output/temporaire.png";
                 $font = "mod/hofrc/Font/" . $font_historique . ".ttf";
 
-                $color_txt_1 = intval(explode(",", $color_txt_1_RGB));
-                $color_txt_2 = intval(explode(",", $color_txt_2_RGB));
-                $color_txt_3 = intval(explode(",", $color_txt_3_RGB));
-                $color_txt_4 = intval(explode(",", $color_txt_4_RGB));
-                $color_txt_5 = intval(explode(",", $color_txt_5_RGB));
+                $color_txt_1 = explode(",", $color_txt_1_RGB);
+                $color_txt_2 = explode(",", $color_txt_2_RGB);
+                $color_txt_3 = explode(",", $color_txt_3_RGB);
+                $color_txt_4 = explode(",", $color_txt_4_RGB);
+                $color_txt_5 = explode(",", $color_txt_5_RGB);
 
-                $destination = imagecreatetruecolor($largeur_historique, $hauteur_historique) or die ("Impossible de crée un flux d'image GD");
+                $destination = imagecreatetruecolor($largeur_historique, $hauteur_historique) or die("Impossible de crée un flux d'image GD");
 
                 $txt_1 = imagecolorallocate($destination, $color_txt_1[0], $color_txt_1[1], $color_txt_1[2]);
                 $txt_2 = imagecolorallocate($destination, $color_txt_2[0], $color_txt_2[1], $color_txt_2[2]);
@@ -675,43 +573,28 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
             </legend>
             <form method="POST" action="index.php?action=hofrc&subaction=admin&id=<?php echo $id ?>" name="color">
                 <p align='left'>
-                    Titre du Skin: <input type="text" name="set_title" id="set_title"
-                                          value="<?php if (!empty($title) == TRUE) echo $title; else echo 'temporaire'; ?>"
-                                          maxlength="20"><br/>
+                    Titre du Skin: <input type="text" name="set_title" id="set_title" value="<?php if (!empty($title) == TRUE) echo $title;
+                                                                                                else echo 'temporaire'; ?>" maxlength="20"><br />
 
-                    Nom du joueur Attaquant: <input type="radio" name="position_color_picker"
-                                                    id="position_color_picker_player_att" checked="checked">
-                    <input type="text" name="couleur_player_att" id="couleur_player_att"
-                           value="<?php if (!empty($color_PLAYER_ATT) == TRUE) echo $color_PLAYER_ATT; else echo '000000'; ?>"
-                           onKeyUp="document.getElementById('preview_player_att').style.color=this.value;"
-                           maxlength="7"><br/>
+                    Nom du joueur Attaquant: <input type="radio" name="position_color_picker" id="position_color_picker_player_att" checked="checked">
+                    <input type="text" name="couleur_player_att" id="couleur_player_att" value="<?php if (!empty($color_PLAYER_ATT) == TRUE) echo $color_PLAYER_ATT;
+                                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_player_att').style.color=this.value;" maxlength="7"><br />
 
-                    Nom du joueur Défenseur: <input type="radio" name="position_color_picker"
-                                                    id="position_color_picker_player_def" checked="checked">
-                    <input type="text" name="couleur_player_def" id="couleur_player_def"
-                           value="<?php if (!empty($color_PLAYER_DEF) == TRUE) echo $color_PLAYER_DEF; else echo '000000'; ?>"
-                           onKeyUp="document.getElementById('preview_player_def').style.color=this.value;"
-                           maxlength="7"><br/>
+                    Nom du joueur Défenseur: <input type="radio" name="position_color_picker" id="position_color_picker_player_def" checked="checked">
+                    <input type="text" name="couleur_player_def" id="couleur_player_def" value="<?php if (!empty($color_PLAYER_DEF) == TRUE) echo $color_PLAYER_DEF;
+                                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_player_def').style.color=this.value;" maxlength="7"><br />
 
-                    Alliance: <input type="radio" name="position_color_picker" id="position_color_picker_ally"
-                                     checked="checked">
-                    <input type="text" name="couleur_ally" id="couleur_ally"
-                           value="<?php if (!empty($color_ALLY) == TRUE) echo $color_ALLY; else echo '000000'; ?>"
-                           onKeyUp="document.getElementById('preview_ally').style.color=this.value;" maxlength="7"><br/>
+                    Alliance: <input type="radio" name="position_color_picker" id="position_color_picker_ally" checked="checked">
+                    <input type="text" name="couleur_ally" id="couleur_ally" value="<?php if (!empty($color_ALLY) == TRUE) echo $color_ALLY;
+                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_ally').style.color=this.value;" maxlength="7"><br />
 
-                    Technologie:<input type="radio" name="position_color_picker" id="position_color_picker_techno"
-                                       checked="checked">
-                    <input type="text" name="couleur_techno" id="couleur_techno"
-                           value="<?php if (!empty($color_TECHNO) == TRUE) echo $color_TECHNO; else echo '000000'; ?>"
-                           onKeyUp="document.getElementById('preview_techno').style.color=this.value;"
-                           maxlength="7"><br/>
+                    Technologie:<input type="radio" name="position_color_picker" id="position_color_picker_techno" checked="checked">
+                    <input type="text" name="couleur_techno" id="couleur_techno" value="<?php if (!empty($color_TECHNO) == TRUE) echo $color_TECHNO;
+                                                                                        else echo '000000'; ?>" onKeyUp="document.getElementById('preview_techno').style.color=this.value;" maxlength="7"><br />
 
-                    Détruit: <input type="radio" name="position_color_picker" id="position_color_picker_detruit"
-                                    checked="checked">
-                    <input type="text" name="couleur_detruit" id="couleur_detruit"
-                           value="<?php if (!empty($color_DETRUIT) == TRUE) echo $color_DETRUIT; else echo '000000'; ?>"
-                           onKeyUp="document.getElementById('preview_detruit').style.color=this.value;"
-                           maxlength="7"><br/>
+                    Détruit: <input type="radio" name="position_color_picker" id="position_color_picker_detruit" checked="checked">
+                    <input type="text" name="couleur_detruit" id="couleur_detruit" value="<?php if (!empty($color_DETRUIT) == TRUE) echo $color_DETRUIT;
+                                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_detruit').style.color=this.value;" maxlength="7"><br />
 
                 </p>
         </fieldset>
@@ -724,81 +607,48 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 </b>
             </legend>
             <p align='left'>
-                Ressources Pillées Minimum: <input type="radio" name="position_color_picker"
-                                                   id="position_color_picker_ressources_piller_min" checked="checked">
-                <input type="text" name="couleur_ressources_piller_min" id="couleur_ressources_piller_min"
-                       value="<?php if (!empty($color_RESSOURCES_PILLER_MIN) == TRUE) echo $color_RESSOURCES_PILLER_MIN; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_ressources_piller_min').style.color=this.value;"
-                       maxlength="7"><br/>
+                Ressources Pillées Minimum: <input type="radio" name="position_color_picker" id="position_color_picker_ressources_piller_min" checked="checked">
+                <input type="text" name="couleur_ressources_piller_min" id="couleur_ressources_piller_min" value="<?php if (!empty($color_RESSOURCES_PILLER_MIN) == TRUE) echo $color_RESSOURCES_PILLER_MIN;
+                                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_ressources_piller_min').style.color=this.value;" maxlength="7"><br />
 
-                Ressources Pillées Maximum: <input type="radio" name="position_color_picker"
-                                                   id="position_color_picker_ressources_piller_max" checked="checked">
-                <input type="text" name="couleur_ressources_piller_max" id="couleur_ressources_piller_max"
-                       value="<?php if (!empty($color_RESSOURCES_PILLER_MAX) == TRUE) echo $color_RESSOURCES_PILLER_MAX; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_ressources_piller_max').style.color=this.value;"
-                       maxlength="7"><br/>
+                Ressources Pillées Maximum: <input type="radio" name="position_color_picker" id="position_color_picker_ressources_piller_max" checked="checked">
+                <input type="text" name="couleur_ressources_piller_max" id="couleur_ressources_piller_max" value="<?php if (!empty($color_RESSOURCES_PILLER_MAX) == TRUE) echo $color_RESSOURCES_PILLER_MAX;
+                                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_ressources_piller_max').style.color=this.value;" maxlength="7"><br />
 
-                Pertes des Flottes et Défenses: <input type="radio" name="position_color_picker"
-                                                       id="position_color_picker_pertes_fleet_def" checked="checked">
-                <input type="text" name="couleur_pertes_fleet_def" id="couleur_pertes_fleet_def"
-                       value="<?php if (!empty($color_PERTES_FLEET_DEF) == TRUE) echo $color_PERTES_FLEET_DEF; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_pertes_fleet_def').style.color=this.value;"
-                       maxlength="7"><br/>
+                Pertes des Flottes et Défenses: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_fleet_def" checked="checked">
+                <input type="text" name="couleur_pertes_fleet_def" id="couleur_pertes_fleet_def" value="<?php if (!empty($color_PERTES_FLEET_DEF) == TRUE) echo $color_PERTES_FLEET_DEF;
+                                                                                                        else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pertes_fleet_def').style.color=this.value;" maxlength="7"><br />
 
-                Pertes Minimum Attaque: <input type="radio" name="position_color_picker"
-                                               id="position_color_picker_pertes_min_att" checked="checked">
-                <input type="text" name="couleur_pertes_min_att" id="couleur_pertes_min_att"
-                       value="<?php if (!empty($color_PERTES_MIN_ATT) == TRUE) echo $color_PERTES_MIN_ATT; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_pertes_min_att').style.color=this.value;"
-                       maxlength="7"><br/>
+                Pertes Minimum Attaque: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_min_att" checked="checked">
+                <input type="text" name="couleur_pertes_min_att" id="couleur_pertes_min_att" value="<?php if (!empty($color_PERTES_MIN_ATT) == TRUE) echo $color_PERTES_MIN_ATT;
+                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pertes_min_att').style.color=this.value;" maxlength="7"><br />
 
-                Pertes Maximum Attaque: <input type="radio" name="position_color_picker"
-                                               id="position_color_picker_pertes_max_att" checked="checked">
-                <input type="text" name="couleur_pertes_max_att" id="couleur_pertes_max_att"
-                       value="<?php if (!empty($color_PERTES_MAX_ATT) == TRUE) echo $color_PERTES_MAX_ATT; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_pertes_max_att').style.color=this.value;"
-                       maxlength="7"><br/>
+                Pertes Maximum Attaque: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_max_att" checked="checked">
+                <input type="text" name="couleur_pertes_max_att" id="couleur_pertes_max_att" value="<?php if (!empty($color_PERTES_MAX_ATT) == TRUE) echo $color_PERTES_MAX_ATT;
+                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pertes_max_att').style.color=this.value;" maxlength="7"><br />
 
-                Pertes Minimum Défense: <input type="radio" name="position_color_picker"
-                                               id="position_color_picker_pertes_min_def" checked="checked">
-                <input type="text" name="couleur_pertes_min_def" id="couleur_pertes_min_def"
-                       value="<?php if (!empty($color_PERTES_MIN_DEF) == TRUE) echo $color_PERTES_MIN_DEF; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_pertes_min_def').style.color=this.value;"
-                       maxlength="7"><br/>
+                Pertes Minimum Défense: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_min_def" checked="checked">
+                <input type="text" name="couleur_pertes_min_def" id="couleur_pertes_min_def" value="<?php if (!empty($color_PERTES_MIN_DEF) == TRUE) echo $color_PERTES_MIN_DEF;
+                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pertes_min_def').style.color=this.value;" maxlength="7"><br />
 
-                Pertes Maximum Défense: <input type="radio" name="position_color_picker"
-                                               id="position_color_picker_pertes_max_def" checked="checked">
-                <input type="text" name="couleur_pertes_max_def" id="couleur_pertes_max_def"
-                       value="<?php if (!empty($color_PERTES_MAX_DEF) == TRUE) echo $color_PERTES_MAX_DEF; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_pertes_max_def').style.color=this.value;"
-                       maxlength="7"><br/>
-                Débris Minimum: <input type="radio" name="position_color_picker" id="position_color_picker_debris_min"
-                                       checked="checked">
-                <input type="text" name="couleur_debris_min" id="couleur_debris_min"
-                       value="<?php if (!empty($color_DEBRIS_MIN) == TRUE) echo $color_DEBRIS_MIN; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_debris_min').style.color=this.value;"
-                       maxlength="7"><br/>
+                Pertes Maximum Défense: <input type="radio" name="position_color_picker" id="position_color_picker_pertes_max_def" checked="checked">
+                <input type="text" name="couleur_pertes_max_def" id="couleur_pertes_max_def" value="<?php if (!empty($color_PERTES_MAX_DEF) == TRUE) echo $color_PERTES_MAX_DEF;
+                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pertes_max_def').style.color=this.value;" maxlength="7"><br />
+                Débris Minimum: <input type="radio" name="position_color_picker" id="position_color_picker_debris_min" checked="checked">
+                <input type="text" name="couleur_debris_min" id="couleur_debris_min" value="<?php if (!empty($color_DEBRIS_MIN) == TRUE) echo $color_DEBRIS_MIN;
+                                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_debris_min').style.color=this.value;" maxlength="7"><br />
 
-                Débris Maximum: <input type="radio" name="position_color_picker" id="position_color_picker_debris_max"
-                                       checked="checked">
-                <input type="text" name="couleur_debris_max" id="couleur_debris_max"
-                       value="<?php if (!empty($color_DEBRIS_MAX) == TRUE) echo $color_DEBRIS_MAX; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_debris_max').style.color=this.value;"
-                       maxlength="7"><br/>
+                Débris Maximum: <input type="radio" name="position_color_picker" id="position_color_picker_debris_max" checked="checked">
+                <input type="text" name="couleur_debris_max" id="couleur_debris_max" value="<?php if (!empty($color_DEBRIS_MAX) == TRUE) echo $color_DEBRIS_MAX;
+                                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_debris_max').style.color=this.value;" maxlength="7"><br />
 
-                Rentabilité Minimum: <input type="radio" name="position_color_picker"
-                                            id="position_color_picker_renta_min" checked="checked">
-                <input type="text" name="couleur_renta_min" id="couleur_renta_min"
-                       value="<?php if (!empty($color_RENTA_MIN) == TRUE) echo $color_RENTA_MIN; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_renta_min').style.color=this.value;"
-                       maxlength="7"><br/>
+                Rentabilité Minimum: <input type="radio" name="position_color_picker" id="position_color_picker_renta_min" checked="checked">
+                <input type="text" name="couleur_renta_min" id="couleur_renta_min" value="<?php if (!empty($color_RENTA_MIN) == TRUE) echo $color_RENTA_MIN;
+                                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_renta_min').style.color=this.value;" maxlength="7"><br />
 
-                Rentabilité Maximum: <input type="radio" name="position_color_picker"
-                                            id="position_color_picker_renta_max" checked="checked">
-                <input type="text" name="couleur_renta_max" id="couleur_renta_max"
-                       value="<?php if (!empty($color_RENTA_MAX) == TRUE) echo $color_RENTA_MAX; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_renta_max').style.color=this.value;"
-                       maxlength="7"><br/>
+                Rentabilité Maximum: <input type="radio" name="position_color_picker" id="position_color_picker_renta_max" checked="checked">
+                <input type="text" name="couleur_renta_max" id="couleur_renta_max" value="<?php if (!empty($color_RENTA_MAX) == TRUE) echo $color_RENTA_MAX;
+                                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_renta_max').style.color=this.value;" maxlength="7"><br />
             </p>
         </fieldset>
 
@@ -810,20 +660,14 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
             </legend>
             <p align='left'>
 
-                Seuil des pertes: <input type="text" name="couleur_seuil_pertes" id="couleur_seuil_pertes"
-                                         value="<?php if (!empty($color_SEUIL_PERTES) == TRUE) echo $color_SEUIL_PERTES; else echo '000000'; ?>"
-                                         onKeyUp="document.getElementById('preview_seuil_pertes').style.color=this.value;"
-                                         maxlength="7"><br/>
+                Seuil des pertes: <input type="text" name="couleur_seuil_pertes" id="couleur_seuil_pertes" value="<?php if (!empty($color_SEUIL_PERTES) == TRUE) echo $color_SEUIL_PERTES;
+                                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_seuil_pertes').style.color=this.value;" maxlength="7"><br />
 
-                Seuil des pillages: <input type="text" name="couleur_seuil_pillage" id="couleur_seuil_pillage"
-                                           value="<?php if (!empty($color_SEUIL_PILLAGE) == TRUE) echo $color_SEUIL_PILLAGE; else echo '000000'; ?>"
-                                           onKeyUp="document.getElementById('preview_seuil_pillage').style.color=this.value;"
-                                           maxlength="7"><br/>
+                Seuil des pillages: <input type="text" name="couleur_seuil_pillage" id="couleur_seuil_pillage" value="<?php if (!empty($color_SEUIL_PILLAGE) == TRUE) echo $color_SEUIL_PILLAGE;
+                                                                                                                        else echo '000000'; ?>" onKeyUp="document.getElementById('preview_seuil_pillage').style.color=this.value;" maxlength="7"><br />
 
-                Seuil Champs de débris: <input type="text" name="couleur_seuil_cdr" id="couleur_seuil_cdr"
-                                               value="<?php if (!empty($color_SEUIL_CDR) == TRUE) echo $color_SEUIL_CDR; else echo '000000'; ?>"
-                                               onKeyUp="document.getElementById('preview_seuil_cdr').style.color=this.value;"
-                                               maxlength="7"><br/>
+                Seuil Champs de débris: <input type="text" name="couleur_seuil_cdr" id="couleur_seuil_cdr" value="<?php if (!empty($color_SEUIL_CDR) == TRUE) echo $color_SEUIL_CDR;
+                                                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_seuil_cdr').style.color=this.value;" maxlength="7"><br />
 
             </p>
         </fieldset>
@@ -838,87 +682,61 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
             </legend>
             <p align='left'>
 
-                P.transporteur:<input type="radio" name="position_color_picker" id="position_color_picker_pt"
-                                      checked="checked">
-                <input type="text" name="couleur_pt" id="couleur_pt"
-                       value="<?php if (!empty($color_PT) == TRUE) echo $color_PT; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_pt').style.color=this.value;" maxlength="7"><br/>
+                P.transporteur:<input type="radio" name="position_color_picker" id="position_color_picker_pt" checked="checked">
+                <input type="text" name="couleur_pt" id="couleur_pt" value="<?php if (!empty($color_PT) == TRUE) echo $color_PT;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pt').style.color=this.value;" maxlength="7"><br />
 
-                G.transporteur:<input type="radio" name="position_color_picker" id="position_color_picker_gt"
-                                      checked="checked">
-                <input type="text" name="couleur_gt" id="couleur_gt"
-                       value="<?php if (!empty($color_GT) == TRUE) echo $color_PT; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_gt').style.color=this.value;" maxlength="7"><br/>
+                G.transporteur:<input type="radio" name="position_color_picker" id="position_color_picker_gt" checked="checked">
+                <input type="text" name="couleur_gt" id="couleur_gt" value="<?php if (!empty($color_GT) == TRUE) echo $color_PT;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_gt').style.color=this.value;" maxlength="7"><br />
 
-                C.Léger<input type="radio" name="position_color_picker" id="position_color_picker_cle"
-                              checked="checked">
-                <input type="text" name="couleur_cle" id="couleur_cle"
-                       value="<?php if (!empty($color_CLE) == TRUE) echo $color_CLE; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_cle').style.color=this.value;" maxlength="7"><br/>
+                C.Léger<input type="radio" name="position_color_picker" id="position_color_picker_cle" checked="checked">
+                <input type="text" name="couleur_cle" id="couleur_cle" value="<?php if (!empty($color_CLE) == TRUE) echo $color_CLE;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_cle').style.color=this.value;" maxlength="7"><br />
 
-                C.Lourd<input type="radio" name="position_color_picker" id="position_color_picker_clo"
-                              checked="checked">
-                <input type="text" name="couleur_clo" id="couleur_clo"
-                       value="<?php if (!empty($color_CLO) == TRUE) echo $color_CLO; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_clo').style.color=this.value;" maxlength="7"><br/>
+                C.Lourd<input type="radio" name="position_color_picker" id="position_color_picker_clo" checked="checked">
+                <input type="text" name="couleur_clo" id="couleur_clo" value="<?php if (!empty($color_CLO) == TRUE) echo $color_CLO;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_clo').style.color=this.value;" maxlength="7"><br />
 
-                Croiseur:<input type="radio" name="position_color_picker" id="position_color_picker_cr"
-                                checked="checked">
-                <input type="text" name="couleur_cr" id="couleur_cr"
-                       value="<?php if (!empty($color_CR) == TRUE) echo $color_CR; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_cr').style.color=this.value;" maxlength="7"><br/>
+                Croiseur:<input type="radio" name="position_color_picker" id="position_color_picker_cr" checked="checked">
+                <input type="text" name="couleur_cr" id="couleur_cr" value="<?php if (!empty($color_CR) == TRUE) echo $color_CR;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_cr').style.color=this.value;" maxlength="7"><br />
 
-                V.Bataille:<input type="radio" name="position_color_picker" id="position_color_picker_vb"
-                                  checked="checked">
-                <input type="text" name="couleur_vb" id="couleur_vb"
-                       value="<?php if (!empty($color_VB) == TRUE) echo $color_VB; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_vb').style.color=this.value;" maxlength="7"><br/>
+                V.Bataille:<input type="radio" name="position_color_picker" id="position_color_picker_vb" checked="checked">
+                <input type="text" name="couleur_vb" id="couleur_vb" value="<?php if (!empty($color_VB) == TRUE) echo $color_VB;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_vb').style.color=this.value;" maxlength="7"><br />
 
-                V.Colonisation:<input type="radio" name="position_color_picker" id="position_color_picker_vc"
-                                      checked="checked">
-                <input type="text" name="couleur_vc" id="couleur_vc"
-                       value="<?php if (!empty($color_VC) == TRUE) echo $color_VC; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_vc').style.color=this.value;" maxlength="7"><br/>
+                V.Colonisation:<input type="radio" name="position_color_picker" id="position_color_picker_vc" checked="checked">
+                <input type="text" name="couleur_vc" id="couleur_vc" value="<?php if (!empty($color_VC) == TRUE) echo $color_VC;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_vc').style.color=this.value;" maxlength="7"><br />
 
-                Recycleur:<input type="radio" name="position_color_picker" id="position_color_picker_rec"
-                                 checked="checked">
-                <input type="text" name="couleur_rec" id="couleur_rec"
-                       value="<?php if (!empty($color_REC) == TRUE) echo $color_REC; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_rec').style.color=this.value;" maxlength="7"><br/>
+                Recycleur:<input type="radio" name="position_color_picker" id="position_color_picker_rec" checked="checked">
+                <input type="text" name="couleur_rec" id="couleur_rec" value="<?php if (!empty($color_REC) == TRUE) echo $color_REC;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_rec').style.color=this.value;" maxlength="7"><br />
 
                 Sonde:<input type="radio" name="position_color_picker" id="position_color_picker_se" checked="checked">
-                <input type="text" name="couleur_se" id="couleur_se"
-                       value="<?php if (!empty($color_SE) == TRUE) echo $color_SE; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_se').style.color=this.value;" maxlength="7"><br/>
+                <input type="text" name="couleur_se" id="couleur_se" value="<?php if (!empty($color_SE) == TRUE) echo $color_SE;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_se').style.color=this.value;" maxlength="7"><br />
 
-                Bombardier:<input type="radio" name="position_color_picker" id="position_color_picker_bmd"
-                                  checked="checked">
-                <input type="text" name="couleur_bmd" id="couleur_bmd"
-                       value="<?php if (!empty($color_BMD) == TRUE) echo $color_BMD; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_bmd').style.color=this.value;" maxlength="7"><br/>
+                Bombardier:<input type="radio" name="position_color_picker" id="position_color_picker_bmd" checked="checked">
+                <input type="text" name="couleur_bmd" id="couleur_bmd" value="<?php if (!empty($color_BMD) == TRUE) echo $color_BMD;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_bmd').style.color=this.value;" maxlength="7"><br />
 
-                S.Solaire: <input type="radio" name="position_color_picker" id="position_color_picker_sat"
-                                  checked="checked">
-                <input type="text" name="couleur_sat" id="couleur_sat"
-                       value="<?php if (!empty($color_SAT) == TRUE) echo $color_SAT; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_sat').style.color=this.value;" maxlength="7"><br/>
+                S.Solaire: <input type="radio" name="position_color_picker" id="position_color_picker_sat" checked="checked">
+                <input type="text" name="couleur_sat" id="couleur_sat" value="<?php if (!empty($color_SAT) == TRUE) echo $color_SAT;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_sat').style.color=this.value;" maxlength="7"><br />
 
-                Destructeur: <input type="radio" name="position_color_picker" id="position_color_picker_dst"
-                                    checked="checked">
-                <input type="text" name="couleur_dst" id="couleur_dst"
-                       value="<?php if (!empty($color_DST) == TRUE) echo $color_DST; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_dst').style.color=this.value;" maxlength="7"><br/>
+                Destructeur: <input type="radio" name="position_color_picker" id="position_color_picker_dst" checked="checked">
+                <input type="text" name="couleur_dst" id="couleur_dst" value="<?php if (!empty($color_DST) == TRUE) echo $color_DST;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_dst').style.color=this.value;" maxlength="7"><br />
 
                 EDLM:<input type="radio" name="position_color_picker" id="position_color_picker_edlm" checked="checked">
-                <input type="text" name="couleur_edlm" id="couleur_edlm"
-                       value="<?php if (!empty($color_EDLM) == TRUE) echo $color_EDLM; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_edlm').style.color=this.value;" maxlength="7"><br/>
+                <input type="text" name="couleur_edlm" id="couleur_edlm" value="<?php if (!empty($color_EDLM) == TRUE) echo $color_EDLM;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_edlm').style.color=this.value;" maxlength="7"><br />
 
-                Traqueur:<input type="radio" name="position_color_picker" id="position_color_picker_tra"
-                                checked="checked">
-                <input type="text" name="couleur_tra" id="couleur_tra"
-                       value="<?php if (!empty($color_TRA) == TRUE) echo $color_TRA; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_tra').style.color=this.value;" maxlength="7"><br/>
+                Traqueur:<input type="radio" name="position_color_picker" id="position_color_picker_tra" checked="checked">
+                <input type="text" name="couleur_tra" id="couleur_tra" value="<?php if (!empty($color_TRA) == TRUE) echo $color_TRA;
+                                                                                else echo '000000'; ?>" onKeyUp="document.getElementById('preview_tra').style.color=this.value;" maxlength="7"><br />
 
 
             </p>
@@ -931,73 +749,54 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
             </legend>
             <p align='left'>
 
-                L.Missile:<input type="radio" name="position_color_picker" id="position_color_picker_lm"
-                                 checked="checked">
-                <input type="text" name="couleur_lm" id="couleur_lm"
-                       value="<?php if (!empty($color_LM) == TRUE) echo $color_LM; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_lm').style.color=this.value;" maxlength="7"><br/>
+                L.Missile:<input type="radio" name="position_color_picker" id="position_color_picker_lm" checked="checked">
+                <input type="text" name="couleur_lm" id="couleur_lm" value="<?php if (!empty($color_LM) == TRUE) echo $color_LM;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_lm').style.color=this.value;" maxlength="7"><br />
 
-                L.Léger:<input type="radio" name="position_color_picker" id="position_color_picker_lleger"
-                               checked="checked">
-                <input type="text" name="couleur_lleger" id="couleur_lleger"
-                       value="<?php if (!empty($color_LLEGER) == TRUE) echo $color_LLEGER; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_lleger').style.color=this.value;" maxlength="7"><br/>
+                L.Léger:<input type="radio" name="position_color_picker" id="position_color_picker_lleger" checked="checked">
+                <input type="text" name="couleur_lleger" id="couleur_lleger" value="<?php if (!empty($color_LLEGER) == TRUE) echo $color_LLEGER;
+                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_lleger').style.color=this.value;" maxlength="7"><br />
 
-                L.Lourd:<input type="radio" name="position_color_picker" id="position_color_picker_llourd"
-                               checked="checked">
-                <input type="text" name="couleur_llourd" id="couleur_llourd"
-                       value="<?php if (!empty($color_LLOURD) == TRUE) echo $color_LLOURD; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_llourd').style.color=this.value;" maxlength="7"><br/>
+                L.Lourd:<input type="radio" name="position_color_picker" id="position_color_picker_llourd" checked="checked">
+                <input type="text" name="couleur_llourd" id="couleur_llourd" value="<?php if (!empty($color_LLOURD) == TRUE) echo $color_LLOURD;
+                                                                                    else echo '000000'; ?>" onKeyUp="document.getElementById('preview_llourd').style.color=this.value;" maxlength="7"><br />
 
-                Can.Gauss:<input type="radio" name="position_color_picker" id="position_color_picker_cg"
-                                 checked="checked">
-                <input type="text" name="couleur_cg" id="couleur_cg"
-                       value="<?php if (!empty($color_CG) == TRUE) echo $color_CG; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_cg').style.color=this.value;" maxlength="7"><br/>
+                Can.Gauss:<input type="radio" name="position_color_picker" id="position_color_picker_cg" checked="checked">
+                <input type="text" name="couleur_cg" id="couleur_cg" value="<?php if (!empty($color_CG) == TRUE) echo $color_CG;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_cg').style.color=this.value;" maxlength="7"><br />
 
-                Art.Ions:<input type="radio" name="position_color_picker" id="position_color_picker_ai"
-                                checked="checked">
-                <input type="text" name="couleur_ai" id="couleur_ai"
-                       value="<?php if (!empty($color_AI) == TRUE) echo $color_AI; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_ai').style.color=this.value;" maxlength="7"><br/>
+                Art.Ions:<input type="radio" name="position_color_picker" id="position_color_picker_ai" checked="checked">
+                <input type="text" name="couleur_ai" id="couleur_ai" value="<?php if (!empty($color_AI) == TRUE) echo $color_AI;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_ai').style.color=this.value;" maxlength="7"><br />
 
-                Lanc.Plasma:<input type="radio" name="position_color_picker" id="position_color_picker_lp"
-                                   checked="checked">
-                <input type="text" name="couleur_lp" id="couleur_lp"
-                       value="<?php if (!empty($color_LP) == TRUE) echo $color_LP; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_lp').style.color=this.value;" maxlength="7"><br/>
+                Lanc.Plasma:<input type="radio" name="position_color_picker" id="position_color_picker_lp" checked="checked">
+                <input type="text" name="couleur_lp" id="couleur_lp" value="<?php if (!empty($color_LP) == TRUE) echo $color_LP;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_lp').style.color=this.value;" maxlength="7"><br />
 
-                P.Bouclier:<input type="radio" name="position_color_picker" id="position_color_picker_pb"
-                                  checked="checked">
-                <input type="text" name="couleur_pb" id="couleur_pb"
-                       value="<?php if (!empty($color_PB) == TRUE) echo $color_PB; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_pb').style.color=this.value;" maxlength="7"><br/>
+                P.Bouclier:<input type="radio" name="position_color_picker" id="position_color_picker_pb" checked="checked">
+                <input type="text" name="couleur_pb" id="couleur_pb" value="<?php if (!empty($color_PB) == TRUE) echo $color_PB;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_pb').style.color=this.value;" maxlength="7"><br />
 
-                G.Bouclier:<input type="radio" name="position_color_picker" id="position_color_picker_gb"
-                                  checked="checked">
-                <input type="text" name="couleur_gb" id="couleur_gb"
-                       value="<?php if (!empty($color_GB) == TRUE) echo $color_GB; else echo '000000'; ?>"
-                       onKeyUp="document.getElementById('preview_gb').style.color=this.value;" maxlength="7"><br/>
+                G.Bouclier:<input type="radio" name="position_color_picker" id="position_color_picker_gb" checked="checked">
+                <input type="text" name="couleur_gb" id="couleur_gb" value="<?php if (!empty($color_GB) == TRUE) echo $color_GB;
+                                                                            else echo '000000'; ?>" onKeyUp="document.getElementById('preview_gb').style.color=this.value;" maxlength="7"><br />
         </fieldset>
     </th>
 
 
     <th colspan="2" rowspan=2>
         Les flottes suivantes se sont affrontées le: 28.06.2011 16:51:44<br>
-        Attaquant <span id="preview_player_att_begin" style="color: <?php echo $color_PLAYER_ATT; ?>; font-size: 10px;"> xXx </span><span
-            id="preview_ally" style="color: <?php echo $color_ALLY; ?>; font-size: 10px;"> [Ally] </span><br>
+        Attaquant <span id="preview_player_att_begin" style="color: <?php echo $color_PLAYER_ATT; ?>; font-size: 10px;"> xXx </span><span id="preview_ally" style="color: <?php echo $color_ALLY; ?>; font-size: 10px;"> [Ally] </span><br>
         Armes: <span id="preview_techno" style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 160 % </span>
         Bouclier: <span id="preview_techno1" style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 150 % </span>
-        Coque: <span id="preview_techno2"
-                     style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 170 % </span><br>
+        Coque: <span id="preview_techno2" style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 170 % </span><br>
         <span id="preview_dst1" style="color: <?php echo $color_DST ?>; font-size: 10px;"> Destr. 1100</span><br>
         <br>
-        Défenseur <span id="preview_player_def_begin" style="color: <?php echo $color_PLAYER_DEF; ?>; font-size: 10px;"> xXx  </span>
+        Défenseur <span id="preview_player_def_begin" style="color: <?php echo $color_PLAYER_DEF; ?>; font-size: 10px;"> xXx </span>
         <span id="preview_ally1" style="color: <?php echo $color_ALLY; ?>; font-size: 10px;"> [Ally] </span><br>
         Armes: <span id="preview_techno3" style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 150 % </span>
         Bouclier: <span id="preview_techno4" style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 130 % </span>
-        Coque: <span id="preview_techno5"
-                     style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 140 % </span><br>
+        Coque: <span id="preview_techno5" style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 140 % </span><br>
         <span id="preview_pt" style="color: <?php echo $color_PT ?>; font-size: 10px;"> P.transp. 50</span><br>
         <span id="preview_gt" style="color: <?php echo $color_GT ?>; font-size: 10px;"> G.transp. 10</span><br>
         <span id="preview_cle" style="color: <?php echo $color_CLE ?>; font-size: 10px;"> Ch.léger 1000</span><br>
@@ -1025,59 +824,44 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
         <br>
         Attaquant <span id="preview_player_att_after" style="color: <?php echo $color_PLAYER_ATT; ?>; font-size: 10px;"> xXx </span>
         <span id="preview_ally2" style="color: <?php echo $color_ALLY; ?>; font-size: 10px;"> [Ally]</span><br>
-        <span id="preview_dst2" style="color: <?php echo $color_DST ?>; font-size: 10px;"> Destr. 1054 </span><span
-            id="preview_pertes_fleet_def"
-            style="color: <?php echo $color_PERTES_FLEET_DEF ?>; font-size: 10px;">(-6)</span><br>
+        <span id="preview_dst2" style="color: <?php echo $color_DST ?>; font-size: 10px;"> Destr. 1054 </span><span id="preview_pertes_fleet_def" style="color: <?php echo $color_PERTES_FLEET_DEF ?>; font-size: 10px;">(-6)</span><br>
         <br>
-        Défenseur <span id="preview_player_def_after" style="color: <?php echo $color_PLAYER_DEF; ?>; font-size: 10px;"> xXx  </span>
+        Défenseur <span id="preview_player_def_after" style="color: <?php echo $color_PLAYER_DEF; ?>; font-size: 10px;"> xXx </span>
         <span id="preview_ally3" style="color: <?php echo $color_ALLY; ?>; font-size: 10px;"> [Ally]</span><br>
         <span id="preview_detruit" style="color: <?php echo $color_DETRUIT; ?>; font-size: 10px;"> Détruit </span><br>
         <br>
-        L'attaquant a remporter la battaille ! Il emporte <span id="preview_ressources_piller_min"
-                                                                style="color: <?php echo $color_RESSOURCES_PILLER_MIN ?>; font-size: 10px;">227.623</span>
-        unités de métal, <span id="preview_ressources_piller_max"
-                               style="color: <?php echo $color_RESSOURCES_PILLER_MAX ?>; font-size: 10px;">392.712</span>
-        unités de cristal et <span id="preview_ressources_piller_min1"
-                                   style="color: <?php echo $color_RESSOURCES_PILLER_MIN ?>; font-size: 10px;">228.109</span>
+        L'attaquant a remporter la battaille ! Il emporte <span id="preview_ressources_piller_min" style="color: <?php echo $color_RESSOURCES_PILLER_MIN ?>; font-size: 10px;">227.623</span>
+        unités de métal, <span id="preview_ressources_piller_max" style="color: <?php echo $color_RESSOURCES_PILLER_MAX ?>; font-size: 10px;">392.712</span>
+        unités de cristal et <span id="preview_ressources_piller_min1" style="color: <?php echo $color_RESSOURCES_PILLER_MIN ?>; font-size: 10px;">228.109</span>
         de deutérium.<br>
         <br>
-        L'attaquant a perdu au total <span id="preview_pertes_min_att"
-                                           style="color: <?php echo $color_PERTES_MIN_ATT ?>; font-size: 10px;">5.060.000</span>
+        L'attaquant a perdu au total <span id="preview_pertes_min_att" style="color: <?php echo $color_PERTES_MIN_ATT ?>; font-size: 10px;">5.060.000</span>
         unités.<br>
         <br>
-        L'attaquant a perdu au total <span id="preview_pertes_max_att"
-                                           style="color: <?php echo $color_PERTES_MAX_ATT ?>; font-size: 10px;">5.060.000</span>
+        L'attaquant a perdu au total <span id="preview_pertes_max_att" style="color: <?php echo $color_PERTES_MAX_ATT ?>; font-size: 10px;">5.060.000</span>
         unités.<br>
         <br>
-        Le défenseur a perdu au total <span id="preview_pertes_min_def"
-                                            style="color: <?php echo $color_PERTES_MIN_DEF ?>; font-size: 10px;">58.784.000</span>
+        Le défenseur a perdu au total <span id="preview_pertes_min_def" style="color: <?php echo $color_PERTES_MIN_DEF ?>; font-size: 10px;">58.784.000</span>
         unités.<br>
         <br>
-        Le défenseur a perdu au total <span id="preview_pertes_max_def"
-                                            style="color: <?php echo $color_PERTES_MAX_DEF ?>; font-size: 10px;">58.784.000</span>
+        Le défenseur a perdu au total <span id="preview_pertes_max_def" style="color: <?php echo $color_PERTES_MAX_DEF ?>; font-size: 10px;">58.784.000</span>
         unités.<br>
         <br>
-        Un champ de débris contenant <span id="preview_debris_max"
-                                           style="color: <?php echo $color_DEBRIS_MAX ?>; font-size: 10px;">11.871.000</span>
-        unités de métal et <span id="preview_debris_min"
-                                 style="color: <?php echo $color_DEBRIS_MIN ?>; font-size: 10px;">6.230.400</span>
+        Un champ de débris contenant <span id="preview_debris_max" style="color: <?php echo $color_DEBRIS_MAX ?>; font-size: 10px;">11.871.000</span>
+        unités de métal et <span id="preview_debris_min" style="color: <?php echo $color_DEBRIS_MIN ?>; font-size: 10px;">6.230.400</span>
         unités de cristal.<br>
         <br>
         Rentabilité<br>
-        Attaquant avec/sans recyclage : <span id="preview_renta_max"
-                                              style="color: <?php echo $color_RENTA_MAX ?>; font-size: 10px;">8.282.844</span>
+        Attaquant avec/sans recyclage : <span id="preview_renta_max" style="color: <?php echo $color_RENTA_MAX ?>; font-size: 10px;">8.282.844</span>
         / <span id="preview_renta_min" style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-4.211.556</span><br>
-        Défenseur avec/sans recyclage : <span id="preview_renta_min1"
-                                              style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-41.531.044</span>
-        / <span id="preview_renta_min2"
-                style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-58.784.000</span><br>
+        Défenseur avec/sans recyclage : <span id="preview_renta_min1" style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-41.531.044</span>
+        / <span id="preview_renta_min2" style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-58.784.000</span><br>
     </th>
     </tr>
     <tr>
         <th colspan="2">
             <!-- color picker -->
-            <table style="background-color: transparent; border: 0px; padding: 0px; margin: 5px auto;" border="0"
-                   cellpadding="0" cellspacing="0" id="colorpicker">
+            <table style="background-color: transparent; border: 0px; padding: 0px; margin: 5px auto;" border="0" cellpadding="0" cellspacing="0" id="colorpicker">
                 <tr>
                     <td width="169" style="border: 1px solid #cccccc; background-color: #ffffff;">
                         <div id="temoin" style="float: right; width: 40px; height: 128px;"></div>
@@ -1111,14 +895,14 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                                 for (X = 0; X <= W; X++) {
                                     i = Math.round(X * (total / W));
                                     R = aR[i] - j;
-                                    if (R < 0)R = 0;
-                                    if (R > 255 || isNaN(R))R = 255;
+                                    if (R < 0) R = 0;
+                                    if (R > 255 || isNaN(R)) R = 255;
                                     G = aG[i] - j;
-                                    if (G < 0)G = 0;
-                                    if (G > 255 || isNaN(G))G = 255;
+                                    if (G < 0) G = 0;
+                                    if (G > 255 || isNaN(G)) G = 255;
                                     B = aB[i] - j;
-                                    if (B < 0)B = 0;
-                                    if (B > 255 || isNaN(B))B = 255;
+                                    if (B < 0) B = 0;
+                                    if (B > 255 || isNaN(B)) B = 255;
                                     s = s + '<' + 'td width="2" bgcolor="#' + jl[R] + jl[G] + jl[B] + '"><' + '/td>';
                                 }
                                 document.write(s + '<' + '/tr>\n');
@@ -1132,7 +916,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                             function t(e) {
                                 source = ie ? event.srcElement : e.target;
                                 if (source.tagName == 'TABLE') return;
-                                while (source.tagName != 'TD' && source.tagName != 'HTML')source = ns6 ? source.parentNode : source.parentElement;
+                                while (source.tagName != 'TD' && source.tagName != 'HTML') source = ns6 ? source.parentNode : source.parentElement;
                                 // couleur dans la zone témoin
                                 document.getElementById('temoin').style.backgroundColor = couleur_clic;
                                 couleur_clic = source.bgColor;
@@ -1332,8 +1116,7 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                     <td>
                         <!-- VALIDATION DES PARAMETRES -->
                         <br>
-                        <center><input type="reset" name="Submit" value="Réinitialiser le formulaire"> <input
-                                type="submit" name="color" value="Envoyer"></center>
+                        <center><input type="reset" name="Submit" value="Réinitialiser le formulaire"> <input type="submit" name="color" value="Envoyer"></center>
                         </form>
                         </p>
                     </td>
