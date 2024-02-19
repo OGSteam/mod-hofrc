@@ -114,8 +114,10 @@ if (!empty($_GET["result"])) {
     <tr>
         <td colspan="11" style="text-align:center;"><?php
             //On récupère la date au bon format
-            $pub_date_from = strftime("%d %m %Y", $pub_date_from);
-            $pub_date_to = strftime("%d %m %Y", $pub_date_to);
+            //$pub_date_from = strftime("%d %m %Y", $pub_date_from);
+            //$pub_date_to = strftime("%d %m %Y", $pub_date_to);
+            $pub_date_from = date("d m Y", $pub_date_from);
+            $pub_date_to = date("d m Y", $pub_date_to);
 
             //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois)
             ?>
