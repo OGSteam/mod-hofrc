@@ -15,9 +15,20 @@ $query = "SELECT `active` FROM `" . TABLE_MOD . "` WHERE `action`='hofrc' AND `a
 if (!$db->sql_numrows($db->sql_query($query)))
     die("Hacking attempt");
 
+    // include 
+$TABLE_HOFRC_ATTACK = $table_prefix . 'hofrc_attack';
+$TABLE_HOFRC_CONFIG = $table_prefix . 'hofrc_config';
+$TABLE_HOFRC_DEFENCE = $table_prefix . 'hofrc_defence';
+$TABLE_HOFRC_INFO_RC = $table_prefix . 'hofrc_info_rc';
+$TABLE_HOFRC_RP = $table_prefix . 'hofrc_rp';
+$TABLE_HOFRC_SKIN = $table_prefix . 'hofrc_skin';
+$TABLE_HOFRC_TITLE = $table_prefix . 'hofrc_title';
+
+
 if (!isset($pub_subaction)) $pub_subaction = "convert";
 if ($pub_subaction !== "preview" && $pub_subaction !== "temp") {
     require_once("views/page_header.php");
+    
     require_once('mod/hofrc/Pages/include.php');
     ?>
     <table width="100%">

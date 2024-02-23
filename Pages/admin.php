@@ -19,8 +19,7 @@ if ($user_data['user_admin'] != 1 && $user_data['user_coadmin'] != 1) {
 require_once('mod/hofrc/Pages/include.php');
 //Définitions
 global $db, $table_prefix, $prefixe;
-define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
-define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
+global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
 
 
 if (isset($pub_id)) {
@@ -84,11 +83,11 @@ if (isset($pub_set_historique)) {
 $skin = select_skin(0);
 
 // On récupère la configuration des couleurs par défaut
-$query_RCcolor = $db->sql_query("SELECT id,title, pt, gt, cle, clo, cr, vb, vc, rec, se, bmd, dst, edlm, tra, sat, lm, lleger, llourd, cg, ai, lp, pb, gb, ally, player_att, player_def,  techno, detruit, ressources_piller_min, ressources_piller_max, pertes_fleet_def, seuil_pertes, seuil_pillage, seuil_cdr, pertes_min_att, pertes_max_att, pertes_min_def, pertes_max_def, debris_min, debris_max, renta_min, renta_max FROM " . TABLE_HOFRC_SKIN . " WHERE title='" . $skin . "'");
+$query_RCcolor = $db->sql_query("SELECT id,title, pt, gt, cle, clo, cr, vb, vc, rec, se, bmd, dst, edlm, tra, sat, lm, lleger, llourd, cg, ai, lp, pb, gb, ally, player_att, player_def,  techno, detruit, ressources_piller_min, ressources_piller_max, pertes_fleet_def, seuil_pertes, seuil_pillage, seuil_cdr, pertes_min_att, pertes_max_att, pertes_min_def, pertes_max_def, debris_min, debris_max, renta_min, renta_max FROM " . $TABLE_HOFRC_SKIN . " WHERE title='" . $skin . "'");
 list($id, $title, $color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color_VB, $color_VC, $color_REC, $color_SE, $color_BMD, $color_DST, $color_EDLM, $color_TRA, $color_SAT, $color_LM, $color_LLEGER, $color_LLOURD, $color_CG, $color_AI, $color_LP, $color_PB, $color_GB, $color_ALLY, $color_PLAYER_ATT, $color_PLAYER_DEF, $color_TECHNO, $color_DETRUIT, $color_RESSOURCES_PILLER_MIN, $color_RESSOURCES_PILLER_MAX, $color_PERTES_FLEET_DEF, $color_SEUIL_PERTES, $color_SEUIL_PILLAGE, $color_SEUIL_CDR, $color_PERTES_MIN_ATT, $color_PERTES_MAX_ATT, $color_PERTES_MIN_DEF, $color_PERTES_MAX_DEF, $color_DEBRIS_MIN, $color_DEBRIS_MAX, $color_RENTA_MIN, $color_RENTA_MAX) = $db->sql_fetch_row($query_RCcolor);
 
 // On récupère les configurations de l'univers
-$query_config = "select * from " . TABLE_HOFRC_CONFIG;
+$query_config = "select * from " . $TABLE_HOFRC_CONFIG;
 $result_config = $db->sql_query($query_config);
 
 while (list($config_name, $config_value) = $db->sql_fetch_row($result_config)) {
@@ -291,12 +290,13 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                     Sélection du skin:
                     <SELECT style="width: 40%;" name="list_skin" value="">
                         <?php
-                        $query_skin = $db->sql_query("SELECT `title` FROM `" . TABLE_HOFRC_SKIN . "` ORDER BY `title` ASC");
+                     
+                        $query_skin = $db->sql_query("SELECT `title` FROM `" . $TABLE_HOFRC_SKIN . "` ORDER BY `title` ASC");
                         while ($query_select_skin = $db->sql_fetch_row($query_skin)) {
                             echo "<option name = '" . $query_select_skin[0] . "' value='" . $query_select_skin[0] . "'";
                             if ($skin == $query_select_skin[0]) echo "selected='selected'";
                             echo ">" . $query_select_skin[0] . "</option>";
-                        }
+                        }   
                         ?>
                     </select>
                     <!-- VALIDATION DES PARAMETRES -->
@@ -366,7 +366,6 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 </b>
             </legend>
             <p align='left'>
-
             <form method="POST" action="index.php?action=hofrc&subaction=admin" name="rate">
                 Ratio: <input type="text" name="rate_resize" value="<?php $rate_resize = rate_resizing(0);
                                                                     echo ($rate_resize); ?>" id="new_skin" maxlength="20">%<br />

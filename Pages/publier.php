@@ -17,33 +17,66 @@ if (!$db->sql_numrows($db->sql_query($query))) die("Hacking attempt");
 
 //Définitions
 global $db, $table_prefix, $prefixe;
-// define('TABLE_HOFRC_CONFIG',$table_prefix.'hofrc_config');
-// define('TABLE_HOFRC_ATTACK',$table_prefix.'hofrc_attack');
-define('TABLE_HOFRC_DEFENSE', $table_prefix . 'hofrc_defence');
-define('TABLE_HOFRC_INFO_RC', $table_prefix . 'hofrc_info_rc');
-define('TABLE_HOFRC_TITLE', $table_prefix . 'hofrc_title');
+global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
+
 
 require_once('mod/hofrc/Pages/include.php');
 $id_rc = $_GET["id"];
-if ($_GET["create"] == 'ok') {
-    $nb_enregistrement = $db->sql_query("SELECT count(*) from `" . TABLE_HOFRC_TITLE . "`");
-    $numero = (mysqli_data_seek($nb_enregistrement, 0) + 1);
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_INFO_RC . "` SET `publicated` = '1' WHERE " . TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $id_rc . "'");
-    $db->sql_query("INSERT INTO `" . TABLE_HOFRC_TITLE . "` (`id`, `id_rc`, `board_url`, `title`) VALUES ('" . $numero . "', '" . $id_rc . "', '', '" . $_POST['title'] . "')");
-    $id = $db->sql_query("SELECT `id` FROM `" . TABLE_HOFRC_TITLE . "` ORDER BY id DESC LIMIT 0,1");
-    list($last_id) = $db->sql_fetch_row($id);
-    historique($last_id);
+if (isset ($_GET["create"])) {
+    if ($_GET["create"] == 'ok') {
+        $nb_enregistrement = $db->sql_query("SELECT count(*) from `" . $TABLE_HOFRC_TITLE . "`");
+        $numero = (mysqli_data_seek($nb_enregistrement, 0) + 1);
+        $db->sql_query("UPDATE `" .  $TABLE_HOFRC_INFO_RC . "` SET `publicated` = '1' WHERE " .  $TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $id_rc . "'");
+        $db->sql_query("REPLACE INTO `" . $TABLE_HOFRC_TITLE . "` ( `id_rc`, `board_url`, `title`) VALUES ('" . $numero . "', '" . $id_rc . "',  '" . $_POST['title'] . "')");
+        $id = $db->sql_query("SELECT `id` FROM `" . $TABLE_HOFRC_TITLE . "` ORDER BY id DESC LIMIT 0,1");
+        list($last_id) = $db->sql_fetch_row($id);
+        historique($last_id);
+    }
+}
+if (isset ($TABLE_HOFRC_DEFENSE)) {
+
+
+   // var_dump("SELECT `player`, `daterc` FROM `" . $TABLE_HOFRC_DEFENSE . "`, `" .  $TABLE_HOFRC_INFO_RC . "` WHERE `" . $TABLE_HOFRC_DEFENSE . "`.id_rc =  " . $id_rc . " AND `" .  $TABLE_HOFRC_INFO_RC . "`.id_rc = " . $id_rc);
 
 }
+if (isset ($TABLE_HOFRC_INFO_RC)) {
+   // var_dump("SELECT `player`, `daterc` FROM `" . $TABLE_HOFRC_DEFENSE . "`, `" .  $TABLE_HOFRC_INFO_RC . "` WHERE `" . $TABLE_HOFRC_DEFENSE . "`.id_rc =  " . $id_rc . " AND `" .  $TABLE_HOFRC_INFO_RC . "`.id_rc = " . $id_rc);
 
-$query_player_date = $db->sql_query("SELECT `player`, `daterc` FROM `" . TABLE_HOFRC_DEFENSE . "`, `" . TABLE_HOFRC_INFO_RC . "` WHERE `" . TABLE_HOFRC_DEFENSE . "`.id_rc =  " . $id_rc . " AND `" . TABLE_HOFRC_INFO_RC . "`.id_rc = " . $id_rc);
+}
+if (isset ($id_rc)) {
+    //$TABLE_HOFRC_ATTACK = $table_prefix . 'hofrc_attack';
+//$TABLE_HOFRC_CONFIG = $table_prefix . 'hofrc_config';
+//$TABLE_HOFRC_DEFENCE = $table_prefix . 'hofrc_defence';
+//$TABLE_HOFRC_INFO_RC = $table_prefix . 'hofrc_info_rc';
+//$TABLE_HOFRC_RP = $table_prefix . 'hofrc_rp';
+//$TABLE_HOFRC_SKIN = $table_prefix . 'hofrc_skin';
+//$TABLE_HOFRC_TITLE = $table_prefix . 'hofrc_title';
+//var_dump( $TABLE_HOFRC_ATTACK);echo "<br />";
+//var_dump( $TABLE_HOFRC_CONFIG);echo "<br />";
+//var_dump( $TABLE_HOFRC_DEFENCE);echo "<br />";
+//var_dump( $TABLE_HOFRC_INFO_RC);echo "<br />";
+//var_dump( $TABLE_HOFRC_SKIN);echo "<br />";
+
+//var_dump( $TABLE_HOFRC_RP);echo "<br />";
+
+//var_dump( $TABLE_HOFRC_TITLE);echo "<br />";
+//var_dump( $id_rc);echo "<br />";
+
+//var_dump("SELECT `player`, `daterc` FROM `" . $table_prefix . "hofrc_defence` ");
+
+
+  //  var_dump("SELECT `player`, `daterc` FROM `" . $table_prefix . "hofrc_defence`, `" .  $table_prefix . "hofrc_info_rc` WHERE `" . $table_prefix . "hofrc_defence`.id_rc =  " . $id_rc . " AND `" .  $table_prefix . "hofrc_info_rc`.id_rc = " . $id_rc);
+
+}
+//die();
+$query_player_date = $db->sql_query("SELECT `player`, `daterc` FROM `" . $table_prefix . "hofrc_defence`, `" .  $table_prefix . "hofrc_info_rc` WHERE `" . $table_prefix . "hofrc_defence`.id_rc =  " . $id_rc . " AND `" .  $table_prefix . "hofrc_info_rc`.id_rc = " . $id_rc);
 list($player, $date) = $db->sql_fetch_row($query_player_date);
 
 $queryRC = $db->sql_query("SELECT `" . TABLE_PARSEDRC . "`.`id_rc`,`dateRC`,`coordinates`,`victoire`,`pertes_A`,`pertes_D`,`gain_M`,`gain_C`,`gain_D`,`debris_M`,`debris_C` , `" . TABLE_PARSEDRCROUND . "`.`id_rc`,`numround`,`id_rcround` FROM `" . TABLE_PARSEDRCROUND . "` LEFT JOIN `" . TABLE_PARSEDRC . "` on `" . TABLE_PARSEDRC . "`.`id_rc`=`" . TABLE_PARSEDRCROUND . "`.`id_rc`  WHERE `dateRC` > " . $date . " AND numround=1 ORDER BY dateRC");
 
 
 if (isset($_POST["raid"])) {
-
+    $pillage="";
     // On véréfie que pillage et raid ne sont pas tout les 2 cocher
     for ($i = 1; $i <= $_POST["count"]; $i++) {
         if (!empty($_POST[$i])) {
@@ -51,7 +84,12 @@ if (isset($_POST["raid"])) {
 
         }
     }
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_TITLE . "` SET `pillage` = '" . $pillage . "' WHERE " . TABLE_HOFRC_TITLE . ".`id_rc`  = '" . $id_rc . "'");
+
+  //  var_dump($pillage);
+ //   die();
+   // var_dump("UPDATE `" .  $table_prefix . "hofrc_title` SET `pillage` = '" . $pillage . "' WHERE " . $table_prefix . "hofrc_title.`id_rc`  = '" . $id_rc . "'");
+   // die();
+    $db->sql_query("UPDATE `" .  $table_prefix . "hofrc_title` SET `pillage` = '" . $pillage . "' WHERE " . $table_prefix . "hofrc_title.`id_rc`  = '" . $id_rc . "'");
 
     ?>
     <script language="JavaScript" type="text/javascript">

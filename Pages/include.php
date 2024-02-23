@@ -14,9 +14,13 @@ if (!defined('IN_SPYOGAME')) die("Hacking attempt");
 
 //Définitions
 global $db, $table_prefix, $prefixe;
+
+
 //On vérifie que le mod est activé
 $query = "SELECT `active` FROM `" . TABLE_MOD . "` WHERE `action`='hofrc' AND `active`='1' LIMIT 1";
 if (!$db->sql_numrows($db->sql_query($query))) die("Hacking attempt");
+
+
 
 /**************************************************************************/
 // Fonction pour traiter le post de configuration de l'historique
@@ -41,23 +45,24 @@ if (!$db->sql_numrows($db->sql_query($query))) die("Hacking attempt");
 function set_historique($font_historique, $font_size, $largeur_historique, $hauteur_historique, $pos_horiz_historique_1, $pos_horiz_historique_2, $pos_horiz_historique_3, $pos_horiz_historique_4, $pos_horiz_historique_5, $color_txt_historique_1, $color_txt_historique_2, $color_txt_historique_3, $color_txt_historique_4, $color_txt_historique_5, $pos_verti_historique, $angle_historique)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $font_historique . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'font_historique'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $font_size . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'font_size_historique'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $largeur_historique . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'largeur_historique'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $hauteur_historique . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'hauteur_historique'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_1 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_1'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_2 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_2'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_3 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_3'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_4 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_4'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_5 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_5'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_1 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_1'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_2 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_2'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_3 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_3'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_4 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_4'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_5 . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_5'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_verti_historique . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_verti_historique'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $angle_historique . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'angle_historique'");
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
+
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $font_historique . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'font_historique'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $font_size . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'font_size_historique'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $largeur_historique . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'largeur_historique'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $hauteur_historique . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'hauteur_historique'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_1 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_1'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_2 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_2'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_3 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_3'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_4 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_4'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_horiz_historique_5 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_horiz_historique_5'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_1 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_1'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_2 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_2'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_3 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_3'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_4 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_4'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $color_txt_historique_5 . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'color_txt_historique_5'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $pos_verti_historique . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'pos_verti_historique'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $angle_historique . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'angle_historique'");
 }
 
 
@@ -92,35 +97,33 @@ function set_historique($font_historique, $font_size, $largeur_historique, $haut
 function post_config($new_start_universe, $config_size_initial, $config_size_courant, $config_size_basic, $config_size_normal, $config_size_avance, $config_size_stratege, $config_size_expert, $config_size_guerrier, $config_size_devastateur, $config_size_champion, $config_size_legendaire, $new_end_initial_solo, $new_end_initial_groupe, $new_end_courant_solo, $new_end_courant_groupe, $new_end_basic_solo, $new_end_basic_groupe, $new_end_normal_solo, $new_end_normal_groupe, $new_end_avance_solo, $new_end_avance_groupe, $new_end_stratege_solo, $new_end_stratege_groupe)
 {
     global $db, $table_prefix;
-    if (!defined('TABLE_HOFRC_CONFIG')) {
-        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    }
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
 
 
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_start_universe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'start_universe'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_initial . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_initial'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_courant . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_courant'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_basic . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_basic'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_normal . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_normal'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_avance . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_avance'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_stratege . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_stratege'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_expert . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_expert'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_guerrier . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'guerrier'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_devastateur . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'devastateur'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_champion . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_champion'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_legendaire . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_legendaire'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_initial_solo . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_initial_solo'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_initial_groupe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_initial_groupe'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_courant_solo . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_courant_solo'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_courant_groupe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_courant_groupe'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_basic_solo . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_basic_solo'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_basic_groupe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_basic_groupe'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_normal_solo . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_normal_solo'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_normal_groupe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_normal_groupe'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_avance_solo . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_avance_solo'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_avance_groupe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_avance_groupe'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_stratege_solo . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_stratege_solo'");
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_stratege_groupe . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_stratege_groupe'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_start_universe . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'start_universe'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_initial . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_initial'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_courant . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_courant'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_basic . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_basic'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_normal . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_normal'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_avance . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_avance'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_stratege . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_stratege'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_expert . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_expert'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_guerrier . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'guerrier'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_devastateur . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'devastateur'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_champion . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_champion'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $config_size_legendaire . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'size_legendaire'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_initial_solo . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_initial_solo'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_initial_groupe . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_initial_groupe'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_courant_solo . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_courant_solo'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_courant_groupe . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_courant_groupe'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_basic_solo . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_basic_solo'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_basic_groupe . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_basic_groupe'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_normal_solo . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_normal_solo'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_normal_groupe . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_normal_groupe'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_avance_solo . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_avance_solo'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_avance_groupe . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_avance_groupe'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_stratege_solo . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_stratege_solo'");
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_end_stratege_groupe . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'end_stratege_groupe'");
 }
 
 
@@ -138,11 +141,8 @@ function post_config($new_start_universe, $config_size_initial, $config_size_cou
 function select_picture($type, $skin, $picture, $historique, $round)
 {
     global $db, $table_prefix;
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     $historique_picture = '';
-    if (!defined('TABLE_HOFRC_TITLE')) {
-        define('TABLE_HOFRC_TITLE', $table_prefix . 'hofrc_title');
-    }
-
 
     $filename = "mod/hofrc/Skin/" . $skin . '/' . $picture;
     $file_historique = "mod/hofrc/Output/historique.php";
@@ -156,7 +156,7 @@ function select_picture($type, $skin, $picture, $historique, $round)
         if ($type == "bbcode") {
             $historique_picture .= "[center][spoiler]";
         }
-        $query_historique = $db->sql_query("SELECT * FROM " . TABLE_HOFRC_TITLE);
+        $query_historique = $db->sql_query("SELECT * FROM " . $TABLE_HOFRC_TITLE);
         while ($historique_title = $db->sql_fetch_assoc($query_historique)) {
             $picture_title = "mod/hofrc/Output/" . $historique_title['id'] . ".png";
             if (!empty($historique_title['board_url'])) {
@@ -190,16 +190,14 @@ function select_picture($type, $skin, $picture, $historique, $round)
 function select_skin($value)
 {
     global $db, $table_prefix;
-    if (!defined('TABLE_HOFRC_CONFIG')) {
-        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    }
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
 
     if ($value === 0) {
-        $query_skin = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_skin'");
+        $query_skin = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_skin'");
         list($skin) = $db->sql_fetch_row($query_skin);
         return $skin;
     } else {
-        $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $value . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'hofrc_skin'");
+        $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $value . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'hofrc_skin'");
     }
 }
 
@@ -212,13 +210,12 @@ function select_skin($value)
 function new_skin($new_skin)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     $folder = "mod/hofrc/Skin/" . $new_skin;
     if (!file_exists($folder)) {
         mkdir($folder, 0777);
-        $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_skin . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'hofrc_skin'");
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_SKIN . "` (`title`) VALUES('" . $new_skin . "')");
+        $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $new_skin . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'hofrc_skin'");
+        $db->sql_query("INSERT INTO `" . $TABLE_HOFRC_SKIN . "` (`title`) VALUES('" . $new_skin . "')");
     } else {
         echo "Un dossier " . $new_skin . " existe déjà.";
     }
@@ -311,18 +308,14 @@ function jsspecialchars($s)
 function convert($id_RC, $type, $hof, $pillage)
 {
     global $db, $table_prefix;
-    if (!defined('TABLE_HOFRC_SKIN')) {
-        define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
-    }
-
-
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     // On définie le skin
     $skin = select_skin(0);
 
     $template = '';
 
     // On récupère la configuration par défaut
-    $query_RCcolor = $db->sql_query("SELECT pt, gt, cle, clo, cr, vb, vc, rec, se, bmd, dst, edlm, tra, sat, lm, lleger, llourd, cg, ai, lp, pb, gb, player_att, player_def, ally, techno, detruit, ressources_piller_min, ressources_piller_max, pertes_fleet_def, seuil_pertes, seuil_pillage, seuil_cdr, pertes_min_att, pertes_max_att, pertes_min_def, pertes_max_def, debris_min, debris_max, renta_min, renta_max, pic_header , pic_round, pic_separator, pic_result, pic_background FROM " . TABLE_HOFRC_SKIN . " WHERE title LIKE '" . $skin . "'");
+    $query_RCcolor = $db->sql_query("SELECT pt, gt, cle, clo, cr, vb, vc, rec, se, bmd, dst, edlm, tra, sat, lm, lleger, llourd, cg, ai, lp, pb, gb, player_att, player_def, ally, techno, detruit, ressources_piller_min, ressources_piller_max, pertes_fleet_def, seuil_pertes, seuil_pillage, seuil_cdr, pertes_min_att, pertes_max_att, pertes_min_def, pertes_max_def, debris_min, debris_max, renta_min, renta_max, pic_header , pic_round, pic_separator, pic_result, pic_background FROM " . $TABLE_HOFRC_SKIN . " WHERE title LIKE '" . $skin . "'");
     list($color_PT, $color_GT, $color_CLE, $color_CLO, $color_CR, $color_VB, $color_VC, $color_REC, $color_SE, $color_BMD, $color_DST, $color_EDLM, $color_TRA, $color_SAT, $color_LM, $color_LLEGER, $color_LLOURD, $color_CG, $color_AI, $color_LP, $color_PB, $color_GB, $color_PLAYER_ATT, $color_PLAYER_DEF, $color_ALLY, $color_TECHNO, $color_DETRUIT, $color_RESSOURCES_PILLER_MIN, $color_RESSOURCES_PILLER_MAX, $color_PERTES_FLEET_DEF, $color_SEUIL_PERTES, $color_SEUIL_PILLAGE, $color_SEUIL_CDR, $color_PERTES_MIN_ATT, $color_PERTES_MAX_ATT, $color_PERTES_MIN_DEF, $color_PERTES_MAX_DEF, $color_DEBRIS_MIN, $color_DEBRIS_MAX, $color_RENTA_MIN, $color_RENTA_MAX, $color_PIC_HEADER, $color_PIC_ROUND, $color_PIC_SEPARATOR, $color_PIC_RESULT, $color_PIC_BACKGROUND) = $db->sql_fetch_row($query_RCcolor);
 
     $query_RCRound = $db->sql_query("SELECT id_rcround FROM " . TABLE_PARSEDRCROUND . " WHERE id_rc=" . $id_RC . " AND numround=1");
@@ -400,7 +393,7 @@ function convert($id_RC, $type, $hof, $pillage)
 
 
     // On récupère la flotte attaquante du premier round
-    $query_round_attack_first = $db->sql_query("SELECT player, coordinates, Armes, Bouclier, Protection, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SUM(DST), SUM(EDLM), SUM(TRA) FROM " . TABLE_ROUND_ATTACK . " WHERE id_rcround=" . $id_rcround . " GROUP BY player");
+    $query_round_attack_first = $db->sql_query("SELECT player, coordinates, Armes, Bouclier, Protection, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SUM(DST), SUM(EDLM), SUM(TRA) FROM " .TABLE_ROUND_ATTACK. " WHERE id_rcround=" . $id_rcround . " GROUP BY player");
     while (list($player_att, $coordinates_att, $Armes_att, $Bouclier_att, $Protection_att, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $DST, $EDLM, $TRA) = $db->sql_fetch_row($query_round_attack_first)) {
         // On récupère les alliances des attaquants
         $query_ally_att = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_att . "'");
@@ -494,7 +487,7 @@ function convert($id_RC, $type, $hof, $pillage)
 
 
     // On récupère les flottes après le combat
-    $query_player_attack_last = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE id_rcround=" . $id_last_rcround . " GROUP BY player");
+    $query_player_attack_last = $db->sql_query("SELECT player FROM " .TABLE_ROUND_ATTACK. " WHERE id_rcround=" . $id_last_rcround . " GROUP BY player");
     while (list($player_attack_list) = $db->sql_fetch_row($query_player_attack_last)) {
         // On nettoie les noms des joueurs des metacaractère et nous voila partie dans un beau bordel -_-'
         $player_attack_list_format = preg_replace('#(\(|\)|\#|\!|\^|\$|\(|\)|\[|\]|\{|\}|\?|\+|\*|\.|\\|\|)#', 'Xespace_symboleX$1', $player_attack_list);
@@ -504,7 +497,7 @@ function convert($id_RC, $type, $hof, $pillage)
         preg_match_all('#\^/(' . $player_attack_list_format2 . ')\^\$,(.+)---#isU', $template_type_att, $select_fleet_attack);
 
 
-        $query_round_attack_last = $db->sql_query("SELECT player, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SUM(DST), SUM(EDLM), SUM(TRA) FROM " . TABLE_ROUND_ATTACK . " WHERE id_rcround=" . $id_last_rcround . " AND player='" . $player_attack_list . "'  GROUP BY player");
+        $query_round_attack_last = $db->sql_query("SELECT player, SUM(PT), SUM(GT), SUM(CLE), SUM(CLO), SUM(CR), SUM(VB), SUM(VC), SUM(REC), SUM(SE), SUM(BMD), SUM(DST), SUM(EDLM), SUM(TRA) FROM " .TABLE_ROUND_ATTACK. " WHERE id_rcround=" . $id_last_rcround . " AND player='" . $player_attack_list . "'  GROUP BY player");
         while (list($player_att, $PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $DST, $EDLM, $TRA) = $db->sql_fetch_row($query_round_attack_last)) {
             // Variable de concaténation pour les attaquants
             $template .= "\n" . 'Attaquant ' . $color_player_att . $player_att . $color_bal . "\n";
@@ -681,8 +674,9 @@ function convert($id_RC, $type, $hof, $pillage)
 function lost_unit($player_name, $alive_unit, $key, $id_rcround, $cat)
 {
     global $db, $table_prefix;
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     if ($cat == "att") {
-        $table_cat = TABLE_ROUND_ATTACK;
+        $table_cat =TABLE_ROUND_ATTACK;
     } elseif ($cat == "def") {
         $table_cat = TABLE_ROUND_DEFENSE;
     }
@@ -716,11 +710,9 @@ function lost_unit($player_name, $alive_unit, $key, $id_rcround, $cat)
 function set_color_fleet($PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $SAT, $DEST, $EDLM, $TRA)
 {
     global $db, $table_prefix;
-    if (!defined('TABLE_HOFRC_SKIN')) {
-        define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
-    }
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     $set_id = $_GET['id'];
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_SKIN . "` SET `pt` = '" . $PT . "', `gt` = '" . $GT . "', `cle` = '" . $CLE . "', `clo` = '" . $CLO . "', `cr` = '" . $CR . "', `vb` = '" . $VB . "', `vc` = '" . $VC . "', `rec` = '" . $REC . "', `se` = '" . $SE . "', `bmd` = '" . $BMD . "', `sat` = '" . $SAT . "', `dst` = '" . $DEST . "', `edlm` = '" . $EDLM . "', `tra` = '" . $TRA . "'	WHERE `" . TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_SKIN . "` SET `pt` = '" . $PT . "', `gt` = '" . $GT . "', `cle` = '" . $CLE . "', `clo` = '" . $CLO . "', `cr` = '" . $CR . "', `vb` = '" . $VB . "', `vc` = '" . $VC . "', `rec` = '" . $REC . "', `se` = '" . $SE . "', `bmd` = '" . $BMD . "', `sat` = '" . $SAT . "', `dst` = '" . $DEST . "', `edlm` = '" . $EDLM . "', `tra` = '" . $TRA . "'	WHERE `" . $TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
 }
 
 /**************************************************************************/
@@ -738,11 +730,9 @@ function set_color_fleet($PT, $GT, $CLE, $CLO, $CR, $VB, $VC, $REC, $SE, $BMD, $
 function set_color_def($LM, $LLEGER, $LLOURD, $CG, $AI, $LP, $PB, $GB)
 {
     global $db, $table_prefix;
-    if (!defined('TABLE_HOFRC_SKIN')) {
-        define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
-    }
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     $set_id = $_GET['id'];
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_SKIN . "` SET `lm` = '" . $LM . "', `lleger` = '" . $LLEGER . "', `llourd` = '" . $LLOURD . "', `cg` = '" . $CG . "', `ai` = '" . $AI . "', `lp` = '" . $LP . "', `pb` = '" . $PB . "', `gb` = '" . $GB . "'	WHERE `" . TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_SKIN . "` SET `lm` = '" . $LM . "', `lleger` = '" . $LLEGER . "', `llourd` = '" . $LLOURD . "', `cg` = '" . $CG . "', `ai` = '" . $AI . "', `lp` = '" . $LP . "', `pb` = '" . $PB . "', `gb` = '" . $GB . "'	WHERE `" . $TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
 }
 
 /**************************************************************************/
@@ -758,9 +748,9 @@ function set_color_def($LM, $LLEGER, $LLOURD, $CG, $AI, $LP, $PB, $GB)
 function set_color_general($title, $ALLY, $PLAYER_ATT, $PLAYER_DEF, $TECHNO, $DETRUIT)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     $set_id = $_GET['id'];
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_SKIN . "` SET `title` = '" . $title . "', `ally` = '" . $ALLY . "', `player_att` = '" . $PLAYER_ATT . "', `player_def` = '" . $PLAYER_DEF . "', `techno` = '" . $TECHNO . "', `detruit` = '" . $DETRUIT . "'	WHERE `" . TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_SKIN . "` SET `title` = '" . $title . "', `ally` = '" . $ALLY . "', `player_att` = '" . $PLAYER_ATT . "', `player_def` = '" . $PLAYER_DEF . "', `techno` = '" . $TECHNO . "', `detruit` = '" . $DETRUIT . "'	WHERE `" . $TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
 }
 
 /**************************************************************************/
@@ -784,9 +774,9 @@ function set_color_general($title, $ALLY, $PLAYER_ATT, $PLAYER_DEF, $TECHNO, $DE
 function set_end_rc($PILLER_MIN, $PILLER_MAX, $PERTES_FLEET_DEF, $SEUIL_PERTES, $SEUIL_PILLAGE, $SEUIL_CDR, $PERTES_MIN_ATT, $PERTES_MAX_ATT, $PERTES_MIN_DEF, $PERTES_MAX_DEF, $DEBRIS_MIN, $DEBRIS_MAX, $RENTA_MIN, $RENTA_MAX)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_SKIN', $table_prefix . 'hofrc_skin');
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
     $set_id = $_GET['id'];
-    $db->sql_query("UPDATE `" . TABLE_HOFRC_SKIN . "` SET `ressources_piller_min` =  '" . $PILLER_MIN . "', `ressources_piller_max` =  '" . $PILLER_MAX . "', `pertes_fleet_def` =  '" . $PERTES_FLEET_DEF . "', `seuil_pertes` =  '" . $SEUIL_PERTES . "', `seuil_pillage` =  '" . $SEUIL_PILLAGE . "', `seuil_cdr` =  '" . $SEUIL_CDR . "', `pertes_min_att` =  '" . $PERTES_MIN_ATT . "', `pertes_max_att` =  '" . $PERTES_MAX_ATT . "', `pertes_min_def` =  '" . $PERTES_MIN_DEF . "', `pertes_max_def` =  '" . $PERTES_MAX_DEF . "', `debris_min` =  '" . $DEBRIS_MIN . "', `debris_max` =  '" . $DEBRIS_MAX . "', `renta_min` =  '" . $RENTA_MIN . "', `renta_max` =  '" . $RENTA_MAX . "' 	WHERE `" . TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
+    $db->sql_query("UPDATE `" . $TABLE_HOFRC_SKIN . "` SET `ressources_piller_min` =  '" . $PILLER_MIN . "', `ressources_piller_max` =  '" . $PILLER_MAX . "', `pertes_fleet_def` =  '" . $PERTES_FLEET_DEF . "', `seuil_pertes` =  '" . $SEUIL_PERTES . "', `seuil_pillage` =  '" . $SEUIL_PILLAGE . "', `seuil_cdr` =  '" . $SEUIL_CDR . "', `pertes_min_att` =  '" . $PERTES_MIN_ATT . "', `pertes_max_att` =  '" . $PERTES_MAX_ATT . "', `pertes_min_def` =  '" . $PERTES_MIN_DEF . "', `pertes_max_def` =  '" . $PERTES_MAX_DEF . "', `debris_min` =  '" . $DEBRIS_MIN . "', `debris_max` =  '" . $DEBRIS_MAX . "', `renta_min` =  '" . $RENTA_MIN . "', `renta_max` =  '" . $RENTA_MAX . "' 	WHERE `" . $TABLE_HOFRC_SKIN . "`.`id`  =  " . $set_id);
 }
 
 /**************************************************************************/
@@ -798,16 +788,14 @@ function set_end_rc($PILLER_MIN, $PILLER_MAX, $PERTES_FLEET_DEF, $SEUIL_PERTES, 
 function rate_resizing($percent)
 {
     global $db, $table_prefix;
-    if (!defined('TABLE_HOFRC_CONFIG')) {
-        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    }
-
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
+  
     if ($percent === 0) {
-        $query_rate = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_percent_resizing'");
+        $query_rate = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_percent_resizing'");
         list($rate_resize) = $db->sql_fetch_row($query_rate);
         return $rate_resize;
     } else {
-        $db->sql_query("UPDATE `" . TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $percent . "' WHERE " . TABLE_HOFRC_CONFIG . ".`config_name`  = 'hofrc_percent_resizing'");
+        $db->sql_query("UPDATE `" . $TABLE_HOFRC_CONFIG . "` SET `config_value` = '" . $percent . "' WHERE " . $TABLE_HOFRC_CONFIG . ".`config_name`  = 'hofrc_percent_resizing'");
     }
 }
 
@@ -820,8 +808,10 @@ function rate_resizing($percent)
 function image_resizing($size)
 {
     global $db;
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
+  
     // On récupère le ratio des images
-    $query_percent_size = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_percent_resizing'");
+    $query_percent_size = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hofrc_percent_resizing'");
     list($percent_resizing) = $db->sql_fetch_row($query_percent_size);
 
     $new_size = round((($percent_resizing / 100) * $size));
@@ -1020,9 +1010,8 @@ function list_font()
 function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id_RC)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    define('TABLE_HOFRC_INFO_RC', $table_prefix . 'hofrc_info_rc');
-    $query_set_config = "select * from " . TABLE_HOFRC_CONFIG;
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
+    $query_set_config = "select * from " . $TABLE_HOFRC_CONFIG;
     $set_config = $db->sql_query($query_set_config);
     while (list($set_config_name, $set_config_value) = $db->sql_fetch_row($set_config)) {
         $set_hofrc_config[$set_config_name] = stripslashes($set_config_value);
@@ -1035,77 +1024,77 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
     if (($Nb_Att == 1) || ($Nb_Def == 1)) {
         // Maintenant que l'on sait qu'il s'agit d'une victoire solo on détermine de quel catégorie il s'agit.
         if (($set_hofrc_config["size_initial"] < $cdr && $cdr < $set_hofrc_config["size_courant"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_initial_solo"])) {
-            $check_initial_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_initial_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_initial_solo)) {
                 signal_hof($id_RC, "INITIAL");
                 echo "<script>alert('Un HOF Initial a été fait.');</script>";
             }
             return "<span style='color:red;'>Initial</span>";
         } elseif (($set_hofrc_config["size_courant"] < $cdr && $cdr < $set_hofrc_config["size_basic"]) && ($set_hofrc_config["start_universe"] < $dateRC && $set_hofrc_config["end_courant_solo"] > $dateRC)) {
-            $check_courant_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_courant_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_courant_solo)) {
                 signal_hof($id_RC, "COURANT");
                 echo "<script>alert('Un HOF Courant a été fait.');</script>";
             }
             return "<span style='color:red;'>Courant</span>";
         } elseif (($set_hofrc_config["size_basic"] < $cdr && $cdr < $set_hofrc_config["size_normal"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_basic_solo"])) {
-            $check_initial_basic = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_initial_basic = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_initial_basic)) {
                 signal_hof($id_RC, "BASIC");
                 echo "<script>alert('Un HOF Basic a été fait.');</script>";
             }
             return "<span style='color:red;'>Basic</span>";
         } elseif (($set_hofrc_config["size_normal"] < $cdr && $cdr < $set_hofrc_config["size_avance"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_normal_solo"])) {
-            $check_normal_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_normal_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_normal_solo)) {
                 signal_hof($id_RC, "NORMAL");
                 echo "<script>alert('Un HOF Normal a été fait.');</script>";
             }
             return "<span style='color:red;'>Normal</span>";
         } elseif (($set_hofrc_config["size_avance"] < $cdr && $cdr < $set_hofrc_config["size_stratege"]) && ($set_hofrc_config["start_universe"] < $dateRC) && ($dateRC < $set_hofrc_config["end_stratege_solo"])) {
-            $check_avance_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_avance_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_avance_solo)) {
                 signal_hof($id_RC, "AVANCE");
                 echo "<script>alert('Un HOF Avancé a été fait.');</script>";
             }
             return "<span style='color:red;'>Avancé</span>";
         } elseif ($set_hofrc_config["size_stratege"] < $cdr && $cdr < $set_hofrc_config["size_expert"]) {
-            $check_stratege_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_stratege_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_stratege_solo)) {
                 signal_hof($id_RC, "STRATEGE");
                 echo "<script>alert('Un HOF Stratège a été fait.');</script>";
             }
             return "<span style='color:red;'>Stratège</span>";
         } elseif ($set_hofrc_config["size_expert"] < $cdr && $cdr < $set_hofrc_config["size_guerrier"]) {
-            $check_expert_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_expert_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_expert_solo)) {
                 signal_hof($id_RC, "EXPERT");
                 echo "<script>alert('Un HOF Expert a été fait.');</script>";
             }
             return "<span style='color:red;'>Expert</span>";
         } elseif ($set_hofrc_config["size_guerrier"] < $cdr && $cdr < $set_hofrc_config["size_devastateur"]) {
-            $check_guerrier_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_guerrier_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_guerrier_solo)) {
                 signal_hof($id_RC, "GUERRIER");
                 echo "<script>alert('Un HOF Guerrier a été fait.');</script>";
             }
             return "<span style='color:red;'>Guerrier</span>";
         } elseif ($set_hofrc_config["size_devastateur"] < $cdr && $cdr < $set_hofrc_config["size_champion"]) {
-            $check_devastateur_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_devastateur_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_devastateur_solo)) {
                 signal_hof($id_RC, "DEVASTATEUR");
                 echo "<script>alert('Un HOF Dévastateur a été fait.');</script>";
             }
             return "<span style='color:red;'>Dévastateur</span>";
         } elseif ($set_hofrc_config["size_champion"] < $cdr && $cdr < $set_hofrc_config["size_legendaire"]) {
-            $check_champion_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_champion_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_champion_solo)) {
                 signal_hof($id_RC, "CHAMPION");
                 echo "<script>alert('Un HOF Champion a été fait.');</script>";
             }
             return "<span style='color:red;'>Champion</span>";
         } elseif ($set_hofrc_config["size_legendaire"] < $cdr) {
-            $check_legendaire_solo = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+            $check_legendaire_solo = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
             if (!$db->sql_numrows($check_legendaire_solo)) {
                 signal_hof($id_RC, "LEGENDAIRE");
                 echo "<script>alert('Un HOF Légendaire a été fait.');</script>";
@@ -1113,77 +1102,77 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
             return "<span style='color:red;'>Legendaire</span>";
         }
     } elseif (($set_hofrc_config["size_initial"] < $cdr && $cdr < $set_hofrc_config["size_courant"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_initial_groupe"])) {
-        $check_initial_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_initial_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_initial_groupe)) {
             signal_hof($id_RC, "INITIAL");
             echo "<script>alert('Un HOF initial a été fait.');</script>";
         }
         return "<span style='color:red;'>Initial</span>";
     } elseif (($set_hofrc_config["size_courant"] < $cdr && $cdr < $set_hofrc_config["size_basic"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_courant_groupe"])) {
-        $check_courant_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_courant_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_courant_groupe)) {
             signal_hof($id_RC, "COURANT");
             echo "<script>alert('Un HOF Courant a été fait.');</script>";
         }
         return "<span style='color:red;'>Courant</span>";
     } elseif (($set_hofrc_config["size_basic"] < $cdr && $cdr < $set_hofrc_config["size_normal"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_basic_groupe"])) {
-        $check_basic_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_basic_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_basic_groupe)) {
             signal_hof($id_RC, "BASIC");
             echo "<script>alert('Un HOF Basic a été fait.');</script>";
         }
         return "<span style='color:red;'>Basic</span>";
     } elseif (($set_hofrc_config["size_normal"] < $cdr && $cdr < $set_hofrc_config["size_avance"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_normal_groupe"])) {
-        $check_normal_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_normal_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_normal_groupe)) {
             signal_hof($id_RC, "NORMAL");
             echo "<script>alert('Un HOF Normal a été fait.');</script>";
         }
         return "<span style='color:red;'>Normal</span>";
     } elseif (($set_hofrc_config["size_avance"] < $cdr && $cdr < $set_hofrc_config["size_stratege"]) && ($set_hofrc_config["start_universe"] < $dateRC && $dateRC < $set_hofrc_config["end_stratege_groupe"])) {
-        $check_avance_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_avance_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_avance_groupe)) {
             signal_hof($id_RC, "AVANCE");
             echo "<script>alert('Un HOF Avancé a été fait.');</script>";
         }
         return "<span style='color:red;'>Avancé</span>";
     } elseif ($set_hofrc_config["size_stratege"] < $cdr && $cdr < $set_hofrc_config["size_expert"]) {
-        $check_stratege_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_stratege_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_stratege_groupe)) {
             signal_hof($id_RC, "STRATEGE");
             echo "<script>alert('Un HOF Stratège a été fait.');</script>";
         }
         return "<span style='color:red;'>Stratège</span>";
     } elseif ($set_hofrc_config["size_expert"] < $cdr && $cdr < $set_hofrc_config["size_guerrier"]) {
-        $check_expert_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_expert_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_expert_groupe)) {
             signal_hof($id_RC, "EXPERT");
             echo "<script>alert('Un HOF Expert a été fait.');</script>";
         }
         return "<span style='color:red;'>Expert</span>";
     } elseif ($set_hofrc_config["size_guerrier"] < $cdr && $cdr < $set_hofrc_config["size_devastateur"]) {
-        $check_guerrier_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_guerrier_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_guerrier_groupe)) {
             signal_hof($id_RC, "GUERRIER");
             echo "<script>alert('Un HOF Guerrier a été fait.');</script>";
         }
         return "<span style='color:red;'>Guerrier</span>";
     } elseif ($set_hofrc_config["size_devastateur"] < $cdr && $cdr < $set_hofrc_config["size_champion"]) {
-        $check_devastateur_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_devastateur_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_devastateur_groupe)) {
             signal_hof($id_RC, "DEVASTATEUR");
             echo "<script>alert('Un HOF Dévastateur a été fait.');</script>";
         }
         return "<span style='color:red;'>Dévastateur</span>";
     } elseif ($set_hofrc_config["size_champion"] < $cdr && $cdr < $set_hofrc_config["size_legendaire"]) {
-        $check_champion_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_champion_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_champion_groupe)) {
             signal_hof($id_RC, "CHAMPION");
             echo "<script>alert('Un HOF Champion a été fait.');</script>";
         }
         return "<span style='color:red;'>Champion</span>";
     } elseif ($set_hofrc_config["size_legendaire"] < $cdr) {
-        $check_legendaire_groupe = $db->sql_query("SELECT `id_rc` FROM " . TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
+        $check_legendaire_groupe = $db->sql_query("SELECT `id_rc` FROM " . $TABLE_HOFRC_INFO_RC . " WHERE `id_rc` = " . $id_RC);
         if (!$db->sql_numrows($check_legendaire_groupe)) {
             signal_hof($id_RC, "LEGENDAIRE");
             echo "<script>alert('Un HOF Légendaire a été fait.');</script>";
@@ -1201,22 +1190,7 @@ function find_hof($Nb_Att, $Nb_Def, $victory, $dateRC, $debris_M, $debris_C, $id
 function signal_hof($id_RC, $type)
 {
     global $db, $table_prefix;
-    if (!defined('TABLE_HOFRC_CONFIG')) {
-        define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    }
-    if (!defined('TABLE_HOFRC_ATTACK')) {
-        define('TABLE_HOFRC_ATTACK', $table_prefix . 'hofrc_attack');
-    }
-    if (!defined('TABLE_HOFRC_DEFENSE')) {
-        define('TABLE_HOFRC_DEFENSE', $table_prefix . 'hofrc_defence');
-    }
-    if (!defined('TABLE_HOFRC_INFO_RC')) {
-        define('TABLE_HOFRC_INFO_RC', $table_prefix . 'hofrc_info_rc');
-    }
-
-
-
-
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
 
     // On sélectionne les id des round pour le rc dans la table parsedRCROUND
     $query_parsedrcround_first = $db->sql_query("SELECT id_rcround FROM " . TABLE_PARSEDRCROUND . " WHERE id_rc = " . $id_RC . " AND numround = 1 ");
@@ -1225,10 +1199,10 @@ function signal_hof($id_RC, $type)
     // On sélectionne les info du rc dans la table parsedRC
     $query_parsedrc = $db->sql_query("SELECT dateRC, coordinates, nb_rounds, victoire, pertes_A, pertes_D, gain_M, gain_C, gain_D, debris_M, debris_C, lune FROM " . TABLE_PARSEDRC . " WHERE id_rc=" . $id_RC);
     list($dateRC, $coordinates, $nb_rounds, $victoire, $pertes_A, $pertes_D, $gain_M, $gain_C, $gain_D, $debris_M, $debris_C, $lune) = $db->sql_fetch_row($query_parsedrc);
-    $db->sql_query("INSERT INTO `" . TABLE_HOFRC_INFO_RC . "` ( `id_rc`, `id_rcround`, `Daterc`, `type_hof`, `coordinates`, `victoire`, `nb_rounds`, `metal_taken`, `cristal_taken`, `deut_taken`, `metal_cdr`, `cristal_cdr`, `lost_attack`, `lost_defence`, `lune`) VALUES ('" . $id_RC . "', '" . $id_rcround_first . "', '" . $dateRC . "', '" . $type . "', '" . $coordinates . "', '" . $victoire . "', '" . $nb_rounds . "', '" . $gain_M . "', '" . $gain_C . "', '" . $gain_D . "', '" . $debris_M . "', '" . $debris_C . "', '" . $pertes_A . "', '" . $pertes_D . "', '" . $lune . "')");
+    $db->sql_query("INSERT INTO `" . $TABLE_HOFRC_INFO_RC . "` ( `id_rc`, `id_rcround`, `Daterc`, `type_hof`, `coordinates`, `victoire`, `nb_rounds`, `metal_taken`, `cristal_taken`, `deut_taken`, `metal_cdr`, `cristal_cdr`, `lost_attack`, `lost_defence`, `lune`) VALUES ('" . $id_RC . "', '" . $id_rcround_first . "', '" . $dateRC . "', '" . $type . "', '" . $coordinates . "', '" . $victoire . "', '" . $nb_rounds . "', '" . $gain_M . "', '" . $gain_C . "', '" . $gain_D . "', '" . $debris_M . "', '" . $debris_C . "', '" . $pertes_A . "', '" . $pertes_D . "', '" . $lune . "')");
 
     //On va récupérer caractéristiques des attaquant du premier round
-    $query_attack = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), SUM(`TRA`) FROM `" . TABLE_ROUND_ATTACK . "` WHERE `id_rcround` = " . $id_rcround_first . " group by `player`");;
+    $query_attack = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), SUM(`TRA`) FROM `" . TABLE_ROUND_ATTACK. "` WHERE `id_rcround` = " . $id_rcround_first . " group by `player`");;
     while (list($player_att, $coordinates_att, $Armes_att, $Bouclier_att, $Protection_att, $PT_att, $GT_att, $CLE_att, $CLO_att, $CR_att, $VB_att, $VC_att, $REC_att, $SE_att, $BMD_att, $DST_att, $EDLM_att, $TRA_att) = $db->sql_fetch_row($query_attack)) {
         // On récupère les alliances des attaquants
         $query_ally_att = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_att . "'");
@@ -1238,7 +1212,7 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_att = $result_ally_att;
         }
-           $db->sql_query("INSERT INTO `" . TABLE_HOFRC_ATTACK . "` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('" . $id_RC . "', '1', '" . $player_att . "', '" . $ally_att . "', '" . $coordinates_att . "', '" . $Armes_att . "', '" . $Bouclier_att . "', '" . $Protection_att . "', '" . $PT_att . "', '" . $GT_att . "', '" . $CLE_att . "', '" . $CLO_att . "', '" . $CR_att . "', '" . $VB_att . "', '" . $VC_att . "', '" . $REC_att . "', '" . $SE_att . "', '" . $BMD_att . "', '" . $DST_att . "', '" . $EDLM_att . "', '" . $TRA_att . "')");
+           $db->sql_query("INSERT INTO `" . $TABLE_HOFRC_ATTACK . "` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('" . $id_RC . "', '1', '" . $player_att . "', '" . $ally_att . "', '" . $coordinates_att . "', '" . $Armes_att . "', '" . $Bouclier_att . "', '" . $Protection_att . "', '" . $PT_att . "', '" . $GT_att . "', '" . $CLE_att . "', '" . $CLO_att . "', '" . $CR_att . "', '" . $VB_att . "', '" . $VC_att . "', '" . $REC_att . "', '" . $SE_att . "', '" . $BMD_att . "', '" . $DST_att . "', '" . $EDLM_att . "', '" . $TRA_att . "')");
     }
 
 
@@ -1253,14 +1227,16 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_def = $result_ally_def;
         }
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_DEFENSE . "` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ( '" . $id_RC . "', '1', '" . $player_def . "', '" . $ally_def . "', '" . $coordinates_def . "', '" . $Armes_def . "', '" . $Bouclier_def . "', '" . $Protection_def . "', '" . $PT_def . "', '" . $GT_def . "', '" . $CLE_def . "', '" . $CLO_def . "', '" . $CR_def . "', '" . $VB_def . "', '" . $VC_def . "', '" . $REC_def . "', '" . $SE_def . "', '" . $BMD_def . "', '" . $DST_def . "', '" . $EDLM_def . "', '" . $TRA_def . "', '" . $SAT_def . "', '" . $LM . "', '" . $LLE . "', '" . $LLO . "', '" . $CG . "', '" . $AI . "', '" . $LP . "', '" . $PB . "', '" . $GB . "')");
+
+        
+        ;$db->sql_query("INSERT INTO `" . $table_prefix . "hofrc_defence` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ( '" . $id_RC . "', '1', '" . $player_def . "', '" . $ally_def . "', '" . $coordinates_def . "', '" . $Armes_def . "', '" . $Bouclier_def . "', '" . $Protection_def . "', '" . $PT_def . "', '" . $GT_def . "', '" . $CLE_def . "', '" . $CLO_def . "', '" . $CR_def . "', '" . $VB_def . "', '" . $VC_def . "', '" . $REC_def . "', '" . $SE_def . "', '" . $BMD_def . "', '" . $DST_def . "', '" . $EDLM_def . "', '" . $TRA_def . "', '" . $SAT_def . "', '" . $LM . "', '" . $LLE . "', '" . $LLO . "', '" . $CG . "', '" . $AI . "', '" . $LP . "', '" . $PB . "', '" . $GB . "')");
     }
 
     $query_parsedrcround_last = $db->sql_query("SELECT id_rcround FROM " . TABLE_PARSEDRCROUND . " WHERE id_rc = " . $id_RC . " AND numround = " . $nb_rounds);
     list($id_rcround_last) = $db->sql_fetch_row($query_parsedrcround_last);
 
     //On va récupérer caractéristiques des attaquant du dernier round
-    $query_attack_last = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), SUM(`TRA`) FROM `" . TABLE_ROUND_ATTACK . "` WHERE `id_rcround` = " . $id_rcround_last . " group by `player`");;
+    $query_attack_last = $db->sql_query("SELECT `player`, `coordinates`, `Armes`, `Bouclier`, `Protection`, SUM(`PT`), SUM(`GT`), SUM(`CLE`), SUM(`CLO`), SUM(`CR`), SUM(`VB`), SUM(`VC`), SUM(`REC`), SUM(`SE`), SUM(`BMD`), SUM(`DST`), SUM(`EDLM`), SUM(`TRA`) FROM `" . TABLE_ROUND_ATTACK. "` WHERE `id_rcround` = " . $id_rcround_last . " group by `player`");;
     while (list($player_att_last, $coordinates_att_last, $Armes_att_last, $Bouclier_att_last, $Protection_att_last, $PT_att_last, $GT_att_last, $CLE_att_last, $CLO_att_last, $CR_att_last, $VB_att_last, $VC_att_last, $REC_att_last, $SE_att_last, $BMD_att_last, $DST_att_last, $EDLM_att_last, $TRA_att_last) = $db->sql_fetch_row($query_attack_last)) {
         // On récupère les alliances des attaquants
         $query_ally_att_last = $db->sql_query("SELECT ally FROM " . TABLE_UNIVERSE . " WHERE player = '" . $player_att . "'");
@@ -1270,7 +1246,7 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_att_last = $result_ally_att_last;
         }
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_ATTACK . "` (`id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('" . $id_RC . "', '" . $nb_rounds . "', '" . $player_att_last . "', '" . $ally_att_last . "','" . $coordinates_att_last . "', '" . $Armes_att_last . "', '" . $Bouclier_att_last . "', '" . $Protection_att_last . "', '" . $PT_att_last . "', '" . $GT_att_last . "', '" . $CLE_att_last . "', '" . $CLO_att_last . "', '" . $CR_att_last . "', '" . $VB_att_last . "', '" . $VC_att_last . "', '" . $REC_att_last . "', '" . $SE_att_last . "', '" . $BMD_att_last . "', '" . $DST_att_last . "', '" . $EDLM_att_last . "', '" . $TRA_att_last . "')");
+        $db->sql_query("INSERT INTO `" . $TABLE_HOFRC_ATTACK . "` (`id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`) VALUES ('" . $id_RC . "', '" . $nb_rounds . "', '" . $player_att_last . "', '" . $ally_att_last . "','" . $coordinates_att_last . "', '" . $Armes_att_last . "', '" . $Bouclier_att_last . "', '" . $Protection_att_last . "', '" . $PT_att_last . "', '" . $GT_att_last . "', '" . $CLE_att_last . "', '" . $CLO_att_last . "', '" . $CR_att_last . "', '" . $VB_att_last . "', '" . $VC_att_last . "', '" . $REC_att_last . "', '" . $SE_att_last . "', '" . $BMD_att_last . "', '" . $DST_att_last . "', '" . $EDLM_att_last . "', '" . $TRA_att_last . "')");
     }
 
 
@@ -1285,7 +1261,7 @@ function signal_hof($id_RC, $type)
         } else {
             $ally_def_last = $result_ally_def_last;
         }
-        $db->sql_query("INSERT INTO `" . TABLE_HOFRC_DEFENSE . "` ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ('" . $id_RC . "', '" . $nb_rounds . "', '" . $player_def_last . "', '" . $ally_def_last . "','" . $coordinates_def_last . "', '" . $Armes_def_last . "', '" . $Bouclier_def_last . "', '" . $Protection_def_last . "', '" . $PT_def_last . "', '" . $GT_def_last . "', '" . $CLE_def_last . "', '" . $CLO_def_last . "', '" . $CR_def_last . "', '" . $VB_def_last . "', '" . $VC_def_last . "', '" . $REC_def_last . "', '" . $SE_def_last . "', '" . $BMD_def_last . "', '" . $DST_def_last . "', '" . $EDLM_def_last . "', '" . $TRA_def_last . "', '" . $SAT_def_last . "', '" . $LM_last . "', '" . $LLE_last . "', '" . $LLO_last . "', '" . $CG_last . "', '" . $AI_last . "', '" . $LP_last . "', '" . $PB_last . "', '" . $GB_last . "')");
+        $db->sql_query("INSERT INTO `" . $table_prefix . "hofrc_defence`  ( `id_rc`, `round`, `player`, `ally`, `coordinates`, `armes`, `bouclier`, `protection`, `pt`, `gt`, `cle`, `clo`, `cr`, `vb`, `vc`, `rec`, `se`, `bmd`, `dst`, `edlm`, `tra`, `sat`, `lm`, `lle`, `llo`, `cg`, `ai`, `lp`, `pb`, `gb`) VALUES ('" . $id_RC . "', '" . $nb_rounds . "', '" . $player_def_last . "', '" . $ally_def_last . "','" . $coordinates_def_last . "', '" . $Armes_def_last . "', '" . $Bouclier_def_last . "', '" . $Protection_def_last . "', '" . $PT_def_last . "', '" . $GT_def_last . "', '" . $CLE_def_last . "', '" . $CLO_def_last . "', '" . $CR_def_last . "', '" . $VB_def_last . "', '" . $VC_def_last . "', '" . $REC_def_last . "', '" . $SE_def_last . "', '" . $BMD_def_last . "', '" . $DST_def_last . "', '" . $EDLM_def_last . "', '" . $TRA_def_last . "', '" . $SAT_def_last . "', '" . $LM_last . "', '" . $LLE_last . "', '" . $LLO_last . "', '" . $CG_last . "', '" . $AI_last . "', '" . $LP_last . "', '" . $PB_last . "', '" . $GB_last . "')");
     }
 }
 
@@ -1297,56 +1273,44 @@ function signal_hof($id_RC, $type)
 function historique($name)
 {
     global $db, $table_prefix;
-    define('TABLE_HOFRC_CONFIG', $table_prefix . 'hofrc_config');
-    define('TABLE_HOFRC_ATTACK', $table_prefix . 'hofrc_attack');
-    if (!defined('TABLE_HOFRC_DEFENSE')) {
-        define('TABLE_HOFRC_DEFENSE', $table_prefix . 'hofrc_defence');
-    }
-    if (!defined('TABLE_HOFRC_INFO_RC')) {
-    define('TABLE_HOFRC_INFO_RC', $table_prefix . 'hofrc_info_rc');
-    }
-    if (!defined('TABLE_HOFRC_TITLE')) {
-    define('TABLE_HOFRC_TITLE', $table_prefix . 'hofrc_title');
-    }
-
-
+    global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
 
     $skin = select_skin(0);
     // On récupère la police
-    $query_font = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'font_historique'");
+    $query_font = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'font_historique'");
     list($select_font) = $db->sql_fetch_row($query_font);
     // On récupère les dimensions de l'image
-    $query_largeur = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'largeur_historique'");
+    $query_largeur = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'largeur_historique'");
     list($largeur_picture) = $db->sql_fetch_row($query_largeur);
-    $query_hauteur = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hauteur_historique'");
+    $query_hauteur = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'hauteur_historique'");
     list($hauteur_picture) = $db->sql_fetch_row($query_hauteur);
     // On récupère les paramètres pour le texte
-    $query_font_size = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'font_size_historique'");
+    $query_font_size = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'font_size_historique'");
     list($font_size) = $db->sql_fetch_row($query_font_size);
-    $query_angle = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'angle_historique'");
+    $query_angle = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'angle_historique'");
     list($angle) = $db->sql_fetch_row($query_angle);
-    $query_pos_horiz_1 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_1'");
+    $query_pos_horiz_1 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_1'");
     list($pos_horiz_1) = $db->sql_fetch_row($query_pos_horiz_1);
-    $query_pos_horiz_2 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_2'");
+    $query_pos_horiz_2 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_2'");
     list($pos_horiz_2) = $db->sql_fetch_row($query_pos_horiz_2);
-    $query_pos_horiz_3 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_3'");
+    $query_pos_horiz_3 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_3'");
     list($pos_horiz_3) = $db->sql_fetch_row($query_pos_horiz_3);
-    $query_pos_horiz_4 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_4'");
+    $query_pos_horiz_4 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_4'");
     list($pos_horiz_4) = $db->sql_fetch_row($query_pos_horiz_4);
-    $query_pos_horiz_5 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_5'");
+    $query_pos_horiz_5 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_horiz_historique_5'");
     list($pos_horiz_5) = $db->sql_fetch_row($query_pos_horiz_5);
-    $query_pos_verti = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_verti_historique'");
+    $query_pos_verti = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'pos_verti_historique'");
     list($pos_verti) = $db->sql_fetch_row($query_pos_verti);
 
-    $query_color_txt_1 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_1'");
+    $query_color_txt_1 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_1'");
     list($color_txt_1_RGB) = $db->sql_fetch_row($query_color_txt_1);
-    $query_color_txt_2 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_2'");
+    $query_color_txt_2 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_2'");
     list($color_txt_2_RGB) = $db->sql_fetch_row($query_color_txt_2);
-    $query_color_txt_3 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_3'");
+    $query_color_txt_3 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_3'");
     list($color_txt_3_RGB) = $db->sql_fetch_row($query_color_txt_3);
-    $query_color_txt_4 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_4'");
+    $query_color_txt_4 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_4'");
     list($color_txt_4_RGB) = $db->sql_fetch_row($query_color_txt_4);
-    $query_color_txt_5 = $db->sql_query("SELECT `config_value` FROM " . TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_5'");
+    $query_color_txt_5 = $db->sql_query("SELECT `config_value` FROM " . $TABLE_HOFRC_CONFIG . " WHERE `config_name` = 'color_txt_historique_5'");
     list($color_txt_5_RGB) = $db->sql_fetch_row($query_color_txt_5);
     $color_txt_1 = explode(",", $color_txt_1_RGB);
     $color_txt_2 = explode(",", $color_txt_2_RGB);
@@ -1362,7 +1326,7 @@ function historique($name)
     } // Regarde si le fichier existe ou non  
 
     // $list_hof = $db->sql_query("SELECT `id`, `id_rc`, `BOARD_URL`, `TITLE` FROM ".TABLE_HOFRC_TITLE);
-    $query_title = $db->sql_query("SELECT `id`, `id_rc`, `BOARD_URL`, `title` FROM " . TABLE_HOFRC_TITLE . " ORDER BY id");
+    $query_title = $db->sql_query("SELECT `id`, `id_rc`, `BOARD_URL`, `title` FROM " . $TABLE_HOFRC_TITLE . " ORDER BY id");
     while ($title = $db->sql_fetch_assoc($query_title)) {
         $color_txt_1 = explode(",", $color_txt_1_RGB);
         $color_txt_2 = explode(",", $color_txt_2_RGB);
@@ -1376,7 +1340,7 @@ function historique($name)
         $color_txt_4 = imagecolorallocate($destination, $color_txt_4[0], $color_txt_4[1], $color_txt_4[2]);
         $color_txt_5 = imagecolorallocate($destination, $color_txt_5[0], $color_txt_5[1], $color_txt_5[2]);
 
-        $query_info = $db->sql_query("SELECT `TYPE_HOF` FROM `" . TABLE_HOFRC_INFO_RC . "` WHERE `id_rc` = " . $title['id_rc']);
+        $query_info = $db->sql_query("SELECT `TYPE_HOF` FROM `" . $TABLE_HOFRC_INFO_RC . "` WHERE `id_rc` = " . $title['id_rc']);
         (list($type_hof) = $db->sql_fetch_row($query_info));
         $text1 = $title['id'];
         $text2 = "";
