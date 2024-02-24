@@ -17,12 +17,12 @@ if (!$db->sql_numrows($db->sql_query($query))) die("Hacking attempt");
 
 //Définitions
 global $db, $table_prefix, $prefixe;
-global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
+global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE;
 
 
 require_once('mod/hofrc/Pages/include.php');
 $id_rc = $_GET["id"];
-if (isset ($_GET["create"])) {
+if (isset($_GET["create"])) {
     if ($_GET["create"] == 'ok') {
         $nb_enregistrement = $db->sql_query("SELECT count(*) from `" . $TABLE_HOFRC_TITLE . "`");
         $numero = (mysqli_data_seek($nb_enregistrement, 0) + 1);
@@ -33,39 +33,39 @@ if (isset ($_GET["create"])) {
         historique($last_id);
     }
 }
-if (isset ($TABLE_HOFRC_DEFENSE)) {
+if (isset($TABLE_HOFRC_DEFENSE)) {
 
 
-   // var_dump("SELECT `player`, `daterc` FROM `" . $TABLE_HOFRC_DEFENSE . "`, `" .  $TABLE_HOFRC_INFO_RC . "` WHERE `" . $TABLE_HOFRC_DEFENSE . "`.id_rc =  " . $id_rc . " AND `" .  $TABLE_HOFRC_INFO_RC . "`.id_rc = " . $id_rc);
-
-}
-if (isset ($TABLE_HOFRC_INFO_RC)) {
-   // var_dump("SELECT `player`, `daterc` FROM `" . $TABLE_HOFRC_DEFENSE . "`, `" .  $TABLE_HOFRC_INFO_RC . "` WHERE `" . $TABLE_HOFRC_DEFENSE . "`.id_rc =  " . $id_rc . " AND `" .  $TABLE_HOFRC_INFO_RC . "`.id_rc = " . $id_rc);
+    // var_dump("SELECT `player`, `daterc` FROM `" . $TABLE_HOFRC_DEFENSE . "`, `" .  $TABLE_HOFRC_INFO_RC . "` WHERE `" . $TABLE_HOFRC_DEFENSE . "`.id_rc =  " . $id_rc . " AND `" .  $TABLE_HOFRC_INFO_RC . "`.id_rc = " . $id_rc);
 
 }
-if (isset ($id_rc)) {
+if (isset($TABLE_HOFRC_INFO_RC)) {
+    // var_dump("SELECT `player`, `daterc` FROM `" . $TABLE_HOFRC_DEFENSE . "`, `" .  $TABLE_HOFRC_INFO_RC . "` WHERE `" . $TABLE_HOFRC_DEFENSE . "`.id_rc =  " . $id_rc . " AND `" .  $TABLE_HOFRC_INFO_RC . "`.id_rc = " . $id_rc);
+
+}
+if (isset($id_rc)) {
     //$TABLE_HOFRC_ATTACK = $table_prefix . 'hofrc_attack';
-//$TABLE_HOFRC_CONFIG = $table_prefix . 'hofrc_config';
-//$TABLE_HOFRC_DEFENCE = $table_prefix . 'hofrc_defence';
-//$TABLE_HOFRC_INFO_RC = $table_prefix . 'hofrc_info_rc';
-//$TABLE_HOFRC_RP = $table_prefix . 'hofrc_rp';
-//$TABLE_HOFRC_SKIN = $table_prefix . 'hofrc_skin';
-//$TABLE_HOFRC_TITLE = $table_prefix . 'hofrc_title';
-//var_dump( $TABLE_HOFRC_ATTACK);echo "<br />";
-//var_dump( $TABLE_HOFRC_CONFIG);echo "<br />";
-//var_dump( $TABLE_HOFRC_DEFENCE);echo "<br />";
-//var_dump( $TABLE_HOFRC_INFO_RC);echo "<br />";
-//var_dump( $TABLE_HOFRC_SKIN);echo "<br />";
+    //$TABLE_HOFRC_CONFIG = $table_prefix . 'hofrc_config';
+    //$TABLE_HOFRC_DEFENCE = $table_prefix . 'hofrc_defence';
+    //$TABLE_HOFRC_INFO_RC = $table_prefix . 'hofrc_info_rc';
+    //$TABLE_HOFRC_RP = $table_prefix . 'hofrc_rp';
+    //$TABLE_HOFRC_SKIN = $table_prefix . 'hofrc_skin';
+    //$TABLE_HOFRC_TITLE = $table_prefix . 'hofrc_title';
+    //var_dump( $TABLE_HOFRC_ATTACK);echo "<br />";
+    //var_dump( $TABLE_HOFRC_CONFIG);echo "<br />";
+    //var_dump( $TABLE_HOFRC_DEFENCE);echo "<br />";
+    //var_dump( $TABLE_HOFRC_INFO_RC);echo "<br />";
+    //var_dump( $TABLE_HOFRC_SKIN);echo "<br />";
 
-//var_dump( $TABLE_HOFRC_RP);echo "<br />";
+    //var_dump( $TABLE_HOFRC_RP);echo "<br />";
 
-//var_dump( $TABLE_HOFRC_TITLE);echo "<br />";
-//var_dump( $id_rc);echo "<br />";
+    //var_dump( $TABLE_HOFRC_TITLE);echo "<br />";
+    //var_dump( $id_rc);echo "<br />";
 
-//var_dump("SELECT `player`, `daterc` FROM `" . $table_prefix . "hofrc_defence` ");
+    //var_dump("SELECT `player`, `daterc` FROM `" . $table_prefix . "hofrc_defence` ");
 
 
-  //  var_dump("SELECT `player`, `daterc` FROM `" . $table_prefix . "hofrc_defence`, `" .  $table_prefix . "hofrc_info_rc` WHERE `" . $table_prefix . "hofrc_defence`.id_rc =  " . $id_rc . " AND `" .  $table_prefix . "hofrc_info_rc`.id_rc = " . $id_rc);
+    //  var_dump("SELECT `player`, `daterc` FROM `" . $table_prefix . "hofrc_defence`, `" .  $table_prefix . "hofrc_info_rc` WHERE `" . $table_prefix . "hofrc_defence`.id_rc =  " . $id_rc . " AND `" .  $table_prefix . "hofrc_info_rc`.id_rc = " . $id_rc);
 
 }
 //die();
@@ -76,22 +76,21 @@ $queryRC = $db->sql_query("SELECT `" . TABLE_PARSEDRC . "`.`id_rc`,`dateRC`,`coo
 
 
 if (isset($_POST["raid"])) {
-    $pillage="";
+    $pillage = "";
     // On véréfie que pillage et raid ne sont pas tout les 2 cocher
     for ($i = 1; $i <= $_POST["count"]; $i++) {
         if (!empty($_POST[$i])) {
             $pillage .= $_POST[$i];
-
         }
     }
 
-  //  var_dump($pillage);
- //   die();
-   // var_dump("UPDATE `" .  $table_prefix . "hofrc_title` SET `pillage` = '" . $pillage . "' WHERE " . $table_prefix . "hofrc_title.`id_rc`  = '" . $id_rc . "'");
-   // die();
+    //  var_dump($pillage);
+    //   die();
+    // var_dump("UPDATE `" .  $table_prefix . "hofrc_title` SET `pillage` = '" . $pillage . "' WHERE " . $table_prefix . "hofrc_title.`id_rc`  = '" . $id_rc . "'");
+    // die();
     $db->sql_query("UPDATE `" .  $table_prefix . "hofrc_title` SET `pillage` = '" . $pillage . "' WHERE " . $table_prefix . "hofrc_title.`id_rc`  = '" . $id_rc . "'");
 
-    ?>
+?>
     <script language="JavaScript" type="text/javascript">
         function show_bbcode() {
             if (document.getElementById('bbcode').style.display == 'none') {
@@ -107,128 +106,129 @@ if (isset($_POST["raid"])) {
         function copyclipboard(intext) {
             window.clipboardData.setData('Text', intext);
         }
-
     </script>
-    <table align="center" width="90%">
-        <tr>
-            <th><?php
-                $rc_convert = convert($id_rc, 'preview', "1", $pillage);
-                echo nl2br($rc_convert); ?>
-            </th>
-        </tr>
-        <tr>
-            <td class="c" colspan="2" style="text-align:center;">
-                <input type="button" onClick="show_bbcode();" id="select_bbcode" value="Afficher le BBCode">
-            </td>
-        </tr>
-        <tr>
-            <th>
-                <div id="bbcode" style="display: none; float: center; padding: 0;"><?php
-                    $rc_convert_bbcode = convert($id_rc, 'bbcode', "1", $pillage);
-                    echo nl2br($rc_convert_bbcode); ?>
-                </div>
-            </th>
-        </tr>
-        <tr>
-            <th>
-                <form style="text-align:center;" method="POST" action="index.php?action=hofrc&subaction=gestion"
-                      name="url">
-                    <input style="width: 200px; text-align: center; margin-right:50px" type="text"
-                           name="url_board_ogame"/>
-                    <input type="hidden" name="url_id" value="<?php echo $id_rc ?>">
-                    <input align="center" type="submit" name="url" value="Publier">
-                </form>
-            </th>
-        </tr>
+    <table class="og-table og-full-table">
+        <tbody>
+            <tr>
+                <td><?php
+                    $rc_convert = convert($id_rc, 'preview', "1", $pillage);
+                    echo nl2br($rc_convert); ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="c" colspan="2" style="text-align:center;">
+                    <input type="button" onClick="show_bbcode();" id="select_bbcode" value="Afficher le BBCode">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="bbcode" style="display: none; float: center; padding: 0;"><?php
+                                                                                        $rc_convert_bbcode = convert($id_rc, 'bbcode', "1", $pillage);
+                                                                                        echo nl2br($rc_convert_bbcode); ?>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form style="text-align:center;" method="POST" action="index.php?action=hofrc&subaction=gestion" name="url">
+                        <input style="width: 200px; text-align: center; margin-right:50px" type="text" name="url_board_ogame" />
+                        <input type="hidden" name="url_id" value="<?php echo $id_rc ?>">
+                        <input align="center" type="submit" name="url" value="Publier">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
     </table><?php
 
-}
-
-
-?>
-<table align="center" width="90%">
-    <form method="post" enctype="multipart/form-data"
-          action="index.php?action=hofrc&subaction=publier&id=<?php echo $id_rc; ?>">
-        <tr>
-            <td class="c" align="center" colspan="11">Listes des RC enregistrés dans
-                OGSpy:<?php echo infobulle("Validez en bas de la page lorsque vous avez finie."); ?> <font color="red">Ne
-                    sélectionner que les pillages du HOF</font></td>
-        </tr>
-        <tr>
-        <tr>
-
-            <th><a>Date</a></th>
-            <th><a>Coordonnée</a></th>
-            <th><a>Attaquant<br>Nom/Pertes</a></th>
-            <th><a>Défenseur<br>Nom/Pertes</a></th>
-            <th><a>Pillage Métal</a></th>
-            <th><a>Pillage Cristal</a></th>
-            <th><a>Pillage Deutérium</a></th>
-            <th><a>Taille CDR</a></th>
-            <th><a>Voir le rc original</a></th>
-            <th><a>Type</a></th>
-        </tr>
-        </tr>
-
-        <?php
-        $count = 0;
-        while ($data = $db->sql_fetch_assoc($queryRC)) {
-            $id_rcround = $data['id_rcround'];
-            if ($data['id_rc'] != $id_rc) {
-                $count = $count + 1;
-                ?>
-
-                <tr>
-                    <th><?php echo date("H:i:s - j-m-Y", $data['dateRC']); ?></th>
-                    <th><?php echo $data['coordinates']; ?></th>
-                    <th>
-                        <?php
-                        $queryAtt = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
-                        while ($player_att = $db->sql_fetch_row($queryAtt)) {
-                            echo $player_att['player'] . "<br>";
-                        }
-                        echo number_format($data['pertes_A'], 0, '', '.');
-                        ?>
-                    </th>
-                    <th>
-                        <?php
-                        $queryDef = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
-                        while ($player_def = $db->sql_fetch_row($queryDef)) {
-                            if ($player_def['player'] == $player) {
-                                echo '<font color="blue">';
-                            }
-                            echo $player_def['player'] . "<br>";
-                            if ($player == $player_def['player']) {
-                                echo '</font>';
-                            }
-                        }
-                        echo number_format($data['pertes_D'], 0, '', '.');
-                        ?>
-                    </th>
-                    <th><?php echo number_format($data['gain_M'], 0, '', '.'); ?></th>
-                    <th><?php echo number_format($data['gain_C'], 0, '', '.'); ?></th>
-                    <th><?php echo number_format($data['gain_D'], 0, '', '.'); ?></th>
-                    <th><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.'); ?></th>
-                    <th><a style="cursor:pointer"
-                           onclick="window.open('index.php?action=hofrc&subaction=preview&id=<?php echo $data['id_rc'] ?>', 'RC Original', 'width=920, height=550, menubar=no, resizable=yes, scrollbars=yes, status=no, toolbar=no'); return false;">Vérifier</a>
-                    </th>
-                    <th>
-                        <input type="checkbox" name="<? echo $count ?>" value="P<?php echo $data['id_rc'] ?>">Pillage
-                    </th>
-
-                </tr>
-                <?php
-
-            }
         }
-        ?>
-        <tr>
-            <td class="c" align="center" colspan="11">
-                <input type="hidden" name="count" value="<?php echo $count ?>">
-                <input type="submit" name="raid" value="Valider"/>
 
-            </td>
-        </tr>
+
+            ?>
+<table class="og-table og-full-table">
+    <form method="post" enctype="multipart/form-data" action="index.php?action=hofrc&subaction=publier&id=<?php echo $id_rc; ?>">
+        <thead>
+            <tr>
+                <th colspan="11">Listes des RC enregistrés dans
+                    OGSpy:<?php echo infobulle("Validez en bas de la page lorsque vous avez finie."); ?> <font color="red">Ne
+                        sélectionner que les pillages du HOF</font>
+                </th>
+            </tr>
+            <tr>
+            <tr>
+
+                <th>Date</th>
+                <th>Coordonnée</th>
+                <th>Attaquant<br>Nom/Pertes</th>
+                <th>Défenseur<br>Nom/Pertes</th>
+                <th>Pillage Métal</th>
+                <th>Pillage Cristal</th>
+                <th>Pillage Deutérium</th>
+                <th>Taille CDR</th>
+                <th>Voir le rc original</th>
+                <th>Type</th>
+            </tr>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $count = 0;
+            while ($data = $db->sql_fetch_assoc($queryRC)) {
+                $id_rcround = $data['id_rcround'];
+                if ($data['id_rc'] != $id_rc) {
+                    $count = $count + 1;
+            ?>
+
+                    <tr>
+                        <td><?php echo date("H:i:s - j-m-Y", $data['dateRC']); ?></td>
+                        <td><?php echo $data['coordinates']; ?></td>
+                        <td>
+                            <?php
+                            $queryAtt = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+                            while ($player_att = $db->sql_fetch_row($queryAtt)) {
+                                echo $player_att['player'] . "<br>";
+                            }
+                            echo number_format($data['pertes_A'], 0, '', '.');
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            $queryDef = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+                            while ($player_def = $db->sql_fetch_row($queryDef)) {
+                                if ($player_def['player'] == $player) {
+                                  //  echo '<font color="blue">';
+                                }
+                                echo $player_def['player'] . "<br>";
+                                if ($player == $player_def['player']) {
+                                    echo '</font>';
+                                }
+                            }
+                            echo number_format($data['pertes_D'], 0, '', '.');
+                            ?>
+                        </td>
+                        <td><?php echo number_format($data['gain_M'], 0, '', '.'); ?></td>
+                        <td><?php echo number_format($data['gain_C'], 0, '', '.'); ?></td>
+                        <td><?php echo number_format($data['gain_D'], 0, '', '.'); ?></td>
+                        <td><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.'); ?></td>
+                        <td><a style="cursor:pointer" onclick="window.open('index.php?action=hofrc&subaction=preview&id=<?php echo $data['id_rc'] ?>', 'RC Original', 'width=920, height=550, menubar=no, resizable=yes, scrollbars=yes, status=no, toolbar=no'); return false;">Vérifier</a>
+                        </td>
+                        <td>
+                            <input type="checkbox" name="<? echo $count ?>" value="P<?php echo $data['id_rc'] ?>">Pillage
+                        </td>
+
+                    </tr>
+            <?php
+
+                }
+            }
+            ?>
+            <tr>
+                <td class="c" align="center" colspan="11">
+                    <input type="hidden" name="count" value="<?php echo $count ?>">
+                    <input type="submit" name="raid" value="Valider" />
+
+                </td>
+            </tr>
+        </tbody>
     </form>
-</table>
 
+</table>

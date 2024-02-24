@@ -1,4 +1,5 @@
 <?php
+
 /**
  * convert.php
  * @package HofRC
@@ -21,7 +22,7 @@ require_once('mod/hofrc/Pages/include.php');
 
 // Gestion des dates
 
-    $day = date("j", time());
+$day = date("j", time());
 
 
 //Si les dates d'affichage ne sont pas définies, on affiche par défaut les attaques du jour,
@@ -78,41 +79,55 @@ $queryRC = $db->sql_query("SELECT `" . TABLE_PARSEDRC . "`.`id_rc`,`dateRC`,`coo
     function copyclipboard(intext) {
         window.clipboardData.setData('Text', intext);
     }
-
 </script><?php
-if (!empty($_GET["result"])) {
-    $id = $_GET["result"];
+            if (!empty($_GET["result"])) {
+                $id = $_GET["result"];
 
-    ?>
+            ?>
 
-    <table width="90%">
-    <tr>
-        <th><?php
-            $rc_convert = convert($id, 'preview', 'raid', '');
-            echo nl2br($rc_convert);?>
-        </th>
-    </tr>
-    <tr>
-        <td class="c" colspan="2" style="text-align:center;">
-            <input type="button" onClick="show_bbcode();" id="select_bbcode" value="Afficher le BBCode">
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <div id="bbcode" style="display: none; float: center; padding: 0;"><?php
-                $rc_convert_bbcode = convert($id, 'bbcode', 'raid', '');
-                echo nl2br($rc_convert_bbcode);?>
-            </div>
-        </th>
-    </tr>
+    <table class="og-table og-full-table">
+        <tbody>
+            <tr>
+                <th><?php
+                    $rc_convert = convert($id, 'preview', 'raid', '');
+                    echo nl2br($rc_convert); ?>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input class="og-button" type="button" onClick="show_bbcode();" id="select_bbcode" value="Afficher le BBCode">
+                </th>
+            </tr>
+            <tr>
+                <th>
+
+                    <div id="bbcode" style="display: none; float: center; padding: 0;">
+                        <fieldset>
+                            <?php
+                            $rc_convert_bbcode = convert($id, 'bbcode', 'raid', '');
+                            echo nl2br($rc_convert_bbcode); ?>
+                        </fieldset>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
     </table><?php
-}
+            }
 
-?>
-
-<table width="90%">
-    <tr>
-        <td colspan="11" style="text-align:center;"><?php
+            ?>
+<table class="og-table og-little-table">
+    <form method="POST" action="index.php"></form>
+    <input type="hidden" name="action" value="search">
+    <thead>
+        <tr>
+            <th colspan="2">
+                Recherche de Rapport de Combat
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <form action="index.php?action=hofrc&subaction=convert" method="post" name="date">
+            <?php
             //On récupère la date au bon format
             //$pub_date_from = strftime("%d %m %Y", $pub_date_from);
             //$pub_date_to = strftime("%d %m %Y", $pub_date_to);
@@ -121,82 +136,112 @@ if (!empty($_GET["result"])) {
 
             //Création du field pour choisir l'affichage (attaque du jour, de la semaine ou du mois)
             ?>
-            <fieldset>
-                <legend><b><font color='#0080FF'>Recherche de Rapport de Combat</font></b></legend>
-                <form action="index.php?action=hofrc&subaction=convert" method="post" name="date">
+            <tr>
+                <td>
                     <label>Recherche entre le :</label>
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $from_day; ?>"
-                           name="from_day"/> / <input style="width: 20px; text-align: center;" type="text"
-                                                      value="<?php echo $from_month; ?>" name="from_month"/> / <input
-                        style="width: 40px; text-align: center;" type="text" value="<?php echo $from_year; ?>"
-                        name="from_year"/> et le
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $to_day; ?>"
-                           name="to_day"/> / <input style="width: 20px; text-align: center;" type="text"
-                                                    value="<?php echo $to_month; ?>" name="to_month"/> / <input
-                        style="width: 40px; text-align: center;" type="text" value="<?php echo $to_year; ?>"
-                        name="to_year"/> <br><br>
-                    <input type="submit" name="search_date" value="Valider"/>
-                </form>
-            </fieldset>
-            <br><br>
-        </td>
-    </tr>
+                </td>
+                <td>
+                    <input type="text" style="width: 20px; text-align: center;" value="<?php echo $from_day; ?>" name="from_day" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $from_month; ?>" name="from_month" /> / <input style="width: 40px; text-align: center;" type="text" value="<?php echo $from_year; ?>" name="from_year" />
+                    <br />
 
-    <tr>
-        <td class="c" align="center" colspan="11">Listes des RC enregistrés dans OGSpy:</td>
-    </tr>
-    <tr>
-        <th><a>Hof</a></th>
-        <th><a>Date</a></th>
-        <th><a>Coordonnée</a></th>
-        <th><a>Attaquant<br>Nom/Pertes</a></th>
-        <th><a>Défenseur<br>Nom/Pertes</a></th>
-        <th><a>Pillage Métal</a></th>
-        <th><a>Pillage Cristal</a></th>
-        <th><a>Pillage Deutérium</a></th>
-        <th><a>Taille CDR</a></th>
-        <th><a>Voir le rc original</a></th>
-        <th><a>Convertir le RC</a></th>
-    </tr>
-    <?php
+                </td>
+            <tr>
+                <td>
+                    et le
+                </td>
+                <td>
+                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $to_day; ?>" name="to_day" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $to_month; ?>" name="to_month" /> / <input style="width: 40px; text-align: center;" type="text" value="<?php echo $to_year; ?>" name="to_year" />
 
-    while ($data = $db->sql_fetch_assoc($queryRC)) {
-        $id_rcround = $data['id_rcround'];
-        $query_Nb_Att = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
-        $Nb_Att = $db->sql_numrows($query_Nb_Att);
-        $query_Nb_Def = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
-        $Nb_Def = $db->sql_numrows($query_Nb_Def);
-        $type_hof = find_hof($Nb_Att, $Nb_Def, $data['victoire'], $data['dateRC'], $data['debris_M'], $data['debris_C'], $data['id_rc']);
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input class="og-button" type="submit" name="search_date" value="Valider" />
+
+                </td>
+            </tr>
+        </form>
+
+    </tbody>
+
+
+
+</table>
+
+
+
+
+
+<table class="og-table og-full-table">
+
+    <thead>
+        <tr>
+            <th colspan="11">Listes des RC enregistrés dans OGSpy:</td>
+        </tr>
+        <tr>
+            <th>Hof</th>
+            <th>Date</th>
+            <th>Coordonnée</th>
+            <th>Attaquant<br>Nom/Pertes</th>
+            <th>Défenseur<br>Nom/Pertes</th>
+            <th>Pillage Métal</th>
+            <th>Pillage Cristal</th>
+            <th>Pillage Deutérium</th>
+            <th>Taille CDR</th>
+            <th>Voir le rc original</th>
+            <th>Convertir le RC</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+
+        while ($data = $db->sql_fetch_assoc($queryRC)) {
+            $id_rcround = $data['id_rcround'];
+            $query_Nb_Att = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+            $Nb_Att = $db->sql_numrows($query_Nb_Att);
+            $query_Nb_Def = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+            $Nb_Def = $db->sql_numrows($query_Nb_Def);
+            $type_hof = find_hof($Nb_Att, $Nb_Def, $data['victoire'], $data['dateRC'], $data['debris_M'], $data['debris_C'], $data['id_rc']);
 
         ?>
 
-        <tr>
-            <th><?php echo $type_hof;?></th>
-            <th><?php echo date("H:i:s - j-m-Y", $data['dateRC']);?></th>
-            <th><?php echo $data['coordinates'];?></th>
-            <th><?php $queryAtt = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player'); while ($player_att = $db->sql_fetch_row($queryAtt)) {
-                    echo $player_att['player'] . "<br>";
-                }?><?php echo number_format($data['pertes_A'], 0, '', '.');?></th>
-            <th><?php $queryDef = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');while ($player_def = $db->sql_fetch_row($queryDef)) {
-                    echo $player_def['player'] . "<br>";
-                }?><?php  echo number_format($data['pertes_D'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['gain_M'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['gain_C'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['gain_D'], 0, '', '.');?></th>
-            <th><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.');?></th>
-            <th><a style="cursor:pointer"
-                   onclick="window.open('index.php?action=hofrc&subaction=preview&id=<?php echo $data['id_rc'] ?>', 'RC Original', 'width=920, height=550, menubar=no, resizable=yes, scrollbars=yes, status=no, toolbar=no'); return false;">Vérifier</a>
-            </th>
-            <th><a style="cursor:pointer"
-                   href="index.php?action=hofrc&subaction=convert&result=<?php echo $data['id_rc'] ?>">Convertir</a>
-            </th>
-        </tr>
+            <tr>
+                <td><?php echo $type_hof; ?></td>
+                <td><?php echo date("H:i:s - j-m-Y", $data['dateRC']); ?></td>
+                <td><?php echo $data['coordinates']; ?></td>
+                <td>
+                    <span class="og-highlight">
+                        <?php $queryAtt = $db->sql_query("SELECT player FROM " . TABLE_ROUND_ATTACK . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+                        while ($player_att = $db->sql_fetch_row($queryAtt)) {
+                            echo $player_att['player'] . "<br>";
+                        } ?>
+                    </span>
+                    <?php echo number_format($data['pertes_A'], 0, '', '.'); ?>
+                </td>
+                <td>
+                    <span class="og-highlight">
+                        <?php $queryDef = $db->sql_query("SELECT player FROM " . TABLE_ROUND_DEFENSE . " WHERE `id_rcround`=" . $id_rcround . ' GROUP BY player');
+                        while ($player_def = $db->sql_fetch_row($queryDef)) {
+                            echo $player_def['player'] . "<br>";
+                        } ?>
+                    </span>
+                    <?php echo number_format($data['pertes_D'], 0, '', '.'); ?>
+                </td>
+                <td><?php echo number_format($data['gain_M'], 0, '', '.'); ?></td>
+                <td><?php echo number_format($data['gain_C'], 0, '', '.'); ?></td>
+                <td><?php echo number_format($data['gain_D'], 0, '', '.'); ?></td>
+                <td><?php echo number_format($data['debris_M'] + $data['debris_C'], 0, '', '.'); ?></td>
+                <td><a style="cursor:pointer" onclick="window.open('index.php?action=hofrc&subaction=preview&id=<?php echo $data['id_rc'] ?>', 'RC Original', 'width=920, height=550, menubar=no, resizable=yes, scrollbars=yes, status=no, toolbar=no'); return false;">Vérifier</a>
+                </td>
+                <td><a style="cursor:pointer" href="index.php?action=hofrc&subaction=convert&result=<?php echo $data['id_rc'] ?>">Convertir</a>
+                </td>
+            </tr>
         <?php
 
-    }
+        }
 
-    //fin de la boucle<th>
-    ?>
 
+        //fin de la boucle<th>
+        ?>
+    </tbody>
 </table>
-	

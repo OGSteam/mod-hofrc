@@ -19,7 +19,7 @@ if ($user_data['user_admin'] != 1 && $user_data['user_coadmin'] != 1) {
 require_once('mod/hofrc/Pages/include.php');
 //Définitions
 global $db, $table_prefix, $prefixe;
-global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE; 
+global $TABLE_HOFRC_ATTACK, $TABLE_HOFRC_CONFIG, $TABLE_HOFRC_DEFENCE, $TABLE_HOFRC_INFO_RC, $TABLE_HOFRC_RP, $TABLE_HOFRC_SKIN, $TABLE_HOFRC_TITLE;
 
 
 if (isset($pub_id)) {
@@ -165,405 +165,420 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
 ?>
 
 
-<table align="center" width="100%" cellpadding="0" cellspacing="1">
+<table class="og-table og-full-table">
 
     <!-- CONFIGURATION GENERAL -->
-    <tr>
-        <td class="c" colspan="4">Configuration générale</td>
-    </tr>
-    <tr>
-        <th colspan="2">
+    <thead>
+        <tr>
+            <th colspan="4">Configuration générale</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <fieldset>
+                    <legend>
+                        <b>
+                            <font color='#0080FF'><u>Configuration de l'univers</u></font>
+                        </b>
+                    </legend>
+                    <p align='left'>
+
+                    <form style="text-align:right;" method="POST" action="index.php?action=hofrc&subaction=admin" name="config">
+                        <span style="text-align:center"><a align="center">Début de l'univers : </a><input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_start_universe; ?>" name="day_start_universe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_start_universe; ?>" name="month_start_universe" /> / <input style="width: 40px; text-align: center;" type="text" value="<?php echo $year_start_universe; ?>" name="year_start_universe" /></span><br><br>
+                        <a style="margin-right:82px;">CDR en solo</a><a style="text-align:right; margin-right:20px">CDR en
+                            groupé</a><br>
+                        <!-- Configuration INITIAL SOLO -->
+                        <a>CDR
+                            Initial <?php echo help(null, 'Permet de désactiver les hofs initial sur certains univers.'); ?>
+                            : </a> <input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_initial; ?>" name="config_size_initial" /> de
+                        débris.
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_solo; ?>" name="day_config_end_initial_solo" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_solo; ?>" name="month_config_end_initial_solo" />
+                        / <input style="width: 40px; text-align: center; margin-right:50px" type="text" value="<?php echo $year_config_end_initial_solo; ?>" name="year_config_end_initial_solo" />
+                        <!-- Configuration INITIAL GROUPE -->
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_groupe; ?>" name="day_config_end_initial_groupe" />
+                        / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_groupe; ?>" name="month_config_end_initial_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px" type="text" value="<?php echo $year_config_end_initial_groupe; ?>" name="year_config_end_initial_groupe" /><br>
+                        <!-- Configuration COURANT SOLO -->
+                        <a>CDR
+                            Courant <?php echo help(null, "Permet de désactiver les hofs courant sur certains univers."); ?>
+                            : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_courant; ?>" name="config_size_courant" /> de débris.
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_solo; ?>" name="day_config_end_courant_solo" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_solo; ?>" name="month_config_end_courant_solo" />
+                        / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_courant_solo; ?>" name="year_config_end_courant_solo" />
+                        <!-- Configuration COURANT GROUPE -->
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_groupe; ?>" name="day_config_end_courant_groupe" />
+                        / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_groupe; ?>" name="month_config_end_courant_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_courant_groupe; ?>" name="year_config_end_courant_groupe" /><br>
+                        <!-- Configuration BASIC SOLO -->
+                        <a>CDR Basic <?php echo help(null, "Permet de désactiver les hofs basic sur certains univers."); ?>
+                            : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_basic; ?>" name="config_size_basic" /> de débris.
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_solo; ?>" name="day_config_end_basic_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_solo; ?>" name="month_config_end_basic_solo" /> /
+                        <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_basic_solo; ?>" name="year_config_end_basic_solo" />
+                        <!--Configuration BASIC GROUPE -->
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_groupe; ?>" name="day_config_end_basic_groupe" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_groupe; ?>" name="month_config_end_basic_groupe" />
+                        / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_basic_groupe; ?>" name="year_config_end_basic_groupe" /><br>
+                        <!-- Configuration NORMAL SOLO -->
+                        <a>CDR
+                            Normal <?php echo help(null, "Permet de désactiver les hofs normal sur certains univers."); ?>
+                            : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_normal; ?>" name="config_size_normal" /> de débris.
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_solo; ?>" name="day_config_end_normal_solo" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_solo; ?>" name="month_config_end_normal_solo" /> /
+                        <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_normal_solo; ?>" name="year_config_end_normal_solo" />
+                        <!--Configuration NORMAL GROUPE -->
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_groupe; ?>" name="day_config_end_normal_groupe" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_groupe; ?>" name="month_config_end_normal_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_normal_groupe; ?>" name="year_config_end_normal_groupe" /><br>
+                        <!-- Configuration AVANCE SOLO -->
+                        <a>CDR
+                            Avancé <?php echo help(null, "Permet de désactiver les hofs avancés sur certains univers."); ?>
+                            : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_avance; ?>" name="config_size_avance" /> de débris.
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_solo; ?>" name="day_config_end_avance_solo" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_solo; ?>" name="month_config_end_avance_solo" /> /
+                        <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_avance_solo; ?>" name="year_config_end_avance_solo" />
+                        <!-- Configuration AVANCE GROUPE -->
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_groupe; ?>" name="day_config_end_avance_groupe" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_groupe; ?>" name="month_config_end_avance_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_avance_groupe; ?>" name="year_config_end_avance_groupe" /></br>
+                        <!-- Configuration STRATEGE SOLO -->
+                        <a>CDR
+                            Stratège <?php echo help(null, "Permet de désactiver les hofs stratège sur certains univers."); ?>
+                            : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_stratege; ?>" name="config_size_stratege" /> de
+                        débris.
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_solo; ?>" name="day_config_end_stratege_solo" /> /
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_solo; ?>" name="month_config_end_stratege_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_stratege_solo; ?>" name="year_config_end_stratege_solo" />
+                        <!-- Configuration STRATEGE GROUPE -->
+                        <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_groupe; ?>" name="day_config_end_stratege_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_groupe; ?>" name="month_config_end_stratege_groupe" /> /
+                        <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_stratege_groupe; ?>" name="year_config_end_stratege_groupe" /></br></br>
+                        <!-- Configuration EXPERT -->
+                        <a>CDR Expert : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_expert; ?>" name="config_size_expert" /> de
+                        débris.
+                        <!-- Configuration GUERRIER -->
+                        <a>CDR Guerrier : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_guerrier; ?>" name="config_size_guerrier" /> de débris.</br></br>
+                        <!-- Configuration DEVASTATEUR -->
+                        <a>CDR Devastateur : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_devastateur; ?>" name="config_size_devastateur" /> de débris.
+                        <!-- Configuration CHAMPION -->
+                        <a>CDR Champion : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_champion; ?>" name="config_size_champion" /> de débris.</br></br>
+                        <!-- Configuration LEGENDAIRE -->
+                        <a>CDR Légendaire : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_legendaire; ?>" name="config_size_legendaire" /> de débris.</br></br>
+
+                        <input align="center" type="submit" class="og-button og-button-little"  name="config_universe" value="Envoyer">
+                    </form>
+                    </p>
+                </fieldset>
+            </td>
+            <td>
+                <fieldset>
+                    <legend>
+                        <b>
+                            <font color='#0080FF'><u>Création d'un nouveau skin</u></font>
+                        </b>
+                    </legend>
+                    <p align='left'>
+
+                    <form method="POST" action="index.php?action=hofrc&subaction=admin" name="create_skin">
+                        Créer un skin: <input style="width: 40%;" type="text" name="new_skin" id="new_skin" maxlength="20"><br><br>
+                        <!-- VALIDATION DES PARAMETRES -->
+                        <input type="submit" class="og-button og-button-little"  name="create_skin" value="Envoyer">
+                    </form>
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <b>
+                            <font color='#0080FF'><u>Sélection d'un skin</u></font>
+                        </b>
+                    </legend>
+                    <p align='left'>
+
+                    <form method="POST" action="index.php?action=hofrc&subaction=admin" name="select_use_skin">
+                        Sélection du skin:
+                        <SELECT style="width: 40%;" name="list_skin" value="">
+                            <?php
+
+                            $query_skin = $db->sql_query("SELECT `title` FROM `" . $TABLE_HOFRC_SKIN . "` ORDER BY `title` ASC");
+                            while ($query_select_skin = $db->sql_fetch_row($query_skin)) {
+                                echo "<option name = '" . $query_select_skin[0] . "' value='" . $query_select_skin[0] . "'";
+                                if ($skin == $query_select_skin[0]) echo "selected='selected'";
+                                echo ">" . $query_select_skin[0] . "</option>";
+                            }
+                            ?>
+                        </select>
+                        <!-- VALIDATION DES PARAMETRES -->
+                        <br><br>
+                        <center><input type="submit" class="og-button og-button-little"  name="select_use_skin" value="Envoyer"></center>
+                    </form>
+                    </p>
+                </fieldset>
+            </td>
+            <td>
+                <fieldset>
+                    <legend>
+                        <b>
+                            <font color='#0080FF'><u>Upload des images</u></font>
+                        </b>
+                    </legend>
+                    <p align='left'>
+                    <table>
+                        <form method="post" enctype="multipart/form-data" action="index.php?action=hofrc&subaction=admin">
+                            <tr>
+                                <th width="220px">
+                                    <!-- On limite le fichier à 300Ko -->
+                                    Image
+                                    :<?php echo help(null, "Les différents fichier doivent avoir comme nom:<br>- header <br>- round <br>- separator <br>- result <br>- background<br>Les seuls fichier accepter sont des gif, jpg et png."); ?>
+                                    <input type="file" name="picture"></br></br>
+                                </th>
+                                <th style="text-align:left;">
+                                    <input type="radio" name="PIC" value="PIC_HEADER">Entête<br>
+                                    <input type="radio" name="PIC" value="PIC_ROUND">Round<br>
+                                    <input type="radio" name="PIC" value="PIC_SEPARATOR">Séparation<br>
+                                    <input type="radio" name="PIC" value="PIC_RESULT">Résultat<br>
+                                    <input type="radio" name="PIC" value="PIC_BACKGROUND">Arrière-Plan<br>
+                                    <input type="radio" name="PIC" value="PIC_HISTORIQUE">Historique<br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <input type="submit" class="og-button og-button-little"  name="upload" value="Envoyer l'image">
+                                </th>
+                            </tr>
+                        </form>
+                    </table>
+                    </p>
+                </fieldset>
+            </td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="4">Affichage des images et police disponible</th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
             <fieldset>
                 <legend>
                     <b>
-                        <font color='#0080FF'><u>Configuration de l'univers</u></font>
+                        <font color='#0080FF'><u>Listes des Polices du skin <?php echo $skin; ?></u></font>
                     </b>
                 </legend>
                 <p align='left'>
 
-                <form style="text-align:right;" method="POST" action="index.php?action=hofrc&subaction=admin" name="config">
-                    <span style="text-align:center"><a align="center">Début de l'univers : </a><input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_start_universe; ?>" name="day_start_universe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_start_universe; ?>" name="month_start_universe" /> / <input style="width: 40px; text-align: center;" type="text" value="<?php echo $year_start_universe; ?>" name="year_start_universe" /></span><br><br>
-                    <a style="margin-right:82px;">CDR en solo</a><a style="text-align:right; margin-right:20px">CDR en
-                        groupé</a><br>
-                    <!-- Configuration INITIAL SOLO -->
-                    <a>CDR
-                        Initial <?php echo help(null, 'Permet de désactiver les hofs initial sur certains univers.'); ?>
-                        : </a> <input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_initial; ?>" name="config_size_initial" /> de
-                    débris.
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_solo; ?>" name="day_config_end_initial_solo" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_solo; ?>" name="month_config_end_initial_solo" />
-                    / <input style="width: 40px; text-align: center; margin-right:50px" type="text" value="<?php echo $year_config_end_initial_solo; ?>" name="year_config_end_initial_solo" />
-                    <!-- Configuration INITIAL GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_initial_groupe; ?>" name="day_config_end_initial_groupe" />
-                    / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_initial_groupe; ?>" name="month_config_end_initial_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px" type="text" value="<?php echo $year_config_end_initial_groupe; ?>" name="year_config_end_initial_groupe" /><br>
-                    <!-- Configuration COURANT SOLO -->
-                    <a>CDR
-                        Courant <?php echo help(null, "Permet de désactiver les hofs courant sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_courant; ?>" name="config_size_courant" /> de débris.
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_solo; ?>" name="day_config_end_courant_solo" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_solo; ?>" name="month_config_end_courant_solo" />
-                    / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_courant_solo; ?>" name="year_config_end_courant_solo" />
-                    <!-- Configuration COURANT GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_courant_groupe; ?>" name="day_config_end_courant_groupe" />
-                    / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_courant_groupe; ?>" name="month_config_end_courant_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_courant_groupe; ?>" name="year_config_end_courant_groupe" /><br>
-                    <!-- Configuration BASIC SOLO -->
-                    <a>CDR Basic <?php echo help(null, "Permet de désactiver les hofs basic sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_basic; ?>" name="config_size_basic" /> de débris.
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_solo; ?>" name="day_config_end_basic_solo" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_solo; ?>" name="month_config_end_basic_solo" /> /
-                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_basic_solo; ?>" name="year_config_end_basic_solo" />
-                    <!--Configuration BASIC GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_basic_groupe; ?>" name="day_config_end_basic_groupe" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_basic_groupe; ?>" name="month_config_end_basic_groupe" />
-                    / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_basic_groupe; ?>" name="year_config_end_basic_groupe" /><br>
-                    <!-- Configuration NORMAL SOLO -->
-                    <a>CDR
-                        Normal <?php echo help(null, "Permet de désactiver les hofs normal sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_normal; ?>" name="config_size_normal" /> de débris.
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_solo; ?>" name="day_config_end_normal_solo" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_solo; ?>" name="month_config_end_normal_solo" /> /
-                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_normal_solo; ?>" name="year_config_end_normal_solo" />
-                    <!--Configuration NORMAL GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_normal_groupe; ?>" name="day_config_end_normal_groupe" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_normal_groupe; ?>" name="month_config_end_normal_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_normal_groupe; ?>" name="year_config_end_normal_groupe" /><br>
-                    <!-- Configuration AVANCE SOLO -->
-                    <a>CDR
-                        Avancé <?php echo help(null, "Permet de désactiver les hofs avancés sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_avance; ?>" name="config_size_avance" /> de débris.
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_solo; ?>" name="day_config_end_avance_solo" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_solo; ?>" name="month_config_end_avance_solo" /> /
-                    <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_avance_solo; ?>" name="year_config_end_avance_solo" />
-                    <!-- Configuration AVANCE GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_avance_groupe; ?>" name="day_config_end_avance_groupe" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_avance_groupe; ?>" name="month_config_end_avance_groupe" /> / <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_avance_groupe; ?>" name="year_config_end_avance_groupe" /></br>
-                    <!-- Configuration STRATEGE SOLO -->
-                    <a>CDR
-                        Stratège <?php echo help(null, "Permet de désactiver les hofs stratège sur certains univers."); ?>
-                        : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_stratege; ?>" name="config_size_stratege" /> de
-                    débris.
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_solo; ?>" name="day_config_end_stratege_solo" /> /
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_solo; ?>" name="month_config_end_stratege_solo" /> / <input style="width: 40px; text-align: center; margin-right:50px;" type="text" value="<?php echo $year_config_end_stratege_solo; ?>" name="year_config_end_stratege_solo" />
-                    <!-- Configuration STRATEGE GROUPE -->
-                    <input style="width: 20px; text-align: center;" type="text" value="<?php echo $day_config_end_stratege_groupe; ?>" name="day_config_end_stratege_groupe" /> / <input style="width: 20px; text-align: center;" type="text" value="<?php echo $month_config_end_stratege_groupe; ?>" name="month_config_end_stratege_groupe" /> /
-                    <input style="width: 40px; text-align: center; margin-right:10px;" type="text" value="<?php echo $year_config_end_stratege_groupe; ?>" name="year_config_end_stratege_groupe" /></br></br>
-                    <!-- Configuration EXPERT -->
-                    <a>CDR Expert : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_expert; ?>" name="config_size_expert" /> de
-                    débris.
-                    <!-- Configuration GUERRIER -->
-                    <a>CDR Guerrier : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_guerrier; ?>" name="config_size_guerrier" /> de débris.</br></br>
-                    <!-- Configuration DEVASTATEUR -->
-                    <a>CDR Devastateur : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_devastateur; ?>" name="config_size_devastateur" /> de débris.
-                    <!-- Configuration CHAMPION -->
-                    <a>CDR Champion : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_champion; ?>" name="config_size_champion" /> de débris.</br></br>
-                    <!-- Configuration LEGENDAIRE -->
-                    <a>CDR Légendaire : </a><input style="width: 20%; text-align: center;" type="text" value="<?php echo $config_size_legendaire; ?>" name="config_size_legendaire" /> de débris.</br></br>
+                    <?php list_font(); ?>
 
-                    <input align="center" type="submit" name="config_universe" value="Envoyer">
-                </form>
                 </p>
             </fieldset>
-        </th>
-        <th>
             <fieldset>
                 <legend>
                     <b>
-                        <font color='#0080FF'><u>Création d'un nouveau skin</u></font>
+                        <font color='#0080FF'><u>Ratio pour visualier les images</u></font>
                     </b>
                 </legend>
                 <p align='left'>
-
-                <form method="POST" action="index.php?action=hofrc&subaction=admin" name="create_skin">
-                    Créer un skin: <input style="width: 40%;" type="text" name="new_skin" id="new_skin" maxlength="20"><br><br>
+                <form method="POST" action="index.php?action=hofrc&subaction=admin" name="rate">
+                    Ratio: <input type="text" name="rate_resize" value="<?php $rate_resize = rate_resizing(0);
+                                                                        echo ($rate_resize); ?>" id="new_skin" maxlength="20">%<br />
                     <!-- VALIDATION DES PARAMETRES -->
-                    <input type="submit" name="create_skin" value="Envoyer">
+                    <br>
+                    <center><input type="submit" class="og-button og-button-little"  name="rate" value="Envoyer"></center>
                 </form>
                 </p>
             </fieldset>
+        </td>
+        <td colspan="3">
             <fieldset>
                 <legend>
                     <b>
-                        <font color='#0080FF'><u>Sélection d'un skin</u></font>
-                    </b>
-                </legend>
-                <p align='left'>
-
-                <form method="POST" action="index.php?action=hofrc&subaction=admin" name="select_use_skin">
-                    Sélection du skin:
-                    <SELECT style="width: 40%;" name="list_skin" value="">
-                        <?php
-                     
-                        $query_skin = $db->sql_query("SELECT `title` FROM `" . $TABLE_HOFRC_SKIN . "` ORDER BY `title` ASC");
-                        while ($query_select_skin = $db->sql_fetch_row($query_skin)) {
-                            echo "<option name = '" . $query_select_skin[0] . "' value='" . $query_select_skin[0] . "'";
-                            if ($skin == $query_select_skin[0]) echo "selected='selected'";
-                            echo ">" . $query_select_skin[0] . "</option>";
-                        }   
-                        ?>
-                    </select>
-                    <!-- VALIDATION DES PARAMETRES -->
-                    <br><br>
-                    <center><input type="submit" name="select_use_skin" value="Envoyer"></center>
-                </form>
-                </p>
-            </fieldset>
-        </th>
-        <th>
-            <fieldset>
-                <legend>
-                    <b>
-                        <font color='#0080FF'><u>Upload des images</u></font>
+                        <font color='#0080FF'><u>Images du skin <?php echo $skin; ?></u></font>
                     </b>
                 </legend>
                 <p align='left'>
                 <table>
-                    <form method="post" enctype="multipart/form-data" action="index.php?action=hofrc&subaction=admin">
-                        <tr>
-                            <th width="220px">
-                                <!-- On limite le fichier à 300Ko -->
-                                Image
-                                :<?php echo help(null, "Les différents fichier doivent avoir comme nom:<br>- header <br>- round <br>- separator <br>- result <br>- background<br>Les seuls fichier accepter sont des gif, jpg et png."); ?>
-                                <input type="file" name="picture"></br></br>
-                            </th>
-                            <th style="text-align:left;">
-                                <input type="radio" name="PIC" value="PIC_HEADER">Entête<br>
-                                <input type="radio" name="PIC" value="PIC_ROUND">Round<br>
-                                <input type="radio" name="PIC" value="PIC_SEPARATOR">Séparation<br>
-                                <input type="radio" name="PIC" value="PIC_RESULT">Résultat<br>
-                                <input type="radio" name="PIC" value="PIC_BACKGROUND">Arrière-Plan<br>
-                                <input type="radio" name="PIC" value="PIC_HISTORIQUE">Historique<br>
-                            </th>
+                    <?php
+                    // Génération de la liste des fonds disponible
+                    $background = get_background_tab($skin);
+
+                    // Limite à 5 images/lignes sinon au nombre d'images
+                    $back_per_ligne =  (count($background) < 5) ? count($background) : 5;
+                    $count = 0;
+                    foreach ($background as $key => $fichier) {
+                        // Si c'est la 1ere image de la ligne, on affiche le <tr>
+                        $count++;
+                        if ($count == 1) echo "<tr>";
+
+                    ?>
+                        <th align="center">
+                            <?php
+                            list($width, $height, $type, $attr) = getimagesize("mod/hofrc/Skin/" . $skin . "/" . "/" . $fichier);
+                            $new_width = image_resizing($width);
+                            $new_height = image_resizing($height);
+                            ?>
+                            <a href="<?php echo "mod/hofrc/Skin/" . $skin . "/" . $fichier; ?>">
+                                <img src="<?php echo "mod/hofrc/Skin/" . $skin . "/" . $fichier; ?>" width="<?php echo $new_width; ?>" height="<?php echo $new_height; ?>"><br />
+                            </a>
+                            <?php echo $fichier; ?></br>
+
+                            <?php
+                            // Récupération et affichage des dimensions de l'image
+                            list($width, $height, $type, $attr) = getimagesize("mod/hofrc/Skin/" . $skin . "/" . "/" . $fichier);
+                            echo "(" . $width . "x" . $height . ")";
+                            ?>
+                        </th>
+                        <?php // Si c'est la dernière image de la ligne, on affiche le </tr>
+                        if ($count == $back_per_ligne) {
+                            echo "</tr>";
+                            $count = 0;
+                        }
+                    }
+                    // Combien il restait de case pour finir la ligne? On ne rempli avec du vide
+                    if ($count != 0) {
+                        ?>
+                        <td style="border:0;" class="d" colspan="<?php echo $back_per_page - $count; ?>">
+                            &nbsp
+                        </td>
                         </tr>
-                        <tr>
-                            <th colspan="2">
-                                <input type="submit" name="upload" value="Envoyer l'image">
-                            </th>
-                        </tr>
-                    </form>
+                    <?php
+                    }
+
+                    ?>
                 </table>
                 </p>
             </fieldset>
-        </th>
-    </tr>
-    <tr>
-        <td class="c" colspan="4">Affichage des images et police disponible</td>
-    </tr>
-    <th>
-        <fieldset>
-            <legend>
-                <b>
-                    <font color='#0080FF'><u>Listes des Polices du skin <?php echo $skin; ?></u></font>
-                </b>
-            </legend>
-            <p align='left'>
+        </td>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="4">Configuration de l'historique</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <fieldset>
+                    <legend>
+                        <b>
+                            <font color='#0080FF'><u>Générales</u></font>
+                        </b>
+                    </legend>
+                    <p align='left'>
 
-                <?php list_font(); ?>
+                    <form method="POST" action="index.php?action=hofrc&subaction=admin&id=<?php echo $id ?>" name="set_historique">
+                        Police: Choix:
+                        <SELECT style="width: 40%;" name="set_font_historique" value="">
+                            <?php
+                            $folder = "mod/hofrc/Font"; ?>
+                            <?php if ($list = opendir($folder)) : ?>
+                                <?php while (false !== ($file = readdir($list))) : ?>
+                                    <?php if ($file != "." && $file != ".." && !is_dir($folder . $file)) : ?>
+                                        <option name='<?php echo $file; ?>' value='<?php echo $file; ?>'>
+                                            <?php echo $file; ?>
+                                        </option>
 
-            </p>
-        </fieldset>
-        <fieldset>
-            <legend>
-                <b>
-                    <font color='#0080FF'><u>Ratio pour visualier les images</u></font>
-                </b>
-            </legend>
-            <p align='left'>
-            <form method="POST" action="index.php?action=hofrc&subaction=admin" name="rate">
-                Ratio: <input type="text" name="rate_resize" value="<?php $rate_resize = rate_resizing(0);
-                                                                    echo ($rate_resize); ?>" id="new_skin" maxlength="20">%<br />
-                <!-- VALIDATION DES PARAMETRES -->
-                <br>
-                <center><input type="submit" name="rate" value="Envoyer"></center>
-            </form>
-            </p>
-        </fieldset>
-    </th>
-    <th colspan="3">
-        <fieldset>
-            <legend>
-                <b>
-                    <font color='#0080FF'><u>Images du skin <?php echo $skin; ?></u></font>
-                </b>
-            </legend>
-            <p align='left'>
-            <table>
-                <?php
-                // Génération de la liste des fonds disponible
-                $background = get_background_tab($skin);
+                                    <?php endif; ?>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </select>
 
-                // Limite à 5 images/lignes sinon au nombre d'images
-                $back_per_ligne =  (count($background) < 5) ? count($background) : 5;
-                $count = 0;
-                foreach ($background as $key => $fichier) {
-                    // Si c'est la 1ere image de la ligne, on affiche le <tr>
-                    $count++;
-                    if ($count == 1) echo "<tr>";
+                        Taille: <input type="text" name="set_font_size" id="set_font_size" value="<?php if (!empty($font_size) == TRUE) echo $font_size;
+                                                                                                    else echo 'Taille de la police'; ?>" maxlength="20">
+                        <br />
+                        Image: Largeur: <input type="text" name="set_largeur_historique" id="set_largeur_historique" value="<?php if (!empty($largeur_historique) == TRUE) echo $largeur_historique;
+                                                                                                                            else echo 'Largeur de l\'image'; ?>" maxlength="20">
+                        Hauteur: <input type="text" name="set_hauteur_historique" id="set_hauteur_historique" value="<?php if (!empty($hauteur_historique) == TRUE) echo $hauteur_historique;
+                                                                                                                        else echo 'Hauteur de l\'image'; ?>" maxlength="20">
+                        <br />
+                        Texte: Position Verticale: <input type="text" name="set_pos_verti_historique" id="set_pos_verti_historique" value="<?php if (!empty($pos_verti_historique) == TRUE) echo $pos_verti_historique;
+                                                                                                                                            else echo 'Pos. vert. txt'; ?>" maxlength="20">
+                        Angle: <input type="text" name="set_angle_historique" id="set_angle_historique" value="<?php if (!empty($angle_historique) == TRUE) echo $angle_historique;
+                                                                                                                else echo '0'; ?>" maxlength="20">
+                        <br />
+                        Texte 1: Position horizontale: <input type="text" name="set_pos_horiz_historique_2" id="set_pos_horiz_historique_2" value="<?php if (!empty($pos_horiz_historique_2) == TRUE) echo $pos_horiz_historique_2;
+                                                                                                                                                    else echo 'Pos. Horiz. txt 2'; ?>" maxlength="20">
+                        Couleur: <input type="text" name="set_color_txt_2_RGB" id="set_color_txt_2_RGB" value="<?php if (!empty($color_txt_2_RGB) == TRUE) echo $color_txt_2_RGB;
+                                                                                                                else echo 'X,XX,XXX'; ?>" maxlength="20">
+                        <br />
+                        Texte 2: Position horizontale: <input type="text" name="set_pos_horiz_historique_3" id="set_pos_horiz_historique_3" value="<?php if (!empty($pos_horiz_historique_3) == TRUE) echo $pos_horiz_historique_3;
+                                                                                                                                                    else echo 'Pos. Horiz. txt 3'; ?>" maxlength="20">
+                        Couleur: <input type="text" name="set_color_txt_3_RGB" id="set_color_txt_3_RGB" value="<?php if (!empty($color_txt_3_RGB) == TRUE) echo $color_txt_3_RGB;
+                                                                                                                else echo 'X,XX,XXX'; ?>" maxlength="20">
+                        <br />
+                        Texte 3: Position horizontale: <input type="text" name="set_pos_horiz_historique_4" id="set_pos_horiz_historique_4" value="<?php if (!empty($pos_horiz_historique_4) == TRUE) echo $pos_horiz_historique_4;
+                                                                                                                                                    else echo 'Pos. Horiz. txt 4'; ?>" maxlength="20">
+                        Couleur: <input type="text" name="set_color_txt_4_RGB" id="set_color_txt_4_RGB" value="<?php if (!empty($color_txt_4_RGB) == TRUE) echo $color_txt_4_RGB;
+                                                                                                                else echo 'X,XX,XXX'; ?>" maxlength="20">
+                        <br />
+                        Texte 4: Position horizontale: <input type="text" name="set_pos_horiz_historique_5" id="set_pos_horiz_historique_5" value="<?php if (!empty($pos_horiz_historique_5) == TRUE) echo $pos_horiz_historique_5;
+                                                                                                                                                    else echo 'Pos. Horiz. txt 5'; ?>" maxlength="20">
+                        Couleur: <input type="text" name="set_color_txt_5_RGB" id="set_color_txt_5_RGB" value="<?php if (!empty($color_txt_5_RGB) == TRUE) echo $color_txt_5_RGB;
+                                                                                                                else echo 'X,XX,XXX'; ?>" maxlength="20">
+                        <!-- VALIDATION DES PARAMETRES -->
+                        <br>
+                        <center><input type="reset" name="Submit" class="og-button og-button-little"  value="Réinitialiser le formulaire"> <input type="submit" class="og-button og-button-little"  name="set_historique" value="Envoyer">
+                        </center>
+                    </form>
+                    </p>
+                </fieldset>
+            </td>
 
-                ?>
-                    <th align="center">
-                        <?php
-                        list($width, $height, $type, $attr) = getimagesize("mod/hofrc/Skin/" . $skin . "/" . "/" . $fichier);
-                        $new_width = image_resizing($width);
-                        $new_height = image_resizing($height);
-                        ?>
-                        <a href="<?php echo "mod/hofrc/Skin/" . $skin . "/" . $fichier; ?>">
-                            <img src="<?php echo "mod/hofrc/Skin/" . $skin . "/" . $fichier; ?>" width="<?php echo $new_width; ?>" height="<?php echo $new_height; ?>"><br />
-                        </a>
-                        <?php echo $fichier; ?></br>
+            <td colspan="2">
+                <fieldset>
+                    <legend>
+                        <b>
+                            <font color='#0080FF'><u>Aperçu de l'historique</u></font>
+                        </b>
+                    </legend>
+                    <?php
+                    $source = imagecreatefromjpeg("mod/hofrc/Skin/" . $skin . "/historique.jpg");
+                    $preview = "mod/hofrc/Output/temporaire.png";
+                    $font = "mod/hofrc/Font/" . $font_historique . ".ttf";
 
-                        <?php
-                        // Récupération et affichage des dimensions de l'image
-                        list($width, $height, $type, $attr) = getimagesize("mod/hofrc/Skin/" . $skin . "/" . "/" . $fichier);
-                        echo "(" . $width . "x" . $height . ")";
-                        ?>
-                    </th>
-                    <?php // Si c'est la dernière image de la ligne, on affiche le </tr>
-                    if ($count == $back_per_ligne) {
-                        echo "</tr>";
-                        $count = 0;
-                    }
-                }
-                // Combien il restait de case pour finir la ligne? On ne rempli avec du vide
-                if ($count != 0) {
+                    $color_txt_1 = explode(",", $color_txt_1_RGB);
+                    $color_txt_2 = explode(",", $color_txt_2_RGB);
+                    $color_txt_3 = explode(",", $color_txt_3_RGB);
+                    $color_txt_4 = explode(",", $color_txt_4_RGB);
+                    $color_txt_5 = explode(",", $color_txt_5_RGB);
+
+                    $destination = imagecreatetruecolor($largeur_historique, $hauteur_historique) or die("Impossible de crée un flux d'image GD");
+
+                    $txt_1 = imagecolorallocate($destination, $color_txt_1[0], $color_txt_1[1], $color_txt_1[2]);
+                    $txt_2 = imagecolorallocate($destination, $color_txt_2[0], $color_txt_2[1], $color_txt_2[2]);
+                    $txt_3 = imagecolorallocate($destination, $color_txt_3[0], $color_txt_3[1], $color_txt_3[2]);
+                    $txt_4 = imagecolorallocate($destination, $color_txt_4[0], $color_txt_4[1], $color_txt_4[2]);
+                    $txt_5 = imagecolorallocate($destination, $color_txt_5[0], $color_txt_5[1], $color_txt_5[2]);
+
+                    // image - taille font - angle - horizontal - verticale
+                    $text1 = "1";
+                    $text2 = "";
+                    $text3 = "LEGENDAIRE";
+                    $text4 = "-";
+                    $text5 = "Titre du RP";
+                    // Les fonctions imagesx et imagesy renvoient la largeur et la hauteur d'une image
+                    $largeur_source = imagesx($source);
+                    $hauteur_source = imagesy($source);
+                    $largeur_destination = imagesx($destination);
+                    $hauteur_destination = imagesy($destination);
+
+                    imagecopyresampled($destination, $source, 0, 0, 0, 0, $largeur_destination, $hauteur_destination, $largeur_source, $hauteur_source);
+                    putenv('GDFONTPATH=' . realpath('.'));
+                    imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_1, $pos_verti_historique, $txt_1, $font, $text1);
+                    imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_2, $pos_verti_historique, $txt_2, $font, $text2);
+                    imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_3, $pos_verti_historique, $txt_3, $font, $text3);
+                    imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_4, $pos_verti_historique, $txt_4, $font, $text4);
+                    imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_5, $pos_verti_historique, $txt_5, $font, $text5);
+                    imagepng($destination, $preview);
+                    imagedestroy($destination);
+
                     ?>
-                    <td style="border:0;" class="d" colspan="<?php echo $back_per_page - $count; ?>">
-                        &nbsp
-                    </td>
-                    </tr>
-                <?php
-                }
-
-                ?>
-            </table>
-            </p>
-        </fieldset>
-    </th>
-    <tr>
-        <td class="c" colspan="4">Configuration de l'historique</td>
-    </tr>
-    <tr>
-        <th colspan="2">
-            <fieldset>
-                <legend>
-                    <b>
-                        <font color='#0080FF'><u>Générales</u></font>
-                    </b>
-                </legend>
-                <p align='left'>
-
-                <form method="POST" action="index.php?action=hofrc&subaction=admin&id=<?php echo $id ?>" name="set_historique">
-                    Police: Choix:
-                    <SELECT style="width: 40%;" name="set_font_historique" value="">
-                        <?php
-                        $folder = "mod/hofrc/Font"; ?>
-                        <?php if ($list = opendir($folder)) : ?>
-                            <?php while (false !== ($file = readdir($list))) : ?>
-                                <?php if ($file != "." && $file != ".." && !is_dir($folder . $file)) : ?>
-                                    <option name='<?php echo $file; ?>' value='<?php echo $file; ?>'>
-                                        <?php echo $file; ?>
-                                    </option>
-
-                                <?php endif; ?>
-                            <?php endwhile; ?>
-                        <?php endif; ?>
-                    </select>
-
-                    Taille: <input type="text" name="set_font_size" id="set_font_size" value="<?php if (!empty($font_size) == TRUE) echo $font_size;
-                                                                                                else echo 'Taille de la police'; ?>" maxlength="20">
-                    <br />
-                    Image: Largeur: <input type="text" name="set_largeur_historique" id="set_largeur_historique" value="<?php if (!empty($largeur_historique) == TRUE) echo $largeur_historique;
-                                                                                                                        else echo 'Largeur de l\'image'; ?>" maxlength="20">
-                    Hauteur: <input type="text" name="set_hauteur_historique" id="set_hauteur_historique" value="<?php if (!empty($hauteur_historique) == TRUE) echo $hauteur_historique;
-                                                                                                                    else echo 'Hauteur de l\'image'; ?>" maxlength="20">
-                    <br />
-                    Texte: Position Verticale: <input type="text" name="set_pos_verti_historique" id="set_pos_verti_historique" value="<?php if (!empty($pos_verti_historique) == TRUE) echo $pos_verti_historique;
-                                                                                                                                        else echo 'Pos. vert. txt'; ?>" maxlength="20">
-                    Angle: <input type="text" name="set_angle_historique" id="set_angle_historique" value="<?php if (!empty($angle_historique) == TRUE) echo $angle_historique;
-                                                                                                            else echo '0'; ?>" maxlength="20">
-                    <br />
-                    Texte 1: Position horizontale: <input type="text" name="set_pos_horiz_historique_2" id="set_pos_horiz_historique_2" value="<?php if (!empty($pos_horiz_historique_2) == TRUE) echo $pos_horiz_historique_2;
-                                                                                                                                                else echo 'Pos. Horiz. txt 2'; ?>" maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_2_RGB" id="set_color_txt_2_RGB" value="<?php if (!empty($color_txt_2_RGB) == TRUE) echo $color_txt_2_RGB;
-                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
-                    <br />
-                    Texte 2: Position horizontale: <input type="text" name="set_pos_horiz_historique_3" id="set_pos_horiz_historique_3" value="<?php if (!empty($pos_horiz_historique_3) == TRUE) echo $pos_horiz_historique_3;
-                                                                                                                                                else echo 'Pos. Horiz. txt 3'; ?>" maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_3_RGB" id="set_color_txt_3_RGB" value="<?php if (!empty($color_txt_3_RGB) == TRUE) echo $color_txt_3_RGB;
-                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
-                    <br />
-                    Texte 3: Position horizontale: <input type="text" name="set_pos_horiz_historique_4" id="set_pos_horiz_historique_4" value="<?php if (!empty($pos_horiz_historique_4) == TRUE) echo $pos_horiz_historique_4;
-                                                                                                                                                else echo 'Pos. Horiz. txt 4'; ?>" maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_4_RGB" id="set_color_txt_4_RGB" value="<?php if (!empty($color_txt_4_RGB) == TRUE) echo $color_txt_4_RGB;
-                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
-                    <br />
-                    Texte 4: Position horizontale: <input type="text" name="set_pos_horiz_historique_5" id="set_pos_horiz_historique_5" value="<?php if (!empty($pos_horiz_historique_5) == TRUE) echo $pos_horiz_historique_5;
-                                                                                                                                                else echo 'Pos. Horiz. txt 5'; ?>" maxlength="20">
-                    Couleur: <input type="text" name="set_color_txt_5_RGB" id="set_color_txt_5_RGB" value="<?php if (!empty($color_txt_5_RGB) == TRUE) echo $color_txt_5_RGB;
-                                                                                                            else echo 'X,XX,XXX'; ?>" maxlength="20">
-                    <!-- VALIDATION DES PARAMETRES -->
-                    <br>
-                    <center><input type="reset" name="Submit" value="Réinitialiser le formulaire"> <input type="submit" name="set_historique" value="Envoyer">
-                    </center>
-                </form>
-                </p>
-            </fieldset>
-        </th>
-
-        <th colspan="2">
-            <fieldset>
-                <legend>
-                    <b>
-                        <font color='#0080FF'><u>Aperçu de l'historique</u></font>
-                    </b>
-                </legend>
-                <?php
-                $source = imagecreatefromjpeg("mod/hofrc/Skin/" . $skin . "/historique.jpg");
-                $preview = "mod/hofrc/Output/temporaire.png";
-                $font = "mod/hofrc/Font/" . $font_historique . ".ttf";
-
-                $color_txt_1 = explode(",", $color_txt_1_RGB);
-                $color_txt_2 = explode(",", $color_txt_2_RGB);
-                $color_txt_3 = explode(",", $color_txt_3_RGB);
-                $color_txt_4 = explode(",", $color_txt_4_RGB);
-                $color_txt_5 = explode(",", $color_txt_5_RGB);
-
-                $destination = imagecreatetruecolor($largeur_historique, $hauteur_historique) or die("Impossible de crée un flux d'image GD");
-
-                $txt_1 = imagecolorallocate($destination, $color_txt_1[0], $color_txt_1[1], $color_txt_1[2]);
-                $txt_2 = imagecolorallocate($destination, $color_txt_2[0], $color_txt_2[1], $color_txt_2[2]);
-                $txt_3 = imagecolorallocate($destination, $color_txt_3[0], $color_txt_3[1], $color_txt_3[2]);
-                $txt_4 = imagecolorallocate($destination, $color_txt_4[0], $color_txt_4[1], $color_txt_4[2]);
-                $txt_5 = imagecolorallocate($destination, $color_txt_5[0], $color_txt_5[1], $color_txt_5[2]);
-
-                // image - taille font - angle - horizontal - verticale
-                $text1 = "1";
-                $text2 = "";
-                $text3 = "LEGENDAIRE";
-                $text4 = "-";
-                $text5 = "Titre du RP";
-                // Les fonctions imagesx et imagesy renvoient la largeur et la hauteur d'une image
-                $largeur_source = imagesx($source);
-                $hauteur_source = imagesy($source);
-                $largeur_destination = imagesx($destination);
-                $hauteur_destination = imagesy($destination);
-
-                imagecopyresampled($destination, $source, 0, 0, 0, 0, $largeur_destination, $hauteur_destination, $largeur_source, $hauteur_source);
-                putenv('GDFONTPATH=' . realpath('.'));
-                imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_1, $pos_verti_historique, $txt_1, $font, $text1);
-                imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_2, $pos_verti_historique, $txt_2, $font, $text2);
-                imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_3, $pos_verti_historique, $txt_3, $font, $text3);
-                imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_4, $pos_verti_historique, $txt_4, $font, $text4);
-                imagettftext($destination, $font_size, $angle_historique, $pos_horiz_historique_5, $pos_verti_historique, $txt_5, $font, $text5);
-                imagepng($destination, $preview);
-                imagedestroy($destination);
-
-                ?>
-                <?php echo '<br><img src="' . $preview . '" alt="' . $preview . '" /><br><br>'; ?>
-            </fieldset>
-        </th>
-    </tr>
-    <tr>
-        <td class="c" colspan="4">Paramétrage des couleurs du Rapport de Combat</td>
-    </tr>
-    <th>
+                    <?php echo '<br><img src="' . $preview . '" alt="' . $preview . '" /><br><br>'; ?>
+                </fieldset>
+            </td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="4">Paramétrage des couleurs du Rapport de Combat</th>
+        </tr>
+    </thead>
+    <tbody>
+    <td>
         <fieldset>
             <legend>
                 <b>
@@ -671,8 +686,8 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
             </p>
         </fieldset>
 
-    </th>
-    <th>
+    </td>
+    <td>
         <fieldset>
             <legend>
                 <b>
@@ -780,10 +795,10 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                 <input type="text" name="couleur_gb" id="couleur_gb" value="<?php if (!empty($color_GB) == TRUE) echo $color_GB;
                                                                             else echo '000000'; ?>" onKeyUp="document.getElementById('preview_gb').style.color=this.value;" maxlength="7"><br />
         </fieldset>
-    </th>
+    </td>
 
 
-    <th colspan="2" rowspan=2>
+    <td colspan="2" rowspan=2>
         Les flottes suivantes se sont affrontées le: 28.06.2011 16:51:44<br>
         Attaquant <span id="preview_player_att_begin" style="color: <?php echo $color_PLAYER_ATT; ?>; font-size: 10px;"> xXx </span><span id="preview_ally" style="color: <?php echo $color_ALLY; ?>; font-size: 10px;"> [Ally] </span><br>
         Armes: <span id="preview_techno" style="color: <?php echo $color_TECHNO ?>; font-size: 10px;"> 160 % </span>
@@ -855,12 +870,17 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
         / <span id="preview_renta_min" style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-4.211.556</span><br>
         Défenseur avec/sans recyclage : <span id="preview_renta_min1" style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-41.531.044</span>
         / <span id="preview_renta_min2" style="color: <?php echo $color_RENTA_MIN ?>; font-size: 10px;">-58.784.000</span><br>
-    </th>
+    </td>
     </tr>
     <tr>
-        <th colspan="2">
+        <td colspan="2">
             <!-- color picker -->
-            <table style="background-color: transparent; border: 0px; padding: 0px; margin: 5px auto;" border="0" cellpadding="0" cellspacing="0" id="colorpicker">
+          
+        </td>
+    </tr>
+</table>
+
+<table style="background-color: transparent; border: 0px; padding: 0px; margin: 5px auto;" border="0" cellpadding="0" cellspacing="0" id="colorpicker">
                 <tr>
                     <td width="169" style="border: 1px solid #cccccc; background-color: #ffffff;">
                         <div id="temoin" style="float: right; width: 40px; height: 128px;"></div>
@@ -1115,12 +1135,9 @@ $year_config_end_stratege_groupe = date("Y", $hofrc_config["end_stratege_groupe"
                     <td>
                         <!-- VALIDATION DES PARAMETRES -->
                         <br>
-                        <center><input type="reset" name="Submit" value="Réinitialiser le formulaire"> <input type="submit" name="color" value="Envoyer"></center>
+                        <center><input class="og-button" type="reset" name="Submit" value="Réinitialiser le formulaire"> <input  class="og-button"  type="submit" name="color" value="Envoyer"></center>
                         </form>
                         </p>
                     </td>
                 </tr>
             </table>
-        </th>
-    </tr>
-</table>

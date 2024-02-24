@@ -26,15 +26,15 @@ if (isset($_GET['del'])) {
 }
 
 
-if (isset($pub_ignore)) {
-    $ignore_id = (int)$pub_ignore;
-    $db->sql_query("UPDATE `" . $TABLE_HOFRC_INFO_RC . "` SET `ignored` = '1' WHERE " . $TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $ignore_id . "'");
+if (isset($_GET['ignore'])) {
+    $ignore_id  = (int) $_GET['ignore'];
+     $db->sql_query("UPDATE `" . $TABLE_HOFRC_INFO_RC . "` SET `ignored` = '1' WHERE " . $TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $ignore_id . "'");
 
 }
 
 // Si on veut traiter un hof ignorer
-if (isset( $pub_traiter)) {
-    $traiter_id == (int) $pub_traiter;
+if (isset($_GET['traiter'])) {
+    $traiter_id  = (int) $_GET['traiter'];
     $db->sql_query("UPDATE `" . $TABLE_HOFRC_INFO_RC . "` SET `ignored` = '0' WHERE " . $TABLE_HOFRC_INFO_RC . ".`id_rc`  = '" . $traiter_id . "'");
 }
 
@@ -45,21 +45,23 @@ if (isset( $pub_url)) {
     echo "<a><font align='center;'  color='red'>HOF ajouté.</font></a>";
 }
 ?>
-<table width="100%">
+  <table class="og-table og-full-table">
+    <thead>
     <tr>
-        <td class="c" align="center" colspan="8">Listes des HOFS non publiés:</td>
+        <th  colspan="8">Listes des HOFS non publiés:</td>
     </tr>
     <tr>
-        <th width="110px"><a>Date</a></th>
-        <th><a>Type de Hof</a></th>
-        <th><a>Coordonnée</a></th>
-        <th><a>Attaquant</a></th>
-        <th><a>Défenseur</a></th>
-        <th><a>Taille du CDR</a></th>
-        <th><a>Publier le HOF</a></th>
-        <th><a>Ignorer</a></th>
+        <th>Date</th>
+        <th>Type de Hof</th>
+        <th>Coordonnée</th>
+        <th>Attaquant</th>
+        <th>Défenseur</th>
+        <th>Taille du CDR</th>
+        <th>Publier le HOF</th>
+        <th>Ignorer</th>
     </tr>
-
+</thead>
+<tbody>
     <?php
     WHILE (list($id_rc, $daterc, $type, $coordinates, $victoire, $metal_cdr, $cristal_cdr) = $db->sql_fetch_row($query_info)) {
         // On détermine les couleurs pour connaitre les vainqueurs
@@ -79,59 +81,61 @@ if (isset( $pub_url)) {
         //list($skin) = $db->sql_fetch_row($query_skin);
         ?>
         <tr>
-            <th width="110px"><?php echo date("H:i:s - j-m-Y", $daterc); ?></th>
-            <th><?php echo $type; ?></th>
-            <th><?php echo $coordinates; ?></th>
-            <th><?php $query_Att = $db->sql_query("SELECT player FROM " . $TABLE_HOFRC_ATTACK . " WHERE `id_rc`=" . $id_rc . " AND round = 1 GROUP BY player");
+            <td><?php echo date("H:i:s - j-m-Y", $daterc); ?></td>
+            <td><?php echo $type; ?></td>
+            <td><?php echo $coordinates; ?></td>
+            <td><?php $query_Att = $db->sql_query("SELECT player FROM " . $TABLE_HOFRC_ATTACK . " WHERE `id_rc`=" . $id_rc . " AND round = 1 GROUP BY player");
                 while ($queryAtt = $db->sql_fetch_row($query_Att)) {
                     echo "<span style='color:" . $att . ";'>" . $queryAtt['player'] . "</span><br>";
-                } ?></th>
-            <th><?php 
+                } ?></td>
+            <td><?php 
             $query_Def1 = $db->sql_query("SELECT player FROM " . $TABLE_HOFRC_DEFENCE . " WHERE `id_rc`=" . $id_rc . " AND round = 1 GROUP BY player");
                 WHILE ($queryDef1 = $db->sql_fetch_row($query_Def1)) {
                     echo "<span style='color:" . $def . ";'>" . $queryDef1['player'] . "</span><br>";
-                } ?></th>
-            <th><?php echo number_format($metal_cdr + $cristal_cdr, 0, '', '.'); ?></th>
-            <th>
+                } ?></td>
+            <td><?php echo number_format($metal_cdr + $cristal_cdr, 0, '', '.'); ?></td>
+            <td>
                 <form style="text-align:center;" method="POST"
                       action="index.php?action=hofrc&subaction=publier&id=<?php echo $id_rc ?>&create=ok"
                       name="titlehof">
                     <input style="width: 100%; text-align: center; margin-right:50px" type="text" value="Titre du HOF"
                            name="title"/>
-                    <input align="center" type="submit" name="titlehof" value="Publier">
+                    <input align="center" class="og-button og-button-little"  type="submit" name="titlehof" value="Publier">
                 </form>
-            </th>
-            <th>
+            </td>
+            <td>
                 <form style="text-align:center;" method="POST"
                       action="index.php?action=hofrc&subaction=gestion&ignore=<?php echo $id_rc ?>" name="ignore_hof">
-                    <input align="center" type="submit" name="ignore" value="Ignorer">
+                    <input align="center" class="og-button og-button-little"  type="submit" name="ignore" value="Ignorer">
                 </form>
-            </th>
+            </td>
         </tr>
         <?php
     }
     ?>
-
+</tbody>
 </table>
-<br><br>
+
 <?php
 //On va récupérer tout les hofs publiés
 $query_info_pub = $db->sql_query("SELECT `id_rc`, `daterc`, `type_hof`, `coordinates`, `victoire`, `metal_cdr`, `cristal_cdr` FROM `" . $TABLE_HOFRC_INFO_RC . "` WHERE `publicated` = '1'");
 ?>
-<table width="100%">
+  <table class="og-table og-full-table">
+    <thead>
     <tr>
-        <td class="c" align="center" colspan="7">Listes des HOFS non publiés:</td>
+        <th class="c" align="center" colspan="7">Listes des HOFS publiés:</th>
     </tr>
     <tr>
-        <th width="110px"><a>Date</a></th>
-        <th><a>Type de Hof</a></th>
-        <th><a>Coordonnée</a></th>
-        <th><a>Attaquant</a></th>
-        <th><a>Défenseur</a></th>
-        <th><a>Taille du CDR</a></th>
-        <th><a>Supprimer le HOF</a></th>
+        <th>Date</th>
+        <th>Type de Hof</th>
+        <th>Coordonnée</th>
+        <th>Attaquant</th>
+        <th>Défenseur</th>
+        <th>Taille du CDR</th>
+        <th>Supprimer le HOF</th>
     </tr>
-
+    </thead>
+    <tbody>
     <?php
     WHILE (list($id_rc_pub, $daterc_pub, $type_pub, $coordinates_pub, $victoire_pub, $metal_cdr_pub, $cristal_cdr_pub) = $db->sql_fetch_row($query_info_pub)) {
         // On détermine les couleurs pour connaitre les vainqueurs
@@ -148,14 +152,14 @@ $query_info_pub = $db->sql_query("SELECT `id_rc`, `daterc`, `type_hof`, `coordin
 
         ?>
         <tr>
-            <th width="110px"><?php echo date("H:i:s - j-m-Y", $daterc_pub); ?></th>
-            <th><?php echo $type_pub; ?></th>
-            <th><?php echo $coordinates_pub; ?></th>
-            <th><?php $query_Att_pub = $db->sql_query("SELECT `player` FROM " . $TABLE_HOFRC_ATTACK . " WHERE `id_rc`=" . $id_rc_pub . " AND round = 1 GROUP BY player");
+            <td><?php echo date("H:i:s - j-m-Y", $daterc_pub); ?></td>
+            <td><?php echo $type_pub; ?></td>
+            <td><?php echo $coordinates_pub; ?></td>
+            <td><?php $query_Att_pub = $db->sql_query("SELECT `player` FROM " . $TABLE_HOFRC_ATTACK . " WHERE `id_rc`=" . $id_rc_pub . " AND round = 1 GROUP BY player");
                 while ($queryAtt_pub = $db->sql_fetch_row($query_Att_pub)) {
                     echo "<span style='color:" . $att_pub . ";'>" . $queryAtt_pub['player'] . "</span><br>";
-                } ?></th>
-            <th>
+                } ?></td>
+            <td>
                 
 
                   <?php $query_Def_pub = $db->sql_query("SELECT `player` FROM " . $TABLE_HOFRC_DEFENCE . " WHERE `id_rc`=" . $id_rc_pub . " AND round = 1 GROUP BY player");
@@ -163,39 +167,41 @@ $query_info_pub = $db->sql_query("SELECT `id_rc`, `daterc`, `type_hof`, `coordin
                 
                 while ($queryDef_pub = $db->sql_fetch_row($query_Def_pub)) {
                     echo "<span style='color:" . $def_pub . ";'>" . $queryDef_pub['player'] . "</span><br>";
-                } ?></th>
-            <th><?php echo number_format($metal_cdr_pub + $cristal_cdr_pub, 0, '', '.'); ?></th>
-            <th>
+                } ?></td>
+            <td><?php echo number_format($metal_cdr_pub + $cristal_cdr_pub, 0, '', '.'); ?></td>
+            <td>
                 <form style="text-align:center;" method="POST"
                       action="index.php?action=hofrc&subaction=gestion&del=<?php echo $id_rc_pub ?>" name="del_hof">
-                    <input align="center" type="submit" name="del" value="Supprimer">
+                    <input align="center" class="og-button og-button-little"  type="submit" name="del" value="Supprimer">
                 </form>
-            </th>
+            </td>
         </tr>
         <?php
     }
     ?>
-
+    </tbody>    
 </table>
-<br><br>
+
 <?php
 //Si on décide de poster le HOF enfin de compte
 $query_info_ign = $db->sql_query("SELECT `id_rc`, `daterc`, `type_hof`, `coordinates`, `victoire`, `metal_cdr`, `cristal_cdr` FROM `" . $TABLE_HOFRC_INFO_RC . "` WHERE `ignored` = '1'");
 ?>
-<table width="100%">
+  <table class="og-table og-full-table">
+    <thead>
     <tr>
-        <td class="c" align="center" colspan="7">Listes des HOFS non publiés:</td>
+        <th colspan="7">Listes des HOFS Ignorés:</th>
     </tr>
     <tr>
-        <th width="110px"><a>Date</a></th>
-        <th><a>Type de Hof</a></th>
-        <th><a>Coordonnée</a></th>
-        <th><a>Attaquant</a></th>
-        <th><a>Défenseur</a></th>
-        <th><a>Taille du CDR</a></th>
-        <th><a>Traiter</a></th>
+        <th>Date</th>
+        <th>Type de Hof</th>
+        <th>Coordonnée</th>
+        <th>Attaquant</th>
+        <th>Défenseur</th>
+        <th>Taille du CDR</th>
+        <th>Traiter</th>
     </tr>
-
+    </thead>
+    <tbody>
     <?php
     WHILE (list($id_rc_ign, $daterc_ign, $type_ign, $coordinates_ign, $victoire_ign, $metal_cdr_ign, $cristal_cdr_ign) = $db->sql_fetch_row($query_info_ign)) {
         // On détermine les couleurs pour connaitre les vainqueurs
@@ -212,31 +218,32 @@ $query_info_ign = $db->sql_query("SELECT `id_rc`, `daterc`, `type_hof`, `coordin
 
         // On récupère les coordonnées de la bataille
         $query_coordonnee_ign = $db->sql_query("SELECT `coordinates` FROM " . $TABLE_HOFRC_DEFENCE . " WHERE `id_rc` = '$id_rc'");
-        list($skin_ign) = $db->sql_fetch_row($query_skin_ign);
+        list($skin_ign) = $db->sql_fetch_row($query_coordonnee_ign);
         ?>
         <tr>
-            <th width="110px"><?php echo date("H:i:s - j-m-Y", $daterc_pub); ?></th>
-            <th><?php echo $type_ign; ?></th>
-            <th><?php echo $coordinates_ign; ?></th>
-            <th><?php $query_Att_ign = $db->sql_query("SELECT `player` FROM " . $TABLE_HOFRC_ATTACK . "  WHERE `id_rc`=" . $id_rc_ign . " AND round = 1 GROUP BY player");
+            <td><?php echo date("H:i:s - j-m-Y", $daterc_pub); ?></td>
+            <td><?php echo $type_ign; ?></td>
+            <td><?php echo $coordinates_ign; ?></td>
+            <td><?php $query_Att_ign = $db->sql_query("SELECT `player` FROM " . $TABLE_HOFRC_ATTACK . "  WHERE `id_rc`=" . $id_rc_ign . " AND round = 1 GROUP BY player");
                 while ($queryAtt_ign = $db->sql_fetch_row($query_Att_ign)) {
                     echo "<span style='color:" . $att_ign . ";'>" . $queryAtt_ign['player'] . "</span><br>";
-                } ?></th>
-            <th><?php $query_Def_ign = $db->sql_query("SELECT `player` FROM " . $TABLE_HOFRC_DEFENCE . " WHERE `id_rc`=" . $id_rc_ign . " AND round = 1 GROUP BY player");
+                } ?></td>
+            <td><?php $query_Def_ign = $db->sql_query("SELECT `player` FROM " . $TABLE_HOFRC_DEFENCE . " WHERE `id_rc`=" . $id_rc_ign . " AND round = 1 GROUP BY player");
                 while ($queryDef_ign = $db->sql_fetch_row($query_Def_ign)) {
                     echo "<span style='color:" . $def_ign . ";'>" . $queryDef_ign['player'] . "</span><br>";
-                } ?></th>
-            <th><?php echo number_format($metal_cdr_ign + $cristal_cdr_ign, 0, '', '.'); ?></th>
-            <th>
+                } ?></td>
+            <td><?php echo number_format($metal_cdr_ign + $cristal_cdr_ign, 0, '', '.'); ?></td>
+            <td>
                 <form style="text-align:center;" method="POST"
                       action="index.php?action=hofrc&subaction=gestion&traiter=<?php echo $id_rc_ign ?>"
                       name="traiter_hof">
-                    <input align="center" type="submit" name="del" value="Traiter">
+                    <input align="center" class="og-button og-button-little"  type="submit" name="del" value="Traiter">
                 </form>
-            </th>
+            </td>
         </tr>
         <?php
+
     }
     ?>
-
+<tbody>
 </table>
