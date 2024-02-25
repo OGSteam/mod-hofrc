@@ -5,6 +5,6 @@ if (!defined('IN_SPYOGAME')) {
 }
 
 $mod_folder = 'hofrc'; // à modifier
-$mod_name = 'hofrc'; // à modifier
+$mod_name = 'Hof RC'; // à modifier
 
 update_mod($mod_folder, $mod_name);
